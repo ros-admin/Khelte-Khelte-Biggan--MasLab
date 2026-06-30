@@ -540,56 +540,77 @@
         }
 
         const form = document.getElementById('registrationForm');
-        const submitBtn = document.getElementById('submitBtn');
-        
-        // আপনার লেটেস্ট পারফেক্ট এপিআই লিঙ্ক যুক্ত করা হয়েছে
-        const apiURL = "https://script.google.com/macros/s/AKfycbx9ZcZ23Ui1A_4d4qQe0y905WyqoED8cDDyX-xfC8gaAT7jSHZTNZiknMWrSUlYy8mb/exec";
+const submitBtn = document.getElementById('submitBtn');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...`;
+// আপনার এপিআই লিঙ্ক
+const apiURL = "https://script.google.com/macros/s/AKfycbx9ZcZ23Ui1A_4d4qQe0y905WyqoED8cDDyX-xfC8gaAT7jSHZTNZiknMWrSUlYy8mb/exec";
 
-            const formData = new FormData(form);
-            const params = new URLSearchParams();
-            
-            formData.forEach((value, key) => {
-                params.append(key, value);
-            });
+form.addEventListener('submit', function(e) {
+    e.preventDefault(); // পেজ রিলোড বন্ধ করা
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...`;
 
-            // ব্যাকগ্রাউন্ডে নিরাপদ উপায়ে কুয়েরি স্ট্রিং হিট করার মেথড
-            let iframe = document.getElementById('hidden_iframe');
-            if (!iframe) {
-                iframe = document.createElement('iframe');
-                iframe.id = 'hidden_iframe';
-                iframe.name = 'hidden_iframe';
-                iframe.style.display = 'none';
-                document.body.appendChild(iframe);
-            }
+    const formData = new FormData(form);
+    const params = new URLSearchParams();
+    
+    formData.forEach((value, key) => {
+        params.append(key, value);
+    });
 
-            // গুগলে ডাটা রুট করা
-            iframe.src = `${apiURL}?${params.toString()}`;
-
-            // ডাটা সাবমিট হওয়ার জন্য পর্যাপ্ত সময় দিয়ে সরাসরি সাকসেস মোডাল ট্রিগার
-            setTimeout(() => {
-                openSuccessModal();
-                form.reset();
-                toggleOlympiadField(false);
-                toggleBkashFields(false);
-                
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> সাবমিট করুন`;
-            }, 2500); 
-        });
-
-        function openSuccessModal() {
-            document.getElementById('successModalOverlay').classList.add('active');
+    // গুগলের অফিশিয়াল 'fetch' রিকোয়েস্ট (যা সরাসরি গুগলের সার্ভার রিডাইরেকশন হ্যান্ডেল করে)
+    fetch(`${apiURL}?${params.toString()}`, {
+        method: 'POST',
+        mode: 'cors', // সরাসরি সিকিউর কানেকশন চেক করবে
+        headers: {
+            'Accept': 'application/json'
         }
+    })
+    .then(response => {
+        // যদি রেসপন্স সফল হয় (status 200 বা redirection ক্যাচ করে)
+        openSuccessModal();
+        form.reset();
+        toggleOlympiadField(false);
+        toggleBkashFields(false);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // যদি গুগল থেকে কোনো টেকনিক্যাল এরর আসে, তা সরাসরি অ্যালার্ট বক্সে দেখাবে
+        alert("গুগল সার্ভার রেসপন্স করেনি। এরর ডিটেইলস: " + error.message + "\n\nদয়া করে ব্রাউজারের Incognito (Private) উইন্ডো থেকে একবার চেষ্টা করুন।");
+    })
+    .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> সাবমিট করুন`;
+    });
+});
 
-        function closeSuccessModal() {
-            document.getElementById('successModalOverlay').classList.remove('active');
-        }
+// বাকি সাপোর্ট ফাংশনগুলো আগের মতোই থাকবে
+function toggleOlympiadField(show) {
+    const box = document.getElementById('olympiadDetailsBox');
+    const input = document.getElementById('olympiadInfo');
+    if (show) { box.style.display = 'block'; input.setAttribute('required', 'required'); } 
+    else { box.style.display = 'none'; input.removeAttribute('required'); input.value = ''; }
+}
+
+function toggleBkashFields(show) {
+    const box = document.getElementById('bkashDetailsBox');
+    const bNum = document.getElementById('bkashNum');
+    const bTrx = document.getElementById('trxId');
+    if (show) { box.style.display = 'block'; bNum.setAttribute('required', 'required'); bTrx.setAttribute('required', 'required'); } 
+    else { box.style.display = 'none'; bNum.removeAttribute('required'); bTrx.removeAttribute('required'); bNum.value = ''; bTrx.value = ''; }
+}
+
+function copyBkashNumber() {
+    navigator.clipboard.writeText("01730716522").then(() => {
+        const toast = document.getElementById('toastBox');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    });
+}
+
+function openSuccessModal() { document.getElementById('successModalOverlay').classList.add('active'); }
+function closeSuccessModal() { document.getElementById('successModalOverlay').classList.remove('active'); }
+
     </script>
 </body>
 </html>
