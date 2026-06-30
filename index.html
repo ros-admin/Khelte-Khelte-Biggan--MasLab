@@ -699,52 +699,60 @@
         }
 
         function checkStatusTimeline() {
-            // ২০২৬ এর বর্তমান সময় ডাইনামিক ট্র্যাকিং 
-            const now = new Date();
-            const regStart = new Date('2026-06-28T08:00:00');
-            const regEnd = new Date('2026-07-04T20:00:00');
-            const wsStart = new Date('2026-07-06T15:00:00');
-            const wsEnd = new Date('2026-07-10T17:00:00');
+    // ২০২৬ এর বর্তমান সময় ডাইনামিক ট্র্যাকিং 
+    const now = new Date();
+    const regStart = new Date('2026-06-28T08:00:00');
+    const regEnd = new Date('2026-07-04T20:00:00');
+    const wsStart = new Date('2026-07-06T15:00:00');
+    const wsEnd = new Date('2026-07-10T17:00:00');
 
-            // ১. নিবন্ধন শুরুর তারিখ পার হয়ে যাওয়ায় ডাইনামিক লাইন কাটা
-            if (now > regStart) {
-                document.getElementById('startDateNode').classList.add('strike-out');
-            }
-            // ২. নিবন্ধন শেষ হওয়ার তারিখ পার হয়ে গেলে কাটা যাওয়ার লজিক
-            if (now > regEnd) {
-                document.getElementById('endDateNode').classList.add('strike-out');
-            }
+    // ১. নিবন্ধন শুরুর তারিখ পার হয়ে গেলে কাটা যাবে
+    if (now > regStart) {
+        document.getElementById('startDateNode').classList.add('strike-out');
+    }
+    // ২. নিবন্ধন শেষ হওয়ার তারিখ পার হয়ে গেলে কাটা যাবে
+    if (now > regEnd) {
+        document.getElementById('endDateNode').classList.add('strike-out');
+    }
+    // ৩. নতুন সংযোজন: কর্মশালা শুরু হয়ে গেলে শুরুর তারিখটিও কাটা যাবে
+    if (now > wsStart) {
+        document.getElementById('wsStartTxt').parentElement.classList.add('strike-out');
+    }
+    // ৪. নতুন সংযোজন: সম্পূর্ণ কর্মশালা শেষ হয়ে গেলে শেষের তারিখটিও কাটা যাবে
+    if (now > wsEnd) {
+        document.getElementById('wsEndTxt').parentElement.classList.add('strike-out');
+    }
 
-            // রেজিঃ ব্যাজ নোটিশ আপডেট
-            const regText = document.getElementById('regStatusText');
-            if (now >= regStart && now <= regEnd) {
-                document.getElementById('regStatusBadge').className = "status-badge success";
-                document.getElementById('regStatusDot').className = "status-dot green";
-                regText.innerText = "নিবন্ধন চলমান";
-            } else {
-                document.getElementById('regStatusBadge').className = "status-badge running";
-                document.getElementById('regStatusDot').className = "status-dot red";
-                regText.innerText = now > regEnd ? "নিবন্ধন শেষ" : "নিবন্ধন শুরু হয়নি";
-            }
+    // রেজিঃ ব্যাজ নোটিশ আপডেট
+    const regText = document.getElementById('regStatusText');
+    if (now >= regStart && now <= regEnd) {
+        document.getElementById('regStatusBadge').className = "status-badge success";
+        document.getElementById('regStatusDot').className = "status-dot green";
+        regText.innerText = "নিবন্ধন চলমান";
+    } else {
+        document.getElementById('regStatusBadge').className = "status-badge running";
+        document.getElementById('regStatusDot').className = "status-dot red";
+        regText.innerText = now > regEnd ? "নিবন্ধন শেষ" : "নিবন্ধন শুরু হয়নি";
+    }
 
-            // ওয়ার্কশপ নোটিশ আপডেট
-            const wsText = document.getElementById('workshopStatusText');
-            if (now < wsStart) {
-                const days = Math.ceil((wsStart - now) / (1000 * 3600 * 24));
-                document.getElementById('workshopStatusBadge').className = "status-badge running";
-                document.getElementById('workshopStatusDot').className = "status-dot red";
-                wsText.innerText = `কর্মশালা শুরু হতে বাকি ${days} দিন`;
-            } else if (now >= wsStart && now <= wsEnd) {
-                document.getElementById('workshopStatusBadge').className = "status-badge success";
-                document.getElementById('workshopStatusDot').className = "status-dot green";
-                wsText.innerText = "কর্মশালা চলমান";
-            } else {
-                document.getElementById('workshopStatusBadge').className = "status-badge running";
-                document.getElementById('workshopStatusDot').className = "status-dot red";
-                wsText.innerText = "কর্মশালা শেষ";
-            }
-        }
-        window.onload = checkStatusTimeline;
+    // ওয়ার্কশপ নোটিশ আপডেট
+    const wsText = document.getElementById('workshopStatusText');
+    if (now < wsStart) {
+        const days = Math.ceil((wsStart - now) / (1000 * 3600 * 24));
+        document.getElementById('workshopStatusBadge').className = "status-badge running";
+        document.getElementById('workshopStatusDot').className = "status-dot red";
+        wsText.innerText = `কর্মশালা শুরু হতে বাকি ${days} দিন`;
+    } else if (now >= wsStart && now <= wsEnd) {
+        document.getElementById('workshopStatusBadge').className = "status-badge success";
+        document.getElementById('workshopStatusDot').className = "status-dot green";
+        wsText.innerText = "কর্মশালা চলমান";
+    } else {
+        document.getElementById('workshopStatusBadge').className = "status-badge running";
+        document.getElementById('workshopStatusDot').className = "status-dot red";
+        wsText.innerText = "কর্মশালা শেষ";
+    }
+}
+window.onload = checkStatusTimeline;
     </script>
 </body>
 </html>
