@@ -1,172 +1,307 @@
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>খেলতে খেলতে বিজ্ঞান - ১৬তম পর্ব</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        /* Banner Slider */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-bottom: 5px solid #009688;
+        }
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* ব্যানার ইমেজের ওপর লেখার জন্য ডেমো টেক্সট (ঐচ্ছিক) */
+        .slide-text {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
 
-<title>খেলতে খেলতে বিজ্ঞান | Registration</title>
+        /* Main Content */
+        .welcome-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: -30px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 4px solid #ff5722;
+        }
+        h1 { color: #009688; margin-bottom: 15px; }
+        .subtitle { font-size: 1.2rem; color: #555; font-weight: bold; }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        .section {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        h2 { 
+            color: #ff5722; 
+            border-bottom: 2px solid #eee; 
+            padding-bottom: 8px; 
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        /* List Styles */
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        li { margin-bottom: 8px; }
 
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+        /* Highlight Boxes */
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .info-card {
+            background: #e0f2f1;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #009688;
+        }
+        .info-card strong { color: #00796b; }
 
-<link rel="stylesheet" href="style.css">
+        /* Button */
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .reg-btn {
+            background-color: #ff5722;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.4);
+            transition: transform 0.2s, background-color 0.2s;
+            display: inline-block;
+        }
+        .reg-btn:hover {
+            background-color: #e64a19;
+            transform: translateY(-2px);
+        }
 
+        /* Footer */
+        footer {
+            background-color: #263238;
+            color: #cfd8dc;
+            padding: 30px 20px;
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .footer-credits {
+            margin-top: 20px;
+            border-top: 1px solid #37474f;
+            padding-top: 15px;
+            font-size: 0.95rem;
+        }
+        .footer-credits strong { color: #fff; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slider-container { height: 250px; }
+            .welcome-box { margin-top: 0; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="overlay"></div>
-
-<div class="container">
-
-<header>
-
-<img src="assets/banner.jpg" class="banner">
-
-</header>
-
-<section class="card">
-
-<h1>খেলতে খেলতে বিজ্ঞান</h1>
-
-<h2>১৬তম পর্ব</h2>
-
-<p class="subtitle">
-
-এসএসসি ২০২৬ পরীক্ষার্থীদের জন্য নিবন্ধন
-
-</p>
-
-<form id="registrationForm">
-
-<div class="input-box">
-
-<label>নাম *</label>
-
-<input type="text" id="name" required>
-
-</div>
-
-<div class="input-box">
-
-<label>ইমেইল *</label>
-
-<input type="email" id="email" required>
-
-</div>
-
-<div class="input-box">
-
-<label>মোবাইল নম্বর *</label>
-
-<input type="tel" id="mobile" required>
-
-</div>
-
-<div class="input-box">
-
-<label>বিদ্যালয়ের নাম *</label>
-
-<input type="text" id="school" required>
-
-</div>
-
-<div class="input-box">
-
-<label>শ্রেণি *</label>
-
-<select id="class">
-
-<option>SSC 2026</option>
-
-<option>Class 9</option>
-
-<option>Class 8</option>
-
-</select>
-
-</div>
-
-<div class="input-box">
-
-<label>লিঙ্গ *</label>
-
-<select id="gender">
-
-<option>Male</option>
-
-<option>Female</option>
-
-<option>Other</option>
-
-</select>
-
-</div>
-
-<div class="input-box">
-
-<label>জন্মতারিখ *</label>
-
-<input type="date" id="dob">
-
-</div>
-
-<div class="input-box">
-
-<label>আগে কোনো অলিম্পিয়াডে অংশগ্রহণ করেছ?</label>
-
-<select id="olympiad">
-
-<option>Yes</option>
-
-<option>No</option>
-
-</select>
-
-</div>
-
-<div class="input-box">
-
-<label>অলিম্পিয়াডের নাম ও সাল</label>
-
-<textarea id="olympiadName"></textarea>
-
-</div>
-
-<div class="input-box">
-
-<label>bKash Transaction ID *</label>
-
-<input type="text" id="trxid">
-
-</div>
-
-<div class="input-box">
-
-<label>মন্তব্য</label>
-
-<textarea id="comment"></textarea>
-
-</div>
-
-<button type="submit">
-
-নিবন্ধন করুন
-
-</button>
-
-</form>
-
-</section>
-
-</div>
-
-<script src="script.js"></script>
-
+    <!-- ১. ব্যানার স্লাইডার অংশ -->
+    <div class="slider-container">
+        <div class="slides" id="slider">
+            <!-- এখানে আপনার ৩টি ব্যানারের ইমেজের লিংক (যেমন: banner1.jpg) বসাবেন -->
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80" alt="Banner 1">
+                <div class="slide-text">হাতে-কলমে বিজ্ঞানের আনন্দ</div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1200&q=80" alt="Banner 2">
+                <div class="slide-text">খেলতে খেলতে বিজ্ঞান - ১৬তম পর্ব</div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Banner 3">
+                <div class="slide-text">১৬তম পর্ব - ম্যাসল্যাব</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <!-- ২. স্বাগতম ও ভূমিকা -->
+        <div class="welcome-box">
+            <h1>প্রিয় এসএসসি পরীক্ষার্থী ২০২৬</h1>
+            <p class="subtitle">পরীক্ষা শেষ, শুরু হলো দীর্ঘ ছুটি! এই সময়টা শুধু বিশ্রাম নয়, নতুন কিছু শেখারও দারুণ সুযোগ।</p>
+        </div>
+
+        <div class="section">
+            <p><strong>কেমন হয়, যদি তুমি নিজে হাতে-কলমে বিজ্ঞানের কিছু মজার এক্সপেরিমেন্ট নিয়ে খেলার সুযোগ পাও?</strong> মাইক্রোস্কোপ দিয়ে বিভিন্ন উদ্ভিদ ও প্রাণির কোষ দেখার সুযোগ পাও! পৃথিবী কেনো ঘুরে তার রহস্য উন্মোচন এবং মান নির্ণয় করতে পারতে? ল্যাবরেটরিতে কিভাবে কাজ করে তার ধারণা পেতে?</p>
+            <br>
+            <p>তোমাদেরকে এমন মজার কর্মকান্ডে অংশ নেয়ার সুযোগ দেয়ার জন্য শুরু হচ্ছে ৪ দিনের একটি বিশেষ কর্মশালা - <strong>“খেলতে খেলতে বিজ্ঞান”</strong>। এবার এই আয়োজনের ১৬ তম পর্ব অনুষ্ঠিত হতে চলছে। নিবন্ধন করা যাবে ২৮ জুন থেকে ৪ জুলাই রাত ৮টা পর্যন্ত (আসন থাকা সাপেক্ষে) পর্যন্ত।</p>
+            <br>
+            <p>যারা নিজেরা হাতেকলমে পরীক্ষা করে বিজ্ঞানকে বুঝতে চাও, আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের জন্য এখন থেকে প্রস্তুতি নিতে চাও, তাদের জন্যই এই কর্মশালা।</p>
+        </div>
+
+        <!-- ৩. টার্গেট অডিয়েন্স ও বিষয়বস্তু -->
+        <div class="section">
+            <h2>অংশ নিতে পারবে</h2>
+            <p>২০২৬ -এ এসএসসি পরীক্ষার্থীরা (তবে আগ্রহী হলে ৮ম-৯ম শ্রেণির শিক্ষার্থীরাও অংশ নিতে পারো)</p>
+        </div>
+
+        <div class="section">
+            <h2>কোর্সের বিষয়বস্তু</h2>
+            <p>পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, এবং মাপজোখ নিয়ে ব্যবহারিক ক্লাস</p>
+        </div>
+
+        <!-- ৪. কর্মশালায় যা যা শেখানো হবে -->
+        <div class="section">
+            <h2>কর্মশালায় যা যা শেখানো হবে</h2>
+            <p style="margin-bottom: 10px; color: #00796b; font-weight: bold;">ল্যাবরেটরির যন্ত্রপাতি ও মাপজোখের হাতে-কলমে ব্যবহার:</p>
+            <ol>
+                <li>ল্যাবের যন্ত্রপাতি ও মাপজোখ নিয়ে ধারণা</li>
+                <li>স্ক্রুগজ এবং স্লাইড ক্যালিপার্স ব্যবহার</li>
+                <li>দ্রবণ তৈরি করা</li>
+                <li>অম্ল-ক্ষার টাইট্রেশন</li>
+                <li>রক্তের গ্রুপ নির্ণয়</li>
+                <li>স্ফিগমোম্যানোমিটার এবং স্টেথোস্কোপের ব্যবহার</li>
+                <li>মাইক্রোস্কোপে পেঁয়াজ কোষ ও এর প্লাজমোলাইসিস পর্যবেক্ষণ</li>
+            </ol>
+            <p><em>* কর্মশালার শেষদিন পরীক্ষায় অংশগ্রহণ করতে হবে।</em></p>
+            <br>
+            <p><strong>যারা বিজ্ঞানকে হাতে-কলমে বুঝতে চাও বা আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের প্রস্তুতি শুরু করতে চাও—এ কর্মশালা তোমার জন্যই।</strong></p>
+        </div>
+
+        <!-- ৫. সময় ও স্থান -->
+        <div class="section">
+            <h2>কর্মশালার বিবরণী</h2>
+            <div class="highlight-grid">
+                <div class="info-card"><strong>তারিখ:</strong> ৬ জুলাই ২০২৬ - ১০ জুলাই ২০২৬</div>
+                <div class="info-card"><strong>সময়:</strong> বিকাল ৩টা – ৫টা</div>
+                <div class="info-card"><strong>নিবন্ধন ফি:</strong> ৩০০০/- টাকা</div>
+                <div class="info-card"><strong>মোট আসন:</strong> মাত্র ১২ জন (আগে আসলে আগে পাবেন ভিত্তিতে)</div>
+            </div>
+            <br>
+            <p><strong>স্থান:</strong> ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
+        </div>
+
+        <!-- ৬. রেজিস্ট্রেশন করার নিয়ম -->
+        <div class="section" style="border-left: 5px solid #ff5722;">
+            <h2>রেজিস্ট্রেশন করার নিয়ম</h2>
+            <ol>
+                <li>প্রথমেই বিকাশের মাধ্যমে কোর্সের নিবন্ধন ফি অগ্রিম প্রদান করতে হবে।</li>
+                <li>নিবন্ধন ফি প্রদান করার বিকাশ নম্বর: <strong>01730-716522</strong></li>
+                <li>এই বিকাশ নম্বরটি পারসোনাল নম্বর। তাই বিকাশের সেন্ড মানি অপশন ব্যবহার করে <strong>৩০৬০ টাকা</strong> (বিকাশ ফি সহ) পাঠাতে হবে। নিবন্ধনের জন্য বিকাশের ফিরতি ম্যাসেজের ট্রাঞ্জেকশন আইডি (TrxID) সংরক্ষণ করতে হবে।</li>
+                <li>এরপর নিচের রেজিস্ট্রেশন ফর্ম বাটনটি পূরণ করতে হবে। ফর্মটি পূরনের সময় ট্রাঞ্জেকশন আইডিটি দিয়ে লিখে ফর্মটি সাবমিট করতে হবে।</li>
+                <li>ফর্ম পূরণের ৪৮ ঘণ্টার মধ্যে মেইলের মাধ্যমে নিবন্ধন নিশ্চিত করা হবে। ৪৮ ঘণ্টার মধ্যে নিবন্ধন কনফার্মেশন না পেলে আমাদের সঙ্গে যোগাযোগ করুন।</li>
+            </ol>
+        </div>
+
+        <!-- রেজিস্ট্রেশন বাটন -->
+        <div class="btn-container">
+            <!-- এখানে আপনার আসল গুগল ফর্ম বা অন্য ফর্মের লিংক href="#" এর জায়গায় বসাবেন -->
+            <a href="#" class="reg-btn" target="_blank">📝 রেজিস্ট্রেশন ফর্মটি পূরণ করো</a>
+        </div>
+
+        <!-- ৭. অতিরিক্ত সুবিধাসমূহ -->
+        <div class="section">
+            <h2>কর্মশালায় যা যা প্রদান করা হবে</h2>
+            <ul>
+                <li><strong>ক)</strong> কোর্স শেষে অংশগ্রহণকারীদের সার্টিফিকেট প্রদান করা হবে।</li>
+                <li><strong>খ)</strong> ব্যবহারিক উপকরণ ও আনুষাঙ্গিক ম্যাটারিয়েলস ম্যাসল্যাব কর্তৃক প্রদান করা হবে।</li>
+                <li><strong>গ)</strong> ২ ঘন্টার মাঝখানে ১০ মিনিটের বিরতি দেয়া হবে এবং হালকা নাস্তা প্রদান করা হবে।</li>
+                <li><strong>ঘ)</strong> আসন সংখ্যা প্রতি ব্যাচে ১২ টি। তাই আগে আসলে আগে পাবে ভিত্তিতে অংশ নেয়ার সুযোগ।</li>
+            </ul>
+        </div>
+
+        <!-- ৮. সমাপনী বাণী -->
+        <div class="welcome-box" style="margin-top: 30px; border-top: 4px solid #009688;">
+            <p style="font-size: 1.2rem; font-style: italic; color: #00796b;">"চলো, পরীক্ষা-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি"</p>
+        </div>
+
+    </div>
+
+    <!-- ৯. ফুটার ও যোগাযোগ -->
+    <footer>
+        <div class="container" style="padding: 0;">
+            <h3>যোগাযোগ</h3>
+            <p>📞 ম্যাসল্যাব: +880 1730-716522 | ✉️ ইমেইল: info@maslab.org</p>
+            <p>📍 ঠিকানা: ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
+            
+            <div class="footer-credits">
+                <p>Event by: <strong>Maslab</strong></p>
+                <p>Developed by: <strong>Utsab Sarkar</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ব্যানার অটো-চেঞ্জ হওয়ার জাভাস্ক্রিপ্ট কোড -->
+    <script>
+        const slider = document.getElementById('slider');
+        const slidesCount = document.querySelectorAll('.slide').length;
+        let currentIndex = 0;
+
+        function showNextSlide() {
+            currentIndex++;
+            if (currentIndex >= slidesCount) {
+                currentIndex = 0;
+            }
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        // প্রতি ৩ সেকেন্ড (৩০০০ মিলিসেকেন্ড) পর পর ব্যানার চেঞ্জ হবে
+        setInterval(showNextSlide, 3000);
+    </script>
 </body>
-
 </html>
