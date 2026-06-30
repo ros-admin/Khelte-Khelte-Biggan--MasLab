@@ -527,89 +527,44 @@
     </div>
 
     <script>
-        // অলিম্পিয়াড ইনপুট ফিল্ড শো/হাইড লজিক
-        function toggleOlympiadField(show) {
-            const box = document.getElementById('olympiadDetailsBox');
-            const input = document.getElementById('olympiadInfo');
-            if (show) {
-                box.style.display = 'block';
-                input.setAttribute('required', 'required');
-            } else {
-                box.style.display = 'none';
-                input.removeAttribute('required');
-                input.value = ''; // ক্লিয়ার ডাটা
-            }
-        }
-
-        // বিকাশ ট্রাঞ্জেকশন ফিল্ড শো/হাইড লজিক
-        function toggleBkashFields(show) {
-            const box = document.getElementById('bkashDetailsBox');
-            const bNum = document.getElementById('bkashNum');
-            const bTrx = document.getElementById('trxId');
-            if (show) {
-                box.style.display = 'block';
-                bNum.setAttribute('required', 'required');
-                bTrx.setAttribute('required', 'required');
-            } else {
-                box.style.display = 'none';
-                bNum.removeAttribute('required');
-                bTrx.removeAttribute('required');
-                bNum.value = '';
-                bTrx.value = '';
-            }
-        }
-
-        // বিকাশ নাম্বার ক্লিপবোর্ডে কপি করা
-        function copyBkashNumber() {
-            navigator.clipboard.writeText("01730716522").then(() => {
-                const toast = document.getElementById('toastBox');
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2500);
-            });
-        }
-
-        // ফর্ম সাবমিশন এবং গুগল শিট এপিআই কানেকশন
-const form = document.getElementById('registrationForm');
+            const form = document.getElementById('registrationForm');
 const submitBtn = document.getElementById('submitBtn');
 
-// আপনার নতুন ডেপ্লয় করা এপিআই লিঙ্কটি এখানে বসান
-const apiURL = "https://script.google.com/macros/s/AKfycby86NlsETtaUO2DSRFs_ickBkPTXdwnaw8rKEFjkXvSodu4YcDzpBe4OEsGmtZzdqcp/exec";
+// আপনার এপিআই লিঙ্ক
+const apiURL = "https://script.google.com/macros/s/AKfycbx9ZcZ23Ui1A_4d4qQe0y905WyqoED8cDDyX-xfC8gaAT7jSHZTNZiknMWrSUlYy8mb/exec";
 
 form.addEventListener('submit', function(e) {
-    e.preventDefault(); 
+    e.preventDefault(); // পেজ রিলোড বন্ধ করা
     
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে, অপেক্ষা করুন...`;
+    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...`;
 
-    // ফর্ম ডাটা অবজেক্ট তৈরি
     const formData = new FormData(form);
-    const object = {};
+    const params = new URLSearchParams();
     
-    // একশন সেট করা
-    object['action'] = 'register';
     formData.forEach((value, key) => {
-        object[key] = value;
+        params.append(key, value);
     });
 
-    // গুগল স্ক্রিপ্টের জন্য পারফেক্ট JSON স্ট্রাকচার ও 'no-cors' মোড রিকোয়েস্ট
-    fetch(apiURL, {
+    // গুগলের অফিশিয়াল 'fetch' রিকোয়েস্ট (যা সরাসরি গুগলের সার্ভার রিডাইরেকশন হ্যান্ডেল করে)
+    fetch(`${apiURL}?${params.toString()}`, {
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'cors', // সরাসরি সিকিউর কানেকশন চেক করবে
         headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(object)
+            'Accept': 'application/json'
+        }
     })
-    .then(() => {
-        // রিকোয়েস্ট সাকসেসফুলি চলে গেছে, তাই সরাসরি পপআপ ওপেন হবে
+    .then(response => {
+        // যদি রেসপন্স সফল হয় (status 200 বা redirection ক্যাচ করে)
         openSuccessModal();
-        form.reset(); 
-        toggleOlympiadField(false); 
+        form.reset();
+        toggleOlympiadField(false);
         toggleBkashFields(false);
     })
     .catch(error => {
         console.error('Error:', error);
-        alert("নেটওয়ার্ক সমস্যার কারণে সাবমিট করা যায়নি। দয়া করে আবার চেষ্টা করুন।");
+        // যদি গুগল থেকে কোনো টেকনিক্যাল এরর আসে, তা সরাসরি অ্যালার্ট বক্সে দেখাবে
+        alert("গুগল সার্ভার রেসপন্স করেনি। এরর ডিটেইলস: " + error.message + "\n\nদয়া করে ব্রাউজারের Incognito (Private) উইন্ডো থেকে একবার চেষ্টা করুন।");
     })
     .finally(() => {
         submitBtn.disabled = false;
@@ -617,14 +572,33 @@ form.addEventListener('submit', function(e) {
     });
 });
 
-        // পপআপ ওপেন এবং ক্লোজ ফাংশন
-        function openSuccessModal() {
-            document.getElementById('successModalOverlay').classList.add('active');
-        }
+// বাকি সাপোর্ট ফাংশনগুলো আগের মতোই থাকবে
+function toggleOlympiadField(show) {
+    const box = document.getElementById('olympiadDetailsBox');
+    const input = document.getElementById('olympiadInfo');
+    if (show) { box.style.display = 'block'; input.setAttribute('required', 'required'); } 
+    else { box.style.display = 'none'; input.removeAttribute('required'); input.value = ''; }
+}
 
-        function closeSuccessModal() {
-            document.getElementById('successModalOverlay').classList.remove('active');
-        }
+function toggleBkashFields(show) {
+    const box = document.getElementById('bkashDetailsBox');
+    const bNum = document.getElementById('bkashNum');
+    const bTrx = document.getElementById('trxId');
+    if (show) { box.style.display = 'block'; bNum.setAttribute('required', 'required'); bTrx.setAttribute('required', 'required'); } 
+    else { box.style.display = 'none'; bNum.removeAttribute('required'); bTrx.removeAttribute('required'); bNum.value = ''; bTrx.value = ''; }
+}
+
+function copyBkashNumber() {
+    navigator.clipboard.writeText("01730716522").then(() => {
+        const toast = document.getElementById('toastBox');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    });
+}
+
+function openSuccessModal() { document.getElementById('successModalOverlay').classList.add('active'); }
+function closeSuccessModal() { document.getElementById('successModalOverlay').classList.remove('active'); }
+
     </script>
 </body>
 </html>
