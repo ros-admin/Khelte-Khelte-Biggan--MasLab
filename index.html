@@ -15,7 +15,6 @@
             --soft-blue-bg: #eff6ff;     
             --text-dark: #1e293b;        
             --text-muted: #64748b;       
-            --header-height: 115px;
         }
 
         * {
@@ -23,7 +22,12 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* মেনু থেকে সেকশনে ক্লিক করলে হেডারের নিচে ঢাকা পড়া রোধ করার ম্যাজিক সিএসএস */
+        html {
             scroll-behavior: smooth;
+            scroll-padding-top: 85px; /* ফিক্সড হেডারের উচ্চতা + গ্যাপ */
         }
 
         body {
@@ -64,7 +68,7 @@
             z-index: 3;
         }
 
-        /* Top Notification Bar - নরমাল স্ক্রল (ফিক্সড নয়) */
+        /* বিজ্ঞপ্তি বার - একদম সবার উপরে (স্ক্রল করলে উপরে চলে যাবে) */
         .top-marquee-container {
             width: 90%;
             max-width: 930px;
@@ -72,7 +76,7 @@
             background: transparent;
             border: 2px solid var(--accent-red);
             border-radius: 30px;
-            margin: 20px auto 10px auto; /* পেজের সাথে স্ক্রল হয়ে উপরে চলে যাবে */
+            margin: 15px auto 15px auto; 
             display: flex;
             align-items: center;
             overflow: hidden;
@@ -111,7 +115,7 @@
             text-decoration: none;
         }
 
-        /* শুধুমাত্র হেডার (Navbar) ফিক্সড থাকবে */
+        /* ফিক্সড হেডার (Navbar) - এটি স্ক্রিনের ওপরে আটকে থাকবে */
         .navbar {
             background: #ffffff;
             color: var(--text-dark);
@@ -144,7 +148,7 @@
             transition: 0.3s;
         }
 
-        /* Unique Boxed Sidebar */
+        /* Sidebar Drawer */
         .sidebar {
             position: fixed;
             top: 0;
@@ -197,7 +201,7 @@
             padding-left: 20px;
         }
 
-        /* 1000364247.jpg ওরেঞ্জ-রেড বক্স */
+        /* 1000364247.jpg ওরেঞ্জ-রেড বক্স রেপ্লিকা */
         .image-replica-box {
             background: var(--accent-red);
             border-radius: 16px;
@@ -223,7 +227,7 @@
             transition: 0.3s;
         }
 
-        /* Banner Module */
+        /* Banner */
         .banner-container {
             width: 100%;
             height: 360px;
@@ -294,7 +298,6 @@
         .status-dot.red { background-color: #ef4444; }
         @keyframes blinker { 50% { opacity: 0; } }
         
-        /* ডেট এক্সপায়ার হলে ডাইনামিক কাটার ক্লাস */
         .strike-out { text-decoration: line-through !important; color: var(--text-muted) !important; opacity: 0.55; }
 
         /* Intro Presentation */
@@ -373,7 +376,7 @@
         .map-middle-text-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.96); color: var(--text-dark); padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 0.95rem; text-align: center; border: 2px solid var(--soft-blue); width: 85%; max-width: 420px; pointer-events: none; }
 
         /* Footer */
-        .footer-universe { background: #1e293b; color: #94a3b8; padding: 50px 15px 30px; margin-top: 60px; }
+        .footer-universe { background: #1e293b; color: #94a3b8; padding: 50px 15px 20px; margin-top: 60px; }
         .footer-header-centered { text-align: center; color: #fff; font-size: 1.6rem; font-weight: 700; margin-bottom: 35px; }
         .footer-header-centered span::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent-red); margin: 8px auto 0; border-radius: 2px; }
         .footer-split-grid { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; max-width: 960px; margin: 0 auto; gap: 40px; }
@@ -383,15 +386,16 @@
         .footer-links-right a { display: flex; align-items: flex-start; gap: 12px; color: #cbd5e1; text-decoration: none; font-size: 1rem; }
         .footer-links-right i { color: var(--accent-red); margin-top: 5px; width: 20px; text-align: center; }
         .footer-bottom-credits { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+        .developer-credit { font-size: 0.8rem; color: #64748b; margin-top: 8px; }
 
-        /* মোবাইল স্ক্রিন অপ্টিমাইজেশন রেসপন্সিভনেস (কাটা ফিক্স) */
+        /* মোবাইল রেসপন্সিভনেস */
         @media (max-width: 768px) {
-            .top-marquee-container { width: 96%; }
+            .top-marquee-container { width: 96%; margin: 10px auto; }
             .banner-container { height: 240px; }
             .slide-caption h2 { font-size: 1.5rem; }
             .section-card { padding: 20px; }
             
-            /* মোবাইলে গ্রিড এক কলামে সোজা হয়ে যাবে যাতে কেটে না যায় */
+            /* মোবাইলে গ্রিড এক কলামে হবে যাতে ভেঙে ডানদিকে না কাটে */
             .info-grid { grid-template-columns: 1fr; gap: 15px; }
             .seat-full-area-box { grid-column: span 1; }
             
@@ -412,13 +416,7 @@
         <div>🔭</div><div>💡</div><div>Σ</div><div>√</div>
     </div>
 
-    <!-- Navbar (একমাত্র ফিক্সড হেডার) -->
-    <nav class="navbar">
-        <div class="nav-title">খেলতে খেলতে বিজ্ঞান <span>(পর্ব-১৬)</span></div>
-        <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
-    </nav>
-
-    <!-- Top Bordered Transparent Notice Bar (পেজ স্ক্রল করলে উপরে চলে যাবে) -->
+    <!-- বিজ্ঞপ্তি সবার উপরে (পেজ স্ক্রল করলে এটি উপরে চলে যাবে) -->
     <div class="top-marquee-container">
         <div class="marquee-fixed-label">
             <i class="fas fa-bullhorn"></i> বিজ্ঞপ্তি:
@@ -429,6 +427,12 @@
             </marquee>
         </div>
     </div>
+
+    <!-- ফিক্সড হেডার (Navbar) -->
+    <nav class="navbar">
+        <div class="nav-title">খেলতে খেলতে বিজ্ঞান <span>(পর্ব-১৬)</span></div>
+        <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+    </nav>
 
     <!-- Drawer Component -->
     <div class="sidebar" id="sidebarMenu">
@@ -490,7 +494,7 @@
             <div class="headline-container">
                 <div class="headline-wrapper"><i class="fas fa-user-astronaut"></i> কাদের জন্য এই কর্মশালা</div>
             </div>
-            <p><strong>এসএসসি ২০২৬ পরীক্ষার্থীরা</strong> এবং ২০২৬ সালে অষ্টম থেকে দশম শ্রেণীতে অধ্যয়নরত যেসব শিক্ষার্থীরা নিজে হাতেকলমে পরীক্ষা করে বিজ্ঞানকে বুঝতে চাও, আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের জন্য এখন থেকে প্রস্তুতি নিতে চাও, তাদের জন্যই এই কর্মশালা।</p>
+            <p><strong>এসএসসি ২০২৬ পরীক্ষার্থীরা</strong> এবং ২০াক্তে অষ্টম থেকে দশম শ্রেণীতে অধ্যয়নরত যেসব শিক্ষার্থীরা নিজে হাতেকলমে পরীক্ষা করে বিজ্ঞানকে বুঝতে চাও, আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের জন্য এখন থেকে প্রস্তুতি নিতে চাও, তাদের জন্যই এই কর্মশালা।</p>
         </div>
 
         <!-- Section: কর্মশালার বিষয়বস্তু -->
@@ -520,7 +524,7 @@
             </div>
         </div>
 
-        <!-- Section: নিবন্ধনের সময়সূচি (পুনর্গঠিত ৩+২ গ্রিড লেআউট) -->
+        <!-- Section: নিবন্ধনের সময়সূচি (৩+২ পারফেক্ট গ্রিড লেআউট) -->
         <div class="section-card" id="schedule">
             <div class="headline-container">
                 <div class="headline-wrapper"><i class="fas fa-calendar-days"></i> নিবন্ধনের সময়সূচি ও যোগ্যতা</div>
@@ -545,7 +549,7 @@
                     <strong id="endDateTxt">৪ জুলাই, ২০২৬; রাত ৮:০০টা</strong>
                 </div>
                 
-                <!-- নিচের সারি: ১টি ফি বক্স এবং ২টি বক্সের সমান আসন বক্স -->
+                <!-- নিচের সারি: ১টি ফি বক্স এবং ২টি বক্সের সমান বড় আসন বক্স -->
                 <div class="info-node">
                     <span><i class="fas fa-wallet"></i>নিবন্ধন ফি</span>
                     <strong>৩০০০/- টাকা মাত্র <span class="small-note">(রেজিস্ট্রেশনের সময় পরিশোধযোগ্য)</span></strong>
@@ -638,7 +642,7 @@
                 <div class="headline-wrapper"><i class="fas fa-award"></i> কর্মশালায় যা যা পাবে</div>
             </div>
             <ul class="custom-ul">
-                <li><strong>ক)</strong> курс শেষে সার্টিফিকেট প্রদান করা হবে।</li>
+                <li><strong>ক)</strong> কোর্স শেষে সার্টিফিকেট প্রদান করা হবে।</li>
                 <li><strong>খ)</strong> ব্যবহারিক উপকরণ ও আনুষাঙ্গিক সব ল্যাব থেকেই দেওয়া হবে।</li>
                 <li><strong>গ)</strong> ক্লাসের মাঝে হালকা নাস্তা প্রদান করা হবে।</li>
                 <li><strong>ঘ)</strong> আসন সংখ্যা মাত্র ১২ টি, তাই আগে আসলে আগে পাবেন।</li>
@@ -652,7 +656,7 @@
 
     <div class="toast-notification" id="toastBox">নম্বরটি কপি হয়েছে!</div>
 
-    <!-- Footer -->
+    <!-- Footer (Branding + Developer Info) -->
     <footer class="footer-universe" id="contact">
         <div class="footer-header-centered"><span>যোগাযোগ</span></div>
         <div class="footer-split-grid">
@@ -665,7 +669,11 @@
                 <a href="#"><i class="fas fa-street-view"></i> <span>ম্যাসল্যাব, ধানমন্ডি, ঢাকা।</span></a>
             </div>
         </div>
-        <div class="footer-bottom-credits"><p>Event by <strong>MASLab</strong></p></div>
+        <div class="footer-bottom-credits">
+            <p>Event by <strong>MASLab</strong></p>
+            <p class="developer-credit">Designed & Developed with ❤️ by Your AI Collaborator</p>
+            <p style="font-size:0.75rem; color:#475569; margin-top:5px;">&copy; 2026 MASLab. All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
@@ -691,18 +699,18 @@
         }
 
         function checkStatusTimeline() {
-            // আজকের বর্তমান সময় ২০২৬ অনুযায়ী
+            // ২০২৬ এর বর্তমান সময় ডাইনামিক ট্র্যাকিং 
             const now = new Date();
             const regStart = new Date('2026-06-28T08:00:00');
             const regEnd = new Date('2026-07-04T20:00:00');
             const wsStart = new Date('2026-07-06T15:00:00');
             const wsEnd = new Date('2026-07-10T17:00:00');
 
-            // ১. নিবন্ধন শুরুর তারিখ পার হয়ে গেলে কাটা (Strike-out) যাবে লজিক
+            // ১. নিবন্ধন শুরুর তারিখ পার হয়ে যাওয়ায় ডাইনামিক লাইন কাটা
             if (now > regStart) {
                 document.getElementById('startDateNode').classList.add('strike-out');
             }
-            // ২. নিবন্ধন শেষ হওয়ার তারিখ পার হয়ে গেলে কাটা যাবে লজিক
+            // ২. নিবন্ধন শেষ হওয়ার তারিখ পার হয়ে গেলে কাটা যাওয়ার লজিক
             if (now > regEnd) {
                 document.getElementById('endDateNode').classList.add('strike-out');
             }
@@ -739,4 +747,4 @@
         window.onload = checkStatusTimeline;
     </script>
 </body>
-    </html>
+</html>
