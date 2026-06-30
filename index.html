@@ -482,7 +482,7 @@
         <div class="image-replica-box">
             <h3>সীমিত আসন!</h3>
             <p>মাত্র ১২ জন অংশ নিতে পারবে</p>
-            <a href="../Registration/" class="image-replica-btn" target="_blank">
+            <a href="../Registration/" class="image-replica-btn">
                 <i class="fas fa-pen-to-square"></i> নিবন্ধন করুন
             </a>
         </div>
@@ -593,11 +593,11 @@
                     <strong>এসএসসি ২০২৬ পরীক্ষার্থী এবং ৮ম-১০ম শ্রেণীর শিক্ষার্থী</strong>
                 </div>
                 <div class="info-node" id="startDateNode">
-                    <span><i class="fas fa-business-time"></i>... শুরু</span>
+                    <span><i class="fas fa-business-time"></i> নিবন্ধন শুরুর সময়</span>
                     <strong id="startDateTxt">২৮ জুন, ২০২৬; সকাল ৮:০০ টা</strong>
                 </div>
                 <div class="info-node" id="endDateNode">
-                    <span><i class="fas fa-calendar-xmark"></i>... শেষ</span>
+                    <span><i class="fas fa-calendar-xmark"></i> নিবন্ধনের শেষ সময়</span>
                     <strong id="endDateTxt">৪ জুলাই, ২০২৬; রাত ৮:০০টা</strong>
                 </div>
                 
@@ -618,7 +618,7 @@
             </div>
 
             <div class="btn-holder" style="margin-top: 35px;">
-                <a href="../Registration/" class="cta-button" target="_blank"><i class="fas fa-file-signature"></i> রেজিস্ট্রেশন করতে এখানে ক্লিক করুন</a>
+                <a href="../Registration/" class="cta-button"><i class="fas fa-file-signature"></i> রেজিস্ট্রেশন করতে এখানে ক্লিক করুন</a>
             </div>
         </div>
 
@@ -694,7 +694,7 @@
                 <div class="headline-wrapper"><i class="fas fa-award"></i> কর্মশালায় যা যা পাবে</div>
             </div>
             <ul class="custom-ul">
-                <li><strong>ক)</strong> কোর্স শেষে সার্টিফিকেট প্রদান করা হবে।</li>
+                <li><strong>ক)</strong> কর্মশালা শেষে সার্টিফিকেট প্রদান করা হবে।</li>
                 <li><strong>খ)</strong> ব্যবহারিক উপকরণ ও আনুষাঙ্গিক সব ল্যাব থেকেই দেওয়া হবে।</li>
                 <li><strong>গ)</strong> ক্লাসের মাঝে হালকা নাস্তা প্রদান করা হবে।</li>
                 <li><strong>ঘ)</strong> আসন সংখ্যা মাত্র ১২ টি, তাই আগে আসলে আগে পাবেন।</li>
@@ -730,17 +730,20 @@
 
     <script>
         function toggleMenu() {
-            document.getElementById('sidebarMenu').classList.toggle('active');
-        }
+    document.getElementById('sidebarMenu').classList.toggle('active');
+}
 
-        let index = 0;
-        setInterval(() => {
-            const slider = document.getElementById('bannerSlider');
-            if(slider) {
-                index = (index + 1) % 2;
-                slider.style.transform = `translateX(-${index * 100}%)`;
-            }
-        }, 4000);
+let index = 0;
+const slider = document.getElementById('bannerSlider');
+
+if (slider) {
+    const totalSlides = slider.children.length;
+
+    setInterval(() => {
+        index = (index + 1) % totalSlides;
+        slider.style.transform = `translateX(-${index * 100}%)`;
+    }, 4000);
+}
 
         function copyNumber() {
             navigator.clipboard.writeText("01730716522").then(() => {
