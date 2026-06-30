@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #060b19;          /* ডিপ স্পেস নেভি ব্লু */
-            --bg-card: #0f172a;          /* রিচ গ্লাস-ইফেক্ট কার্ড ব্যাকগ্রাউন্ড */
-            --neon-cyan: #0ea5e9;        /* ইলেকট্রিক সায়ান */
-            --mint-green: #2dd4bf;       /* ফ্রেশ মিন্ট গ্রিন (হাইলাইটের জন্য) */
-            --text-light: #f1f5f9;       /* ক্রিস্প হোয়াইট টেক্সট */
-            --text-muted: #94a3b8;       /* সফট গ্রে টেক্সট */
-            --alert-red: #f43f5e;        /* প্রিমিয়াম রোজ রেড (আসন সংখ্যার জন্য) */
+            --bg-main: #f8fafc;          /* ক্লিন হোয়াইট/অফ-হোয়াইট ব্যাকগ্রাউন্ড */
+            --bg-card: #ffffff;          /* পিওর হোয়াইট কার্ড */
+            --accent-red: #dc2626;       /* ভাইব্রেন্ট ক্রিপ্স রেড (আইকন ও প্রাইমারি হাইলাইট) */
+            --soft-blue: #3b82f6;        /* হালকা প্রিমিয়াম ব্লু টোন (বক্সের বাম পাশের জন্য) */
+            --soft-blue-bg: #eff6ff;     /* একদম হালকা ব্লু ব্যাকগ্রাউন্ড টোন */
+            --text-dark: #1e293b;        /* ডার্ক টেক্সট (পড়ার সুবিধার জন্য) */
+            --text-muted: #64748b;       /* মিউটেড গ্রে টেক্সট */
             --header-height: 70px;       /* হেডার উচ্চতা */
         }
 
@@ -28,7 +28,7 @@
 
         body {
             background-color: var(--bg-main);
-            color: var(--text-light);
+            color: var(--text-dark);
             line-height: 1.8;
         }
 
@@ -39,8 +39,8 @@
 
         /* Navbar & Sidebar */
         .navbar {
-            background: rgba(15, 23, 42, 0.9);
-            color: #fff;
+            background: #ffffff;
+            color: var(--text-dark);
             padding: 0 25px;
             height: var(--header-height);
             display: flex;
@@ -50,28 +50,28 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-            border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: 2px solid var(--soft-blue);
         }
 
         .nav-title {
             font-size: 1.3rem;
             font-weight: 700;
-            background: linear-gradient(to right, var(--neon-cyan), var(--mint-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-dark);
+        }
+        .nav-title span {
+            color: var(--accent-red);
         }
 
         .menu-btn {
             background: none;
             border: none;
-            color: var(--neon-cyan);
+            color: var(--accent-red);
             font-size: 1.5rem;
             cursor: pointer;
             transition: 0.3s;
         }
-        .menu-btn:hover { color: var(--mint-green); }
+        .menu-btn:hover { color: var(--soft-blue); }
 
         .sidebar {
             position: fixed;
@@ -79,9 +79,9 @@
             right: -320px;
             width: 320px;
             height: 100%;
-            background: #090d16;
+            background: #ffffff;
             z-index: 1001;
-            box-shadow: -15px 0 35px rgba(0,0,0,0.6);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
             transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             padding: 30px 20px;
             display: flex;
@@ -100,35 +100,36 @@
             margin-bottom: 25px;
             transition: 0.3s;
         }
-        .close-btn:hover { color: var(--alert-red); }
+        .close-btn:hover { color: var(--accent-red); }
 
         .sidebar a {
-            color: var(--text-muted);
+            color: var(--text-dark);
             text-decoration: none;
             padding: 14px 15px;
             font-size: 1.05rem;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid #f1f5f9;
             transition: 0.3s;
+            font-weight: 500;
         }
 
         .sidebar a:hover {
-            color: var(--neon-cyan);
-            background: rgba(14, 165, 233, 0.05);
+            color: var(--accent-red);
+            background: var(--soft-blue-bg);
             padding-left: 22px;
         }
 
         .sidebar-reg-card {
-            background: rgba(14, 165, 233, 0.05);
+            background: #fff5f5;
             padding: 20px;
             border-radius: 14px;
             text-align: center;
             margin-top: 25px;
-            border: 1px solid rgba(14, 165, 233, 0.2);
+            border: 1px solid #fee2e2;
         }
 
         .menu-action-btn {
             display: inline-block;
-            background: linear-gradient(135deg, var(--neon-cyan), #0284c7);
+            background: var(--accent-red);
             color: #fff;
             padding: 10px 22px;
             border-radius: 25px;
@@ -137,14 +138,14 @@
             margin-top: 12px;
             font-size: 0.95rem;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
         }
-        .menu-action-btn:hover { transform: translateY(-2px); }
+        .menu-action-btn:hover { background: #b91c1c; transform: translateY(-2px); }
 
         /* Banner Module */
         .banner-container {
             width: 100%;
-            height: 480px;
+            height: 440px;
             overflow: hidden;
             position: relative;
             margin-top: var(--header-height);
@@ -167,7 +168,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.4) contrast(1.1);
+            filter: brightness(0.5);
         }
 
         .slide-caption {
@@ -180,9 +181,6 @@
 
         .slide-caption h2 {
             font-size: 2.6rem;
-            background: linear-gradient(to right, #fff, #bae6fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             font-weight: 800;
             margin-bottom: 12px;
         }
@@ -197,119 +195,109 @@
         .section-card {
             background: var(--bg-card);
             padding: 40px;
-            border-radius: 20px;
+            border-radius: 16px;
             margin-bottom: 35px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            border-left: 6px solid var(--soft-blue); /* হালকা নীল টোন বাম পাশে */
             position: relative;
-            overflow: hidden;
         }
 
         .headline-wrapper {
             font-size: 1.55rem;
-            color: var(--neon-cyan);
+            color: var(--text-dark);
             margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 14px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 2px solid #f1f5f9;
             padding-bottom: 14px;
-            font-weight: 600;
+            font-weight: 700;
         }
-        .headline-wrapper i { color: var(--mint-green); }
+        .headline-wrapper i { color: var(--accent-red); } /* আইকনগুলো লাল */
 
         /* Intro Presentation Box */
         .intro-box {
-            background: linear-gradient(145deg, #131c35, #0b1120);
-            border-top: 3px solid var(--mint-green);
-            text-align: center;
+            border-left: 6px solid var(--accent-red); /* শুধু ইন্ট্রো বক্সের বামে লাল */
+            background: #fff;
         }
         .intro-box h1 { 
-            background: linear-gradient(to right, var(--neon-cyan), var(--mint-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--accent-red);
             font-size: 2.4rem; 
             margin-bottom: 15px; 
+            font-weight: 800;
         }
-        .intro-box p.lead { font-size: 1.25rem; color: #fff; font-weight: 500; }
+        .intro-box p.lead { font-size: 1.25rem; color: var(--text-dark); font-weight: 600; }
 
-        /* Unique Grid List for Syllabus (No Numbers) */
+        /* Syllabus List style */
         .syllabus-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
+            gap: 12px;
         }
         .syllabus-item {
             display: flex;
             align-items: center;
             gap: 18px;
-            background: rgba(255,255,255,0.02);
+            background: #f8fafc;
             padding: 16px 22px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.03);
-            transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
         }
         .syllabus-item:hover {
-            background: rgba(14, 165, 233, 0.04);
-            border-color: rgba(14, 165, 233, 0.2);
-            transform: translateY(-2px);
+            background: var(--soft-blue-bg);
+            border-color: #bfdbfe;
         }
         .syllabus-item-icon {
-            background: rgba(45, 212, 191, 0.1);
-            color: var(--mint-green);
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
+            color: var(--accent-red); /* আইকন লাল */
+            font-size: 1.3rem;
+            width: 30px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
             flex-shrink: 0;
         }
-        .syllabus-item span { font-size: 1.05rem; font-weight: 500; }
+        .syllabus-item span { font-size: 1.05rem; font-weight: 500; color: var(--text-dark); }
 
         /* Standalone Content Boxes */
         .premium-box {
-            background: #131c33;
+            background: var(--soft-blue-bg);
             padding: 25px 30px;
-            border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid #dbeafe;
             margin-top: 25px;
         }
 
         /* Separate Seats Highlight Box */
         .seats-container-box {
-            background: linear-gradient(135deg, #151828, #111322);
-            border: 1px solid rgba(244, 63, 94, 0.2);
-            border-left: 5px solid var(--alert-red);
+            background: #fff5f5;
+            border: 1px solid #fee2e2;
+            border-left: 6px solid var(--accent-red);
         }
         .seats-container-box h3 {
             font-size: 1.25rem;
-            color: #fff;
+            color: var(--text-dark);
             margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .seats-container-box h3 strong { color: var(--alert-red); font-size: 1.4rem; }
+        .seats-container-box h3 strong { color: var(--accent-red); font-size: 1.4rem; }
         .red-alert-text {
-            color: var(--alert-red);
+            color: var(--accent-red);
             font-weight: 600;
-            font-size: 1rem;
-            background: rgba(244, 63, 94, 0.08);
-            padding: 4px 12px;
-            border-radius: 6px;
+            font-size: 0.95rem;
             display: inline-block;
             margin-top: 5px;
         }
 
         /* Separate Venue Highlight Box */
         .venue-container-box {
-            border-left: 5px solid var(--neon-cyan);
-            background: #11192e;
+            border-left: 6px solid var(--soft-blue);
+            background: var(--soft-blue-bg);
         }
         .venue-container-box h3 {
-            color: var(--neon-cyan);
+            color: var(--soft-blue);
             margin-bottom: 8px;
             font-size: 1.25rem;
             display: flex;
@@ -324,14 +312,16 @@
             gap: 20px;
         }
         .info-node {
-            background: #0b1121;
+            background: #f8fafc;
             padding: 22px;
             border-radius: 12px;
-            border-top: 3px solid var(--neon-cyan);
-            border-right: 1px solid rgba(255,255,255,0.02);
+            border-top: 4px solid var(--soft-blue);
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
         }
-        .info-node span { display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 6px; }
-        .info-node strong { font-size: 1.15rem; color: #fff; }
+        .info-node span { display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 6px; font-weight: 500; }
+        .info-node strong { font-size: 1.15rem; color: var(--text-dark); }
 
         /* bKash Widget */
         .bkash-container {
@@ -343,91 +333,138 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            max-width: 420px;
+            max-width: 440px;
             color: #333;
         }
-        .bkash-container strong { color: #000; font-size: 1.1rem; }
+        .bkash-number-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .bkash-container strong { color: #000; font-size: 1.15rem; letter-spacing: 0.5px; }
+        
+        /* কপি বাটন স্টাইল */
+        .copy-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: var(--text-muted);
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .copy-btn:hover {
+            color: var(--accent-red);
+            border-color: var(--accent-red);
+            background: #fff5f5;
+        }
         .bkash-label { background: #d1156c; color: white; padding: 5px 14px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
+
+        /* কপি নোটিফিকেশন টোস্ট */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #334155;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2000;
+            opacity: 0;
+        }
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
 
         /* General Custom List Layer */
         .custom-ul { list-style: none; }
         .custom-ul li { position: relative; padding-left: 32px; margin-bottom: 14px; }
         .custom-ul li::before {
-            content: "\f00c"; font-family: "Font Awesome 5 Free"; font-weight: 900;
-            position: absolute; left: 0; color: var(--mint-green); font-size: 1.05rem;
+            content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            position: absolute; left: 0; color: var(--accent-red); font-size: 1.05rem;
         }
 
         /* Main CTA Form Trigger Button */
         .btn-holder { text-align: center; margin: 40px 0; }
         .cta-button {
-            background: linear-gradient(135deg, var(--mint-green), #0f766e);
-            color: #060b19;
+            background: var(--accent-red);
+            color: #fff;
             padding: 16px 45px;
             font-size: 1.2rem;
             font-weight: 700;
             text-decoration: none;
             border-radius: 50px;
-            box-shadow: 0 6px 25px rgba(45, 212, 191, 0.25);
-            transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.25);
+            transition: 0.3s;
             display: inline-block;
         }
-        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(45, 212, 191, 0.45); color: #fff; }
+        .cta-button:hover { background: #b91c1c; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4); }
 
         /* Quote Slogan Box */
         .classic-quote-box {
-            background: linear-gradient(135deg, #0f172a, #090d16);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-left: 5px solid var(--mint-green);
+            background: var(--soft-blue-bg);
+            border: 1px solid #dbeafe;
+            border-left: 6px solid var(--soft-blue);
             padding: 35px;
             border-radius: 16px;
             text-align: center;
             font-style: italic;
             font-size: 1.25rem;
+            color: var(--text-dark);
             margin: 50px 0;
             position: relative;
         }
         .classic-quote-box::before {
             content: "\f10d"; font-family: "Font Awesome 6 Free"; font-weight: 900;
-            position: absolute; top: -15px; left: 30px; font-size: 2rem; color: rgba(45, 212, 191, 0.15);
+            position: absolute; top: -15px; left: 30px; font-size: 2rem; color: rgba(59, 130, 246, 0.15);
         }
 
-        /* Map Element Layout & Dynamic Grid Text Inside Map */
+        /* Map Frame Layout */
         .map-relative-frame {
             position: relative;
             width: 100%;
             height: 320px;
             border-radius: 14px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid #cbd5e1;
             margin-top: 25px;
         }
-        .map-iframe-object { width: 100%; height: 100%; filter: grayscale(0.5) invert(0.92) contrast(1.1); }
+        .map-iframe-object { width: 100%; height: 100%; }
         .map-middle-text-overlay {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(6, 11, 25, 0.92);
-            color: var(--mint-green);
+            background: rgba(255, 255, 255, 0.96);
+            color: var(--text-dark);
             padding: 16px 28px;
             border-radius: 10px;
             font-weight: 600;
             font-size: 1rem;
             text-align: center;
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            pointer-events: none; /* Map functionality won't block */
+            border: 2px solid var(--soft-blue);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            pointer-events: none;
             width: 85%;
             max-width: 460px;
         }
 
         /* Footer Hub */
         .footer-universe {
-            background: #03060f;
-            color: var(--text-muted);
+            background: #1e293b;
+            color: #94a3b8;
             padding: 60px 20px 30px;
             margin-top: 80px;
-            border-top: 1px solid rgba(255,255,255,0.03);
         }
         
         .footer-header-centered {
@@ -436,13 +473,12 @@
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 45px;
-            letter-spacing: 0.5px;
         }
         .footer-header-centered span {
             position: relative; display: inline-block;
         }
         .footer-header-centered span::after {
-            content: ''; display: block; width: 50px; height: 3px; background: var(--neon-cyan); margin: 8px auto 0; border-radius: 2px;
+            content: ''; display: block; width: 50px; height: 3px; background: var(--accent-red); margin: 8px auto 0; border-radius: 2px;
         }
         
         .footer-split-grid {
@@ -460,7 +496,6 @@
         .footer-branding-left a {
             display: inline-block; background: #fff; padding: 14px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.3s;
         }
-        .footer-branding-left a:hover { transform: scale(1.02); }
         .footer-branding-left img { max-width: 210px; height: auto; display: block; }
 
         .footer-links-right {
@@ -469,11 +504,11 @@
         .footer-links-right a {
             display: flex; align-items: flex-start; gap: 15px; color: #cbd5e1; text-decoration: none; font-size: 1.05rem; transition: 0.3s;
         }
-        .footer-links-right a:hover { color: var(--neon-cyan); }
-        .footer-links-right i { color: var(--neon-cyan); margin-top: 5px; font-size: 1.2rem; width: 24px; text-align: center; }
+        .footer-links-right a:hover { color: #fff; }
+        .footer-links-right i { color: var(--accent-red); margin-top: 5px; font-size: 1.2rem; width: 24px; text-align: center; }
 
         .footer-bottom-credits {
-            text-align: center; margin-top: 60px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.95rem;
+            text-align: center; margin-top: 60px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem;
         }
         .footer-bottom-credits strong { color: #fff; }
 
@@ -490,7 +525,7 @@
 
     <!-- Header / Navbar -->
     <nav class="navbar">
-        <div class="nav-title">খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)</div>
+        <div class="nav-title">খেলতে খেলতে বিজ্ঞান <span>(পর্ব-১৬)</span></div>
         <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
     </nav>
 
@@ -506,7 +541,7 @@
         <a href="#perks" onclick="toggleMenu()">সুবিধাসমূহ</a>
         
         <div class="sidebar-reg-card">
-            <p style="font-size: 0.9rem; color: var(--text-muted);">সীমিত আসন সংখ্যা!</p>
+            <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 500;">সীমিত আসন সংখ্যা!</p>
             <a href="https://forms.gle/" class="menu-action-btn" target="_blank"><i class="fas fa-id-badge"></i> রেজিস্ট্রেশন বাটন</a>
         </div>
     </div>
@@ -515,7 +550,6 @@
     <div class="banner-container">
         <div class="slides" id="bannerSlider">
             <div class="slide">
-                <!-- আপনার দেওয়া ফাইল "1000364238.jpg" এখানে যুক্ত করতে পারবেন -->
                 <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80" alt="MASLab Workshop Banner">
                 <div class="slide-caption">
                     <h2>খেলতে খেলতে বিজ্ঞান</h2>
@@ -544,7 +578,7 @@
             <p>তোমাদেরকে এমন মজার কর্মকান্ডে অংশ নেয়ার সুযোগ দেয়ার জন্য শুরু হচ্ছে ৪ দিনের একটি বিশেষ কর্মশালা - <strong>“খেলতে খেলতে বিজ্ঞান”</strong>। এবার এই আয়োজনের ১৬ তম পর্ব অনুষ্ঠিত হতে চলছে।</p>
         </div>
 
-         <!-- Section: কাদের জন্য এই কর্মশালা -->
+        <!-- Section: কাদের জন্য এই কর্মশালা -->
         <div class="section-card" id="audience">
             <div class="headline-wrapper"><i class="fas fa-user-astronaut"></i> কাদের জন্য এই কর্মশালা</div>
             <p><strong>এসএসসি ২০২৬ পরীক্ষার্থীরা</strong> এবং ২০২৬ সালে অষ্টম থেকে দশম শ্রেণীতে অধ্যয়নরত যেসব শিক্ষার্থীরা নিজে হাতেকলমে পরীক্ষা করে বিজ্ঞানকে বুঝতে চাও, আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের জন্য এখন থেকে প্রস্তুতি নিতে চাও, তাদের জন্যই এই কর্মশালা।</p>
@@ -553,20 +587,20 @@
         <!-- Section: কর্মশালার বিষয়বস্তু -->
         <div class="section-card" id="topics">
             <div class="headline-wrapper"><i class="fas fa-microscope"></i> কর্মশালার বিষয়বস্তু</div>
-            <p style="font-size: 1.2rem; font-weight: bold; color: var(--mint-green);"><i class="fas fa-compass-drafting"></i> পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, এবং মাপজোখ নিয়ে ব্যবহারিক ক্লাস</p>
+            <p style="font-size: 1.15rem; font-weight: bold; color: var(--text-dark);"><i class="fas fa-compass-drafting" style="color:var(--accent-red)"></i> পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, এবং মাপজোখ নিয়ে ব্যবহারিক ক্লাস</p>
         </div>
 
-        <!-- Section: কর্মশালায় যা যা শেখানো হবে (ইউনিক আইকন-ভিত্তিক লিস্ট, নো নাম্বারিং) -->
+        <!-- Section: কর্মশালায় যা যা শেখানো হবে -->
         <div class="section-card" id="lessons">
             <div class="headline-wrapper"><i class="fas fa-flask"></i> কর্মশালায় যা যা শেখানো হবে</div>
             <div class="syllabus-grid">
                 <div class="syllabus-item">
-                    <div class="syllabus-item-icon"><i class="fas fa-screwdriver-Wrench"></i></div>
+                    <div class="syllabus-item-icon"><i class="fas fa-screwdriver-wrench"></i></div>
                     <span>ল্যাবের যন্ত্রপাতি ও মাপজোখ নিয়ে ধারণা</span>
                 </div>
                 <div class="syllabus-item">
                     <div class="syllabus-item-icon"><i class="fas fa-ruler-horizontal"></i></div>
-                    <span>스크ুরগজ এবং স্লাইড ক্যালিপার্স ব্যবহার</span>
+                    <span>স্কুরগজ এবং স্লাইড ক্যালিপার্স ব্যবহার</span>
                 </div>
                 <div class="syllabus-item">
                     <div class="syllabus-item-icon"><i class="fas fa-vial-circle-check"></i></div>
@@ -589,8 +623,8 @@
                     <span>মাইক্রোস্কোপে পেঁয়াজ কোষ ও এর প্লাজমোলাইসিস পর্যবেক্ষণ</span>
                 </div>
             </div>
-            <div style="margin-top: 25px; padding: 15px; background: rgba(14, 165, 233, 0.05); border-radius: 10px; border-left: 4px solid var(--neon-cyan);">
-                <strong><i class="fas fa-clipboard-check"></i> মূল্যায়ন:</strong> কর্মশালার শেষদিন পরীক্ষায় অংশগ্রহণ করতে হবে।
+            <div style="margin-top: 25px; padding: 15px; background: var(--soft-blue-bg); border-radius: 10px; border-left: 4px solid var(--soft-blue);">
+                <strong><i class="fas fa-clipboard-check" style="color:var(--soft-blue)"></i> মূল্যায়ন:</strong> কর্মশালার শেষদিন পরীক্ষায় অংশগ্রহণ করতে হবে।
             </div>
         </div>
 
@@ -616,14 +650,14 @@
                 </div>
             </div>
 
-            <!-- আলাদা সম্পূর্ণ স্বতন্ত্র আসন সংখ্যা বক্স -->
+            <!-- আলাদা স্বতন্ত্র আসন সংখ্যা বক্স -->
             <div class="premium-box seats-container-box">
-                <h3><i class="fas fa-chair"></i> মোট আসন সংখ্যা: <strong>মাত্র ১২ জন</strong></h3>
-                <div class="red-alert-text"><i class="fas fa-triangle-exclamation"></i> আগে আসলে আগে পাবেন ভিত্তিতে</div>
+                <h3><i class="fas fa-chair" style="color:var(--accent-red)"></i> মোট আসন সংখ্যা: <strong>মাত্র ১২ জন</strong></h3>
+                <div class="red-alert-text"><i class="fas fa-triangle-exclamation"></i> আগে আসলে আগে পাবেন ভিত্তিতে আসন বরাদ্দ করা হবে।</div>
             </div>
 
             <div class="btn-holder" style="margin-top: 35px; margin-bottom: 0;">
-                <a href="https://forms.gle/" class="cta-button" target="_blank"><i class="fas fa-input-text"></i> রেজিস্ট্রেশন করতে এখানে ক্লিক করুন</a>
+                <a href="https://forms.gle/" class="cta-button" target="_blank"><i class="fas fa-file-signature"></i> রেজিস্ট্রেশন করতে এখানে ক্লিক করুন</a>
             </div>
         </div>
 
@@ -637,14 +671,14 @@
                 </div>
                 <div class="info-node">
                     <span><i class="fas fa-clock"></i> দৈনিক সময়</span>
-                    <strong>বিকার ৩:০০ টা – ৫:০০ টা</strong>
+                    <strong>বিকাল ৩:০০ টা – ৫:০০ টা</strong>
                 </div>
             </div>
 
-            <!-- সুন্দর করে আলাদা স্বতন্ত্র ভেন্যু বক্স -->
+            <!-- ভেন্যু বক্স -->
             <div class="premium-box venue-container-box">
                 <h3><i class="fas fa-hotel"></i> কর্মশালার ভেন্যু</h3>
-                <p style="color: var(--text-light);">ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
+                <p style="color: var(--text-dark); font-weight: 500;">ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
             </div>
 
             <!-- গুগল ম্যাপ ও তার ঠিক মাঝখানে টেক্সট লেবেল ওভারলে -->
@@ -652,9 +686,8 @@
                 <div class="map-iframe-object">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.227280459524!2d90.3721381!3d23.739276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b51d45906d%3A0x7d8a6358c5a2789!2sGreen%20City%20Center!5e0!3m2!1sbn!2sbd!4v1700000000000!5m2!1sbn!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-                <!-- লোকেশনের একদম মাঝখানে টেক্সট লেবেল -->
                 <div class="map-middle-text-overlay">
-                    <i class="fas fa-location-dot"></i> Level 12, MASLab, 758 Satmasjid Road, Dhaka 1209
+                    <i class="fas fa-location-dot" style="color:var(--accent-red)"></i> Level 12, MASLab, 758 Satmasjid Road, Dhaka 1209
                 </div>
             </div>
         </div>
@@ -664,11 +697,17 @@
             <div class="headline-wrapper"><i class="fas fa-file-invoice"></i> রেজিস্ট্রেশন করার নিয়ম</div>
             <ol class="custom-ul" style="display:flex; flex-direction:column; gap:12px;">
                 <li>প্রথমেই বিকাশের মাধ্যমে কোর্সের নিবন্ধন ফি অগ্রিম প্রদান করতে হবে।</li>
-                <li>নিবন্ধন ফি প্রদান করার বিকাশ নম্বর: <strong>01730-716522</strong>
+                <li>নিবন্ধন ফি প্রদান করার বিকাশ নম্বর: 
                     <div class="bkash-container">
-                        <div>
-                            <span style="font-size:0.85rem; color:#64748b; display:block;">বিকাশ পারসোনাল অ্যাকাউন্ট</span>
-                            <strong>01730-716522</strong>
+                        <div class="bkash-number-box">
+                            <div>
+                                <span style="font-size:0.85rem; color:var(--text-muted); display:block; font-weight:500;">বিকাশ পারসোনাল অ্যাকাউন্ট</span>
+                                <strong id="bkashNo">01730-716522</strong>
+                            </div>
+                            <!-- ক্লিকেবল কপি বাটন ও আইকন -->
+                            <button class="copy-btn" onclick="copyNumber()" title="নাম্বার কপি করুন">
+                                <i class="far fa-copy" id="copyIcon"></i> <span id="copyTxt">কপি</span>
+                            </button>
                         </div>
                         <span class="bkash-label">bKash</span>
                     </div>
@@ -683,47 +722,43 @@
         <div class="section-card" id="perks">
             <div class="headline-wrapper"><i class="fas fa-award"></i> কর্মশালায় অংশগ্রহণকারীরা যা যা পাবে</div>
             <ul class="custom-ul" style="display:flex; flex-direction:column; gap:12px;">
-                <li><strong>ক)</strong> কোর্স শেষে অংশগ্রহণকারীদের সার্টিফিকেট প্রদান করা হবে।</li>
+                <li><strong>ক)</strong> курс শেষে অংশগ্রহণকারীদের সার্টিফিকেট প্রদান করা হবে।</li>
                 <li><strong>খ)</strong> ব্যবহারিক উপকরণ ও আনুষাঙ্গিক ম্যাটারিয়েলস ম্যাসল্যাব কর্তৃক প্রদান করা হবে।</li>
                 <li><strong>গ)</strong> ২ ঘন্টার মাঝখানে ১০ মিনিটের বিরতি দেয়া হবে এবং হালকা নাস্তা প্রদান করা হবে।</li>
                 <li><strong>ঘ)</strong> আসন সংখ্যা প্রতি ব্যাচে ১২ টি। তাই আগে আসলে আগে পাবে ভিত্তিতে অংশ নেয়ার সুযোগ।</li>
             </ul>
         </div>
 
-        <!-- সুন্দর ক্লাসিক কোট বক্স স্লোগান -->
+        <!-- কোট বক্স স্লোগান -->
         <div class="classic-quote-box">
             "চলো, পরীক্ষা-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি"
         </div>
 
     </div>
 
+    <!-- কপি নোটিফিকেশন টোস্ট পপ-আপ -->
+    <div class="toast-notification" id="toastBox">নম্বরটি কপি হয়েছে!</div>
+
     <!-- Section: Footer -->
     <footer class="footer-universe" id="contact">
-        
-        <!-- যোগাযোগ টাইটেল একদম উপরে এবং সেন্টারে -->
         <div class="footer-header-centered">
             <span>যোগাযোগ</span>
         </div>
         
         <div class="footer-split-grid">
-            
-            <!-- বাম দিকে ব্র্যান্ড লোগো -->
             <div class="footer-branding-left">
                 <a href="https://maslab.org/" target="_blank" title="ম্যাসল্যাব অফিসিয়াল সাইট">
                     <img src="https://maslab.org/wp-content/uploads/2024/03/MASLab-Logo-1-1.png" alt="MASLab Logo">
                 </a>
             </div>
 
-            <!-- ডান দিকে ক্লিকেবল কন্ট্যাক্ট এঙ্কর লিংকস -->
             <div class="footer-links-right">
                 <a href="tel:+8801730716522"><i class="fas fa-phone"></i> <span><strong>মোবাইল:</strong> +880 1730-716522</span></a>
                 <a href="mailto:info@maslab.org"><i class="fas fa-envelope"></i> <span><strong>ইমেইল:</strong> info@maslab.org</span></a>
-                <a href="https://maps.app.goo.gl/aUu6hppcGwhYChjP8" target="_blank"><i class="fas fa-street-view"></i> <span><strong>ঠিকানা:</strong> ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড, ধানমন্ডি, ঢাকা।</span></a>
+                <a href="https://maps.app.goo.gl/aUu6hppcGwhYChYChjP8" target="_blank"><i class="fas fa-street-view"></i> <span><strong>ঠিকানা:</strong> ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড, ধানমন্ডি, ঢাকা।</span></a>
             </div>
-
         </div>
 
-        <!-- কপিরাইট ও অথর ক্রেডিট বেসলাইন -->
         <div class="footer-bottom-credits">
             <p style="margin-bottom: 6px;">Event by, <strong>MASLab</strong></p>
             <p>Developed by, <strong>Utsab Sarker</strong></p>
@@ -748,6 +783,36 @@
             slider.style.transform = `translateX(-${index * 100}%)`;
         }
         setInterval(handleAutoSlide, 4000);
+
+        // বিকাশ নম্বর ওয়ান-ক্লিক কপি ফাংশন
+        function copyNumber() {
+            // ড্যাশ ছাড়া শুধু পিওর নাম্বারটি কপি করার ব্যবস্থা
+            const rawNumber = "01730716522"; 
+            
+            navigator.clipboard.writeText(rawNumber).then(() => {
+                const toast = document.getElementById('toastBox');
+                const icon = document.getElementById('copyIcon');
+                const txt = document.getElementById('copyTxt');
+                
+                // বাটন স্টেট পরিবর্তন
+                icon.className = "fas fa-check";
+                icon.style.color = "#16a34a";
+                txt.innerText = "কপিড";
+                
+                // পপআপ মেসেজ টোস্ট শো করা
+                toast.classList.add('show');
+                
+                // ৩ সেকেন্ড পর আবার আগের অবস্থায় ফিরিয়ে নেওয়া
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    icon.className = "far fa-copy";
+                    icon.style.color = "";
+                    txt.innerText = "কপি";
+                }, 3000);
+            }).catch(err => {
+                console.error('কপি করতে সমস্যা হয়েছে: ', err);
+            });
+        }
     </script>
 </body>
 </html>
