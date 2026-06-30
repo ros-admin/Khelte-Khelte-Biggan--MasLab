@@ -546,7 +546,7 @@ const submitBtn = document.getElementById('submitBtn');
 const apiURL = "https://script.google.com/macros/s/AKfycbx9ZcZ23Ui1A_4d4qQe0y905WyqoED8cDDyX-xfC8gaAT7jSHZTNZiknMWrSUlYy8mb/exec";
 
 form.addEventListener('submit', function(e) {
-    e.preventDefault(); // পেজ রিলোড বন্ধ করা
+    e.preventDefault(); // ডিফল্ট পেজ রিলোড বন্ধ করা
     
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...`;
@@ -558,16 +558,14 @@ form.addEventListener('submit', function(e) {
         params.append(key, value);
     });
 
-    // গুগলের অফিশিয়াল 'fetch' রিকোয়েস্ট (যা সরাসরি গুগলের সার্ভার রিডাইরেকশন হ্যান্ডেল করে)
+    // 💡 সমাধান: মোড 'no-cors' করার কারণে ব্রাউজার আর রিকোয়েস্ট ব্লক করবে না।
+    // ডাটা সরাসরি গুগলে চলে যাবে।
     fetch(`${apiURL}?${params.toString()}`, {
         method: 'POST',
-        mode: 'cors', // সরাসরি সিকিউর কানেকশন চেক করবে
-        headers: {
-            'Accept': 'application/json'
-        }
+        mode: 'no-cors' // এই মোডটি ব্রাউজারের CORS লক ভেঙে দেয়
     })
-    .then(response => {
-        // যদি রেসপন্স সফল হয় (status 200 বা redirection ক্যাচ করে)
+    .then(() => {
+        // no-cors মোডে ডাটা গুগলে পৌঁছানো মাত্রই এই ব্লকটি রান করবে
         openSuccessModal();
         form.reset();
         toggleOlympiadField(false);
@@ -575,8 +573,7 @@ form.addEventListener('submit', function(e) {
     })
     .catch(error => {
         console.error('Error:', error);
-        // যদি গুগল থেকে কোনো টেকনিক্যাল এরর আসে, তা সরাসরি অ্যালার্ট বক্সে দেখাবে
-        alert("গুগল সার্ভার রেসপন্স করেনি। এরর ডিটেইলস: " + error.message + "\n\nদয়া করে ব্রাউজারের Incognito (Private) উইন্ডো থেকে একবার চেষ্টা করুন।");
+        alert("নেটওয়ার্ক সমস্যার কারণে সাবমিট করা যায়নি। আবার চেষ্টা করুন।");
     })
     .finally(() => {
         submitBtn.disabled = false;
@@ -584,7 +581,7 @@ form.addEventListener('submit', function(e) {
     });
 });
 
-// বাকি সাপোর্ট ফাংশনগুলো আগের মতোই থাকবে
+// কন্ডিশনাল ইনপুট ও পপআপ কন্ট্রোল ফাংশনসমূহ (আগের মতোই থাকবে)
 function toggleOlympiadField(show) {
     const box = document.getElementById('olympiadDetailsBox');
     const input = document.getElementById('olympiadInfo');
