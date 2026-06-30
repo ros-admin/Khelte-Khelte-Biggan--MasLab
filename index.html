@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)</title>
-    <!-- FontAwesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-main: #f8fafc;          
             --bg-card: #ffffff;          
-            --accent-red: #ff0000;       /* পিওর লাল রঙ */
+            --accent-red: #ff0000;       
             --soft-blue: #3b82f6;        
             --soft-blue-bg: #eff6ff;     
             --text-dark: #1e293b;        
             --text-muted: #64748b;       
-            --header-height: 70px;       
+            --header-height: 105px; /* Marquee + Navbar এর জন্য সমন্বয় */
         }
 
         * {
@@ -30,23 +29,61 @@
             background-color: var(--bg-main);
             color: var(--text-dark);
             line-height: 1.8;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ব্যাকগ্রাউন্ড ওয়াটারমার্ক থিম */
+        body::before {
+            content: "π   ⚛   Σ   📚   ∫   🔭   √   💡   ⚛   π   ∫   📚   🔭   💡   Σ   √";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            font-size: 2.5rem;
+            letter-spacing: 45px;
+            line-height: 6;
+            color: rgba(59, 130, 246, 0.03); /* হালকা নীল জলছাপ */
+            pointer-events: none;
+            white-space: wrap;
+            z-index: -1;
+            padding: 40px;
+            overflow: hidden;
         }
 
         .section-card, #welcome, #audience, #topics, #lessons, #schedule, #rules, #perks {
             scroll-margin-top: calc(var(--header-height) + 20px);
         }
 
-        /* Navbar & Sidebar */
+        /* Top Notification Marquee */
+        .top-marquee {
+            background: var(--accent-red);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 6px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            height: 35px;
+            display: flex;
+            align-items: center;
+        }
+        .top-marquee a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Navbar */
         .navbar {
             background: #ffffff;
             color: var(--text-dark);
             padding: 0 25px;
-            height: var(--header-height);
+            height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: fixed;
-            top: 0;
+            top: 35px;
             width: 100%;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
@@ -70,6 +107,7 @@
         }
         .menu-btn:hover { color: var(--soft-blue); }
 
+        /* Unique Boxed Sidebar */
         .sidebar {
             position: fixed;
             top: 0;
@@ -77,14 +115,13 @@
             width: 320px;
             height: 100%;
             background: #ffffff;
-            z-index: 1001;
+            z-index: 1002;
             box-shadow: -10px 0 30px rgba(0,0,0,0.1);
             transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             padding: 30px 20px;
             display: flex;
             flex-direction: column;
         }
-
         .sidebar.active { right: 0; }
 
         .close-btn {
@@ -95,48 +132,59 @@
             align-self: flex-end;
             cursor: pointer;
             margin-bottom: 25px;
-            transition: 0.3s;
         }
         .close-btn:hover { color: var(--accent-red); }
 
+        /* বক্স স্টাইল মেনু আইটেম */
+        .sidebar-menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
         .sidebar a {
             color: var(--text-dark);
             text-decoration: none;
-            padding: 14px 15px;
-            font-size: 1.05rem;
-            border-bottom: 1px solid #f1f5f9;
-            transition: 0.3s;
-            font-weight: 500;
+            padding: 12px 15px;
+            font-size: 1rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            transition: 0.2s;
+            font-weight: 600;
         }
         .sidebar a:hover {
-            color: var(--accent-red);
-            background: var(--soft-blue-bg);
-            padding-left: 22px;
+            color: #fff;
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            padding-left: 20px;
         }
 
         .sidebar-reg-card {
             background: #fff5f5;
             padding: 20px;
-            border-radius: 14px;
+            border-radius: 12px;
             text-align: center;
-            margin-top: 25px;
+            margin-top: auto;
             border: 1px solid #fee2e2;
         }
 
+        /* ওরিজিনাল ওয়ান-লাইন রাউন্ডেড বাটন */
         .menu-action-btn {
             display: inline-block;
-            background: #fff;
-            color: var(--accent-red);
-            border: 2px solid var(--accent-red);
-            padding: 10px 22px;
+            background: var(--accent-red);
+            color: #fff !important;
+            padding: 10px 20px;
             border-radius: 25px;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 12px;
-            font-size: 0.95rem;
+            margin-top: 10px;
+            font-size: 0.9rem;
             transition: 0.3s;
+            border: none !important;
+            text-align: center;
+            white-space: nowrap;
         }
-        .menu-action-btn:hover { background: #fff5f5; transform: translateY(-2px); }
+        .menu-action-btn:hover { background: #cc0000 !important; transform: translateY(-2px); }
 
         /* Banner Module */
         .banner-container {
@@ -146,18 +194,13 @@
             position: relative;
             margin-top: var(--header-height);
         }
-        .slides {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+        .slides { display: flex; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
         .slide { min-width: 100%; height: 100%; position: relative; }
         .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
         .slide-caption { position: absolute; bottom: 60px; left: 8%; right: 8%; color: #fff; }
         .slide-caption h2 { font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; }
 
-        /* Main Hub */
+        /* Main Container */
         .main-container {
             max-width: 960px;
             margin: 0 auto;
@@ -172,44 +215,46 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.04);
             border: 1px solid #e2e8f0;
             border-left: 6px solid var(--soft-blue); 
-            position: relative;
         }
 
+        /* শিরোনাম এবং কোনায় স্ট্যাটাস ম্যানেজমেন্ট */
+        .headline-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 14px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
         .headline-wrapper {
             font-size: 1.55rem;
             color: var(--text-dark);
-            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 14px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 14px;
             font-weight: 700;
         }
         .headline-wrapper i { color: var(--accent-red); } 
 
-        /* Intro Presentation Box */
-        .intro-box { border-left: 6px solid var(--accent-red); background: #fff; }
-        .intro-box h1 { color: var(--accent-red); font-size: 2.4rem; margin-bottom: 15px; font-weight: 800; }
-        .intro-box p.lead { font-size: 1.25rem; color: var(--text-dark); font-weight: 600; }
-
-        /* Status Element Styles */
-        .status-container {
+        /* কর্নার স্ট্যাটাস ব্যাজ */
+        .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: #f1f5f9;
-            padding: 6px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-top: -10px;
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid transparent;
         }
+        .status-badge.running { background: #ef444415; color: #ef4444; border-color: #ef444430; }
+        .status-badge.success { background: #22c55e15; color: #22c55e; border-color: #22c55e30; }
+
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             display: inline-block;
             animation: blinker 1.2s linear infinite;
@@ -217,49 +262,24 @@
         .status-dot.green { background-color: #22c55e; }
         .status-dot.red { background-color: #ef4444; }
         
-        @keyframes blinker {
-            50% { opacity: 0; }
-        }
+        @keyframes blinker { 50% { opacity: 0; } }
+        .strike-out { text-decoration: line-through; color: var(--text-muted); opacity: 0.6; }
 
-        /* Strikethrough style */
-        .strike-out { text-decoration: line-through; color: var(--text-muted); opacity: 0.7; }
+        /* Intro Presentations */
+        .intro-box { border-left: 6px solid var(--accent-red); background: #fff; }
+        .intro-box h1 { color: var(--accent-red); font-size: 2.4rem; margin-bottom: 15px; font-weight: 800; }
+        .intro-box p.lead { font-size: 1.25rem; color: var(--text-dark); font-weight: 600; }
 
-        /* Syllabus List style */
+        /* Syllabus */
         .syllabus-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .syllabus-item {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            background: #f8fafc;
-            padding: 16px 22px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            transition: 0.2s;
-        }
-        .syllabus-item:hover { background: var(--soft-blue-bg); border-color: #bfdbfe; }
+        .syllabus-item { display: flex; align-items: center; gap: 18px; background: #f8fafc; padding: 16px 22px; border-radius: 10px; border: 1px solid #e2e8f0; }
         .syllabus-item-icon { color: var(--accent-red); font-size: 1.3rem; width: 30px; display: flex; justify-content: center; flex-shrink: 0; }
-        .syllabus-item span { font-size: 1.05rem; font-weight: 500; color: var(--text-dark); }
-
+        
         .premium-box { background: var(--soft-blue-bg); padding: 25px 30px; border-radius: 12px; border: 1px solid #dbeafe; margin-top: 25px; }
-
-        /* Seats Highlight Smaller Box */
-        .seats-small-box {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #fff5f5;
-            border: 1px solid #fee2e2;
-            border-left: 4px solid var(--accent-red);
-            padding: 10px 18px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
         .venue-container-box { border-left: 6px solid var(--soft-blue); background: var(--soft-blue-bg); }
         .venue-container-box h3 { color: var(--soft-blue); margin-bottom: 8px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
 
+        /* ৪ কলাম/২ কলাম গ্রিড স্ট্রাকচার */
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
         .info-node {
             background: #f8fafc; padding: 22px; border-radius: 12px; border-top: 4px solid var(--soft-blue);
@@ -267,31 +287,60 @@
         }
         .info-node span { display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 6px; font-weight: 500; }
         .info-node strong { font-size: 1.15rem; color: var(--text-dark); }
-        .small-note { font-size: 0.8rem; color: var(--text-muted); font-weight: normal; display: block; margin-top: 2px; }
+        .small-note { font-size: 0.8rem; color: var(--text-muted); font-weight: normal; display: block; margin-top: 4px; }
+
+        /* আসন সংখ্যা কাস্টম বক্স আর্কিটেকচার */
+        .seat-full-area-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid var(--accent-red);
+            padding: 22px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .seat-main-title { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+        .seat-count-highlight { font-size: 1.4rem; color: var(--text-dark); font-weight: 700; margin-bottom: 12px; }
+        .seat-count-highlight span { color: var(--accent-red); }
+        
+        /* ইনার ওয়ার্নিং ছোট বক্স */
+        .inner-warning-box {
+            background: #fff5f5;
+            border: 1px solid #fee2e2;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
         /* bKash Widget */
-        .bkash-container { background: #fff0f6; border: 1px solid #fbcfe8; padding: 16px 20px; border-radius: 10px; margin: 18px 0; display: flex; align-items: center; justify-content: space-between; max-width: 440px; color: #333; }
+        .bkash-container { background: #fff0f6; border: 1px solid #fbcfe8; padding: 16px 20px; border-radius: 10px; margin: 18px 0; display: flex; align-items: center; justify-content: space-between; max-width: 440px; }
         .bkash-number-box { display: flex; align-items: center; gap: 10px; }
         .bkash-container strong { color: #000; font-size: 1.15rem; letter-spacing: 0.5px; }
-        .copy-btn { background: #ffffff; border: 1px solid #cbd5e1; color: var(--text-muted); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; }
+        .copy-btn { background: #ffffff; border: 1px solid #cbd5e1; color: var(--text-muted); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 5px; }
         .copy-btn:hover { color: var(--accent-red); border-color: var(--accent-red); background: #fff5f5; }
         .bkash-label { background: #d1156c; color: white; padding: 5px 14px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
 
         .toast-notification { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #334155; color: #fff; padding: 10px 24px; border-radius: 30px; font-size: 0.95rem; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2000; opacity: 0; }
         .toast-notification.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-        /* Custom White-in-Red-Circle Checked List Layer */
+        /* হোয়াইট-ইন-রেড সার্কেলড চেক লিস্ট */
         .custom-ul { list-style: none; }
         .custom-ul li { position: relative; padding-left: 36px; margin-bottom: 14px; }
         .custom-ul li::before {
             content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900;
-            position: absolute; left: 0; top: 3px;
+            position: absolute; left: 0; top: 4px;
             color: #ffffff; background-color: var(--accent-red);
-            font-size: 0.75rem; width: 20px; height: 20px;
+            font-size: 0.7rem; width: 20px; height: 20px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
 
-        /* White Center Red Outline Button */
+        /* হোয়াইট সেন্টার, রেড বর্ডার বাটন */
         .btn-holder { text-align: center; margin: 40px 0; }
         .cta-button {
             background: #ffffff;
@@ -302,11 +351,10 @@
             font-weight: 700;
             text-decoration: none;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.1);
             transition: 0.3s;
             display: inline-block;
         }
-        .cta-button:hover { background: #fff5f5; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(220, 38, 38, 0.2); }
+        .cta-button:hover { background: #fff5f5; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 0, 0, 0.15); }
 
         .classic-quote-box { background: var(--soft-blue-bg); border: 1px solid #dbeafe; border-left: 6px solid var(--soft-blue); padding: 35px; border-radius: 16px; text-align: center; font-style: italic; font-size: 1.25rem; color: var(--text-dark); margin: 50px 0; position: relative; }
         .classic-quote-box::before { content: "\f10d"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; top: -15px; left: 30px; font-size: 2rem; color: rgba(59, 130, 246, 0.15); }
@@ -315,18 +363,16 @@
         .map-iframe-object { width: 100%; height: 100%; }
         .map-middle-text-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.96); color: var(--text-dark); padding: 16px 28px; border-radius: 10px; font-weight: 600; font-size: 1rem; text-align: center; border: 2px solid var(--soft-blue); box-shadow: 0 10px 30px rgba(0,0,0,0.15); pointer-events: none; width: 85%; max-width: 460px; }
 
-        /* Footer Hub */
+        /* Footer */
         .footer-universe { background: #1e293b; color: #94a3b8; padding: 60px 20px 30px; margin-top: 80px; }
         .footer-header-centered { text-align: center; color: #fff; font-size: 1.8rem; font-weight: 700; margin-bottom: 45px; }
-        .footer-header-centered span { position: relative; display: inline-block; }
         .footer-header-centered span::after { content: ''; display: block; width: 50px; height: 3px; background: var(--accent-red); margin: 8px auto 0; border-radius: 2px; }
         .footer-split-grid { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; max-width: 960px; margin: 0 auto; gap: 50px; }
         .footer-branding-left { flex: 1; min-width: 280px; text-align: center; }
-        .footer-branding-left a { display: inline-block; background: #fff; padding: 14px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.3s; }
+        .footer-branding-left a { display: inline-block; background: #fff; padding: 14px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .footer-branding-left img { max-width: 210px; height: auto; display: block; }
         .footer-links-right { flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 20px; }
-        .footer-links-right a { display: flex; align-items: flex-start; gap: 15px; color: #cbd5e1; text-decoration: none; font-size: 1.05rem; transition: 0.3s; }
-        .footer-links-right a:hover { color: #fff; }
+        .footer-links-right a { display: flex; align-items: flex-start; gap: 15px; color: #cbd5e1; text-decoration: none; font-size: 1.05rem; }
         .footer-links-right i { color: var(--accent-red); margin-top: 5px; font-size: 1.2rem; width: 24px; text-align: center; }
         .footer-bottom-credits { text-align: center; margin-top: 60px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem; }
         .footer-bottom-credits strong { color: #fff; }
@@ -335,6 +381,7 @@
             .banner-container { height: 260px; }
             .slide-caption h2 { font-size: 1.7rem; }
             .section-card { padding: 25px; }
+            .headline-container { flex-direction: column; align-items: flex-start; }
             .footer-split-grid { flex-direction: column; text-align: center; }
             .footer-links-right a { justify-content: center; }
         }
@@ -342,30 +389,35 @@
 </head>
 <body>
 
-    <!-- Header / Navbar -->
+    <div class="top-marquee">
+        <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
+            <a href="#schedule">রেজিস্ট্রেশন চলছে! রেজিস্ট্রেশন চলছে! রেজিস্ট্রেশন চলছে! 'খেলতে খেলতে বিজ্ঞান'-এর ১৬তম পর্বের জন্য রেজিস্ট্রেশন চলছে। রেজিস্ট্রেশন করতে এখানে ক্লিক করুন।</a>
+        </marquee>
+    </div>
+
     <nav class="navbar">
         <div class="nav-title">খেলতে খেলতে বিজ্ঞান <span>(পর্ব-১৬)</span></div>
         <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
     </nav>
 
-    <!-- Drawer Component -->
     <div class="sidebar" id="sidebarMenu">
         <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
-        <a href="#welcome" onclick="toggleMenu()">পরিচিতি</a>
-        <a href="#audience" onclick="toggleMenu()">উদ্দেশ্য ও যোগ্যতা</a>
-        <a href="#topics" onclick="toggleMenu()">বিষয়বস্তু</a>
-        <a href="#lessons" onclick="toggleMenu()">শিখনফল</a>
-        <a href="#schedule" onclick="toggleMenu()">সময়সূচি ও ভেন্যু</a>
-        <a href="#rules" onclick="toggleMenu()">নিবন্ধনের নিয়ম</a>
-        <a href="#perks" onclick="toggleMenu()">সুবিধাসমূহ</a>
+        <div class="sidebar-menu-grid">
+            <a href="#welcome" onclick="toggleMenu()">পরিচিতি</a>
+            <a href="#audience" onclick="toggleMenu()">উদ্দেশ্য ও যোগ্যতা</a>
+            <a href="#topics" onclick="toggleMenu()">বিষয়বস্তু</a>
+            <a href="#lessons" onclick="toggleMenu()">শিখনফল</a>
+            <a href="#schedule" onclick="toggleMenu()">সময়সূচি ও ভেন্যু</a>
+            <a href="#rules" onclick="toggleMenu()">নিবন্ধনের নিয়ম</a>
+            <a href="#perks" onclick="toggleMenu()">সুবিধাসমূহ</a>
+        </div>
         
         <div class="sidebar-reg-card">
-            <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 500;">সীমিত আসন সংখ্যা!</p>
+            <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-bottom: 5px;">সীমিত আসন সংখ্যা!</p>
             <a href="https://forms.gle/" class="menu-action-btn" target="_blank"><i class="fas fa-id-badge"></i> রেজিস্ট্রেশন বাটন</a>
         </div>
     </div>
 
-    <!-- Banner Layer -->
     <div class="banner-container">
         <div class="slides" id="bannerSlider">
             <div class="slide">
@@ -385,10 +437,8 @@
         </div>
     </div>
 
-    <!-- Main Container -->
     <div class="main-container">
         
-        <!-- Section: পরিচিতি -->
         <div class="section-card intro-box" id="welcome">
             <h1>প্রিয় এসএসসি পরীক্ষার্থী ২০২৬</h1>
             <p class="lead" style="margin-bottom: 20px;">পরীক্ষা শেষ, শুরু হলো দীর্ঘ ছুটি! এই সময়টা শুধু বিশ্রাম নয়, নতুন কিছু শেখারও দারুণ সুযোগ।</p>
@@ -397,21 +447,24 @@
             <p>তোমাদেরকে এমন মজার কর্মকান্ডে অংশ নেয়ার সুযোগ দেয়ার জন্য শুরু হচ্ছে ৪ দিনের একটি বিশেষ কর্মশালা - <strong>“খেলতে খেলতে বিজ্ঞান”</strong>। এবার এই আয়োজনের ১৬ তম পর্ব অনুষ্ঠিত হতে চলছে।</p>
         </div>
 
-        <!-- Section: কাদের জন্য এই কর্মশালা -->
         <div class="section-card" id="audience">
-            <div class="headline-wrapper"><i class="fas fa-user-astronaut"></i> কাদের জন্য এই কর্মশালা</div>
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-user-astronaut"></i> কাদের জন্য এই কর্মশালা</div>
+            </div>
             <p><strong>এসএসসি ২০২৬ পরীক্ষার্থীরা</strong> এবং ২০২৬ সালে অষ্টম থেকে দশম শ্রেণীতে অধ্যয়নরত যেসব শিক্ষার্থীরা নিজে হাতেকলমে পরীক্ষা করে বিজ্ঞানকে বুঝতে চাও, আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের জন্য এখন থেকে প্রস্তুতি নিতে চাও, তাদের জন্যই এই কর্মশালা।</p>
         </div>
 
-        <!-- Section: কর্মশালার বিষয়বস্তু -->
         <div class="section-card" id="topics">
-            <div class="headline-wrapper"><i class="fas fa-microscope"></i> কর্মশালার বিষয়বস্তু</div>
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-microscope"></i> কর্মশালার বিষয়বস্তু</div>
+            </div>
             <p style="font-size: 1.15rem; font-weight: bold; color: var(--text-dark);"><i class="fas fa-compass-drafting" style="color:var(--accent-red)"></i> পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, এবং মাপজোখ নিয়ে ব্যবহারিক ক্লাস</p>
         </div>
 
-        <!-- Section: কর্মশালায় যা যা শেখানো হবে -->
         <div class="section-card" id="lessons">
-            <div class="headline-wrapper"><i class="fas fa-flask"></i> কর্মশালায় যা যা শেখানো হবে</div>
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-flask"></i> কর্মশালায় যা যা শেখানো হবে</div>
+            </div>
             <div class="syllabus-grid">
                 <div class="syllabus-item">
                     <div class="syllabus-item-icon"><i class="fas fa-screwdriver-wrench"></i></div>
@@ -419,15 +472,14 @@
                 </div>
                 <div class="syllabus-item">
                     <div class="syllabus-item-icon"><i class="fas fa-ruler-horizontal"></i></div>
-                    <span>স্ক্রুগজ এবং স্লাইড ক্যালিপার্স ব্যবহার</span>
+                    <span>স্কুরগজ এবং স্লাইড ক্যালিপার্স ব্যবহার</span>
                 </div>
                 <div class="syllabus-item">
                     <div class="syllabus-item-icon"><i class="fas fa-vial-circle-check"></i></div>
                     <span>দ্রবণ তৈরি করা</span>
                 </div>
                 <div class="syllabus-item">
-                    <div class="syllabus-item-icon"><i class="fas fa-vials"></i></div> <!-- টাইট্রেশন আইকন ফিক্স করা হয়েছে -->
-                    <span>অম্ল-ক্ষার টাইট্রেশন</span>
+                    <div class="syllabus-item-icon"><i class="fas fa-vials"></i></div> <span>অম্ল-ক্ষার টাইট্রেশন</span>
                 </div>
                 <div class="syllabus-item">
                     <div class="syllabus-item-icon"><i class="fas fa-droplet"></i></div>
@@ -447,14 +499,13 @@
             </div>
         </div>
 
-        <!-- Section: নিবন্ধনের সময়সূচি ও যোগ্যতা -->
         <div class="section-card" id="schedule">
-            <div class="headline-wrapper"><i class="fas fa-calendar-days"></i> নিবন্ধনের সময়সূচি ও যোগ্যতা</div>
-            
-            <!-- ডায়নামিক রেজিস্ট্রেশন স্ট্যাটাস অপশন -->
-            <div class="status-container">
-                <span id="regStatusDot" class="status-dot"></span>
-                <span id="regStatusText">স্ট্যাটাস লোড হচ্ছে...</span>
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-calendar-days"></i> নিবন্ধনের সময়সূচি ও যোগ্যতা</div>
+                <div id="regStatusBadge" class="status-badge">
+                    <span id="regStatusDot" class="status-dot"></span>
+                    <span id="regStatusText">লোড হচ্ছে...</span>
+                </div>
             </div>
 
             <div class="info-grid">
@@ -472,14 +523,16 @@
                 </div>
                 <div class="info-node">
                     <span><i class="fas fa-wallet"></i> নিবন্ধন ফি</span>
-                    <strong>৩০০০/- টাকা মাত্র <span class="small-note">(রেজিস্ট্রেশনের সময় পরিশোধযোগ্য)</span></strong> <!-- লেখাটি ছোট করা হয়েছে -->
+                    <strong>৩০০০/- টাকা মাত্র <span class="small-note">(রেজিস্ট্রেশনের সময় পরিশোধযোগ্য)</span></strong>
                 </div>
-            </div>
-
-            <!-- আগে আসলে আগে পাবেন - আলাদা স্বতন্ত্র ছোট সুন্দর বক্স -->
-            <div class="seats-small-box">
-                <i class="fas fa-circle-info" style="color:var(--accent-red)"></i>
-                <span>আগে আসলে আগে পাবেন ভিত্তিতে আসন বরাদ্দ করা হবে। (মোট আসন সংখ্যা: মাত্র ১২ জন)</span>
+                <div class="seat-full-area-box">
+                    <div class="seat-main-title"><i class="fas fa-chair" style="color:var(--accent-red)"></i> আসন সংখ্যা</div>
+                    <div class="seat-count-highlight">মাত্র <span>১২</span> টি</div>
+                    <div class="inner-warning-box">
+                        <i class="fas fa-triangle-exclamation" style="color:var(--accent-red)"></i>
+                        <span>আগে আসলে আগে পাবেন ভিত্তিতে আসন বরাদ্দ করা হবে।</span>
+                    </div>
+                </div>
             </div>
 
             <div class="btn-holder" style="margin-top: 35px; margin-bottom: 0;">
@@ -487,30 +540,35 @@
             </div>
         </div>
 
-        <!-- Section: কর্মশালার সময়সূচি ও ভেন্যু -->
         <div class="section-card">
-            <div class="headline-wrapper"><i class="fas fa-map-pinned"></i> কর্মশালার সময়সূচি ও ভেন্যু</div>
-            
-            <!-- ডায়নামিক কর্মশালা স্ট্যাটাস অপশন -->
-            <div class="status-container">
-                <span id="workshopStatusDot" class="status-dot"></span>
-                <span id="workshopStatusText">স্ট্যাটাস লোড হচ্ছে...</span>
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-map-pinned"></i> কর্মশালার সময়সূচি ও ভেন্যু</div>
+                <div id="workshopStatusBadge" class="status-badge">
+                    <span id="workshopStatusDot" class="status-dot"></span>
+                    <span id="workshopStatusText">লোড হচ্ছে...</span>
+                </div>
+            </div>
+
+            <div class="info-grid" style="margin-bottom: 20px;">
+                <div class="info-node">
+                    <span><i class="fas fa-calendar-plus"></i> কর্মশালা শুরুর তারিখ</span>
+                    <strong id="wsStartTxt">৬ জুলাই ২০২৬</strong>
+                </div>
+                <div class="info-node">
+                    <span><i class="fas fa-calendar-check"></i> কর্মশালা শেষের তারিখ</span>
+                    <strong id="wsEndTxt">১০ জুলাই ২০২৬</strong>
+                </div>
             </div>
 
             <div class="info-grid" style="margin-bottom: 25px;">
                 <div class="info-node">
-                    <span><i class="fas fa-calendar-week"></i> সময়কাল</span>
-                    <strong><span id="wsStartTxt">৬ জুলাই ২০২৬</span> – <span id="wsEndTxt">১০ জুলাই ২০২৬</span></strong>
-                </div>
-                <div class="info-node">
-                    <span><i class="fas fa-clock"></i> দৈনিক সময়</span>
+                    <span><i class="fas fa-clock"></i> দৈনিক সময়সূচী</span>
                     <strong>বিকাল ৩:০০ টা – ৫:০০ টা</strong>
                 </div>
-            </div>
-
-            <div class="premium-box venue-container-box">
-                <h3><i class="fas fa-hotel"></i> কর্মশালার ভেন্যু</h3>
-                <p style="color: var(--text-dark); font-weight: 500;">ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
+                <div class="seat-full-area-box" style="border-top: 4px solid var(--soft-blue);">
+                    <div class="seat-main-title" style="color:var(--soft-blue); font-weight:bold;"><i class="fas fa-hotel"></i> কর্মশালার ভেন্যু</div>
+                    <p style="font-size: 0.95rem; font-weight: 600; margin-top: 5px;">ম্যাসল্যাব, গ্রিন সিটি সেন্টার (১২ তলা), ৭৫৮ সাত মসজিদ রোড, ধানমন্ডি, ঢাকা।</p>
+                </div>
             </div>
 
             <div class="map-relative-frame">
@@ -523,9 +581,10 @@
             </div>
         </div>
 
-        <!-- Section: নিবন্ধনের নিয়ম -->
         <div class="section-card" id="rules">
-            <div class="headline-wrapper"><i class="fas fa-file-invoice"></i> রেজিস্ট্রেশন করার নিয়ম</div>
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-file-invoice"></i> রেজিস্ট্রেশন করার নিয়ম</div>
+            </div>
             <ol class="custom-ul" style="display:flex; flex-direction:column; gap:12px;">
                 <li>প্রথমেই বিকাশের মাধ্যমে কোর্সের নিবন্ধন ফি অগ্রিম প্রদান করতে হবে।</li>
                 <li>নিবন্ধন ফি প্রদান করার বিকাশ নম্বর: 
@@ -548,9 +607,10 @@
             </ol>
         </div>
 
-        <!-- Section: কর্মশালায় অংশগ্রহণকারীরা কি কি পাবে -->
         <div class="section-card" id="perks">
-            <div class="headline-wrapper"><i class="fas fa-award"></i> কর্মশালায় অংশগ্রহণকারীরা যা যা পাবে</div>
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-award"></i> কর্মশালায় অংশগ্রহণকারীরা যা যা পাবে</div>
+            </div>
             <ul class="custom-ul" style="display:flex; flex-direction:column; gap:12px;">
                 <li><strong>ক)</strong> কোর্স শেষে অংশগ্রহণকারীদের সার্টিফিকেট প্রদান করা হবে।</li>
                 <li><strong>খ)</strong> ব্যবহারিক উপকরণ ও আনুষাঙ্গিক ম্যাটারিয়েলস ম্যাসল্যাব কর্তৃক প্রদান করা হবে।</li>
@@ -559,17 +619,14 @@
             </ul>
         </div>
 
-        <!-- কোট বক্স স্লোগান -->
         <div class="classic-quote-box">
-            "চলো, परीक्षा-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি"
+            "চলো, পরীক্ষা-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি"
         </div>
 
     </div>
 
-    <!-- কপি নোটিফিকেশন টোস্ট পপ-আপ -->
     <div class="toast-notification" id="toastBox">নম্বরটি কপি হয়েছে!</div>
 
-    <!-- Section: Footer -->
     <footer class="footer-universe" id="contact">
         <div class="footer-header-centered">
             <span>যোগাযোগ</span>
@@ -577,7 +634,7 @@
         
         <div class="footer-split-grid">
             <div class="footer-branding-left">
-                <a href="https://maslab.org/" target="_blank" title="ম্যাসল্যাব অফিসিয়াল সাইট">
+                <a href="https://maslab.org/" target="_blank" title="ম্যাسل্যাব অফিসিয়াল সাইট">
                     <img src="https://maslab.org/wp-content/uploads/2024/03/MASLab-Logo-1-1.png" alt="MASLab Logo">
                 </a>
             </div>
@@ -595,14 +652,12 @@
         </div>
     </footer>
 
-    <!-- JavaScript Controller -->
     <script>
         function toggleMenu() {
             const menu = document.getElementById('sidebarMenu');
             menu.classList.toggle('active');
         }
 
-        // ব্যানার ক্যারোসেল অটোমেটিক স্লাইডার
         const slider = document.getElementById('bannerSlider');
         const count = document.querySelectorAll('.slide').length;
         let index = 0;
@@ -614,7 +669,6 @@
         }
         setInterval(handleAutoSlide, 4000);
 
-        // বিকাশ নম্বর ওয়ান-ক্লিক কপি ফাংশন
         function copyNumber() {
             const rawNumber = "01730716522"; 
             navigator.clipboard.writeText(rawNumber).then(() => {
@@ -636,71 +690,67 @@
             });
         }
 
-        // --- ডায়নামিক সময় ও স্ট্যাটাস ক্যালকুলেশন ইঞ্জিন (২০২৬ সালের ডাটা ভিত্তিক) ---
+        // --- ডায়নামিক সময় ও স্ট্যাটাস ক্যালকুলেশন ইঞ্জিন ---
         function checkStatusTimeline() {
-            const now = new Date(); // ২০২৬ সালের বর্তমান সময় ও তারিখ ধরবে
+            const now = new Date(); 
 
-            // ১. নিবন্ধনের সময়সীমা কন্ডিশন (২৮ জুন সকাল ৮:০০ টা থেকে ৪ জুলাই রাত ৮:০০ টা ২০২৬)
+            // ১. নিবন্ধন টাইমলাইন কন্ডিশন
             const regStart = new Date('2026-06-28T08:00:00');
             const regEnd = new Date('2026-07-04T20:00:00');
             
+            const regBadge = document.getElementById('regStatusBadge');
             const regDot = document.getElementById('regStatusDot');
             const regText = document.getElementById('regStatusText');
             const startDateTxt = document.getElementById('startDateTxt');
             const endDateTxt = document.getElementById('endDateTxt');
 
             if (now >= regStart && now <= regEnd) {
-                // নিবন্ধন চলমান অবস্থা
+                regBadge.className = "status-badge success";
                 regDot.className = "status-dot green";
                 regText.innerText = "নিবন্ধন চলমান";
-                regText.style.color = "#22c55e";
-                startDateTxt.classList.add('strike-out'); // শুরুর তারিখে টান
+                startDateTxt.classList.add('strike-out'); 
             } else if (now > regEnd) {
-                // নিবন্ধন শেষ অবস্থা
+                regBadge.className = "status-badge running";
                 regDot.className = "status-dot red";
                 regText.innerText = "নিবন্ধনের সময় শেষ হয়েছে";
-                regText.style.color = "#ef4444";
-                startDateTxt.classList.add('strike-out'); // শুরুর তারিখে টান
-                endDateTxt.classList.add('strike-out'); // শেষের তারিখে টান
+                startDateTxt.classList.add('strike-out'); 
+                endDateTxt.classList.add('strike-out'); 
             } else {
-                // শুরুর আগের অবস্থা
+                regBadge.className = "status-badge running";
                 regDot.className = "status-dot red";
-                regText.innerText = "নিবন্ধন এখনো শুরু হয়নি";
+                regText.innerText = "নিবন্ধন শুরু হয়নি";
             }
 
-            // ২. কর্মশালার সময়সীমা কন্ডিশন (৬ জুলাই থেকে ১০ জুলাই ২০২৬)
-            const wsStart = new Date('2026-07-06T00:00:00');
-            const wsEnd = new Date('2026-07-10T23:59:59');
+            // ২. কর্মশালা টাইমলাইন কন্ডিশন
+            const wsStart = new Date('2026-07-06T15:00:00');
+            const wsEnd = new Date('2026-07-10T17:00:00');
             
+            const wsBadge = document.getElementById('workshopStatusBadge');
             const wsDot = document.getElementById('workshopStatusDot');
             const wsText = document.getElementById('workshopStatusText');
             const wsStartTxt = document.getElementById('wsStartTxt');
             const wsEndTxt = document.getElementById('wsEndTxt');
 
             if (now < wsStart) {
-                // শুরু হতে বাকি দিন গণনা
                 const timeDiff = wsStart.getTime() - now.getTime();
                 const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                wsBadge.className = "status-badge running";
                 wsDot.className = "status-dot red";
                 wsText.innerText = `কর্মশালা শুরু হতে বাকি ${daysLeft} দিন`;
-                wsText.style.color = "#ef4444";
             } else if (now >= wsStart && now <= wsEnd) {
-                // কর্মশালা শুরু হয়েছে
+                wsBadge.className = "status-badge success";
                 wsDot.className = "status-dot green";
                 wsText.innerText = "কর্মশালা শুরু হয়েছে";
-                wsText.style.color = "#22c55e";
-                wsStartTxt.classList.add('strike-out'); // শুরুর তারিখে টান
+                wsStartTxt.classList.add('strike-out'); 
             } else if (now > wsEnd) {
-                // কর্মশালা শেষ হয়েছে
+                wsBadge.className = "status-badge running";
                 wsDot.className = "status-dot red";
                 wsText.innerText = "কর্মশালা শেষ হয়েছে";
-                wsText.style.color = "#ef4444";
-                wsStartTxt.classList.add('strike-out'); // শুরুর তারিখে টান
-                wsEndTxt.classList.add('strike-out'); // শেষের তারিখে টান
+                wsStartTxt.classList.add('strike-out'); 
+                wsEndTxt.classList.add('strike-out'); 
             }
         }
 
-        // পেজ লোড হবার সাথে সাথে স্ট্যাটাস রান করবে
         window.onload = checkStatusTimeline;
     </script>
 </body>
