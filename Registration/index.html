@@ -572,52 +572,51 @@
 const form = document.getElementById('registrationForm');
 const submitBtn = document.getElementById('submitBtn');
 
-// আপনার দেওয়া এপিআই লিঙ্ক
+// আপনার এপিআই লিঙ্ক (শেষে কোনো ?action=register রাখার দরকার নেই, এটা নিচে ডাইনামিকালি যোগ হবে)
 const apiURL = "https://script.google.com/macros/s/AKfycby86NlsETtaUO2DSRFs_ickBkPTXdwnaw8rKEFjkXvSodu4YcDzpBe4OEsGmtZzdqcp/exec";
 
 form.addEventListener('submit', function(e) {
-    e.preventDefault(); // ডিফল্ট পেজ রিলোড বন্ধ করা
+    e.preventDefault(); 
     
-    // সাবমিট বাটন ডিসেবল করা এবং লোডিং টেক্সট দেওয়া
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে, অপেক্ষা করুন...`;
 
-    // ফর্ম ডাটা সংগ্রহ করা
+    // ফর্ম ডাটা সংগ্রহ
     const formData = new FormData(form);
-    
-    // URL Query Parameter তৈরি করা এবং action=register যুক্ত করা
     const params = new URLSearchParams();
+    
+    // আপনার স্ক্রিপ্টের রিকোয়েস্ট অনুযায়ী action=register যোগ করা
     params.append('action', 'register');
+    
+    // ফর্মের বাকি সব ফিল্ড যোগ করা
     formData.forEach((value, key) => {
         params.append(key, value);
     });
 
-    // CORS সমস্যা এড়াতে এবং গুগল অ্যাপ স্ক্রিপ্টের সাথে পারফেক্টলি কানেক্ট করতে no-cors মোড ব্যবহার
-    fetch(`${apiURL}?${params.toString()}`, {
+    // পূর্ণাঙ্গ URL তৈরি (কোয়েরি স্ট্রিং সহ)
+    const finalUrl = `${apiURL}?${params.toString()}`;
+
+    // GET/POST রিকোয়েস্ট পাঠানো
+    fetch(finalUrl, {
         method: 'POST',
-        mode: 'no-cors', // এই লাইনটি CORS এরর ব্লক করবে
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
+        mode: 'no-cors'
     })
     .then(() => {
-        // 'no-cors' মোডে রেসপন্স রিড করা যায় না, কিন্তু রিকোয়েস্ট সফলভাবে শিটে চলে যায়
+        // সফলভাবে সাবমিট হলে পপআপ দেখাবে
         openSuccessModal();
-        form.reset(); // ফর্ম ফাঁকা করা
-        toggleOlympiadField(false); // কন্ডিশনাল বক্স রিসেট
+        form.reset(); 
+        toggleOlympiadField(false); 
         toggleBkashFields(false);
     })
     .catch(error => {
         console.error('Error:', error);
-        alert("নেটওয়ার্ক সমস্যার কারণে সাবমিট করা যায়নি। দয়া করে আবার চেষ্টা করুন।");
+        alert("নেটওয়ার্ক সমস্যার কারণে সাবমিট করা যায়নি। আবার চেষ্টা করুন।");
     })
     .finally(() => {
-        // বাটন পুনরায় সচল করা
         submitBtn.disabled = false;
         submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> সাবমিট করুন`;
     });
 });
-
 
         // পপআপ ওপেন এবং ক্লোজ ফাংশন
         function openSuccessModal() {
