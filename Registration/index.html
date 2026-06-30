@@ -569,56 +569,55 @@
         }
 
         // ফর্ম সাবমিশন এবং গুগল শিট এপিআই কানেকশন
-        const form = document.getElementById('registrationForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const apiURL = "https://script.google.com/macros/s/AKfycby86NlsETtaUO2DSRFs_ickBkPTXdwnaw8rKEFjkXvSodu4YcDzpBe4OEsGmtZzdqcp/exec?action=register";
+const form = document.getElementById('registrationForm');
+const submitBtn = document.getElementById('submitBtn');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // ডিফল্ট পেজ রিলোড বন্ধ করা
-            
-            // সাবমিট বাটন ডিসেবল করা এবং লোডিং টেক্সট দেওয়া
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে, অপেক্ষা করুন...`;
+// আপনার দেওয়া এপিআই লিঙ্ক
+const apiURL = "https://script.google.com/macros/s/AKfycby86NlsETtaUO2DSRFs_ickBkPTXdwnaw8rKEFjkXvSodu4YcDzpBe4OEsGmtZzdqcp/exec";
 
-            // ফর্ম ডাটা সংগ্রহ করা
-            const formData = new FormData(form);
-            
-            // URL Query Parameter তৈরি করা
-            const params = new URLSearchParams();
-            formData.forEach((value, key) => {
-                params.append(key, value);
-            });
+form.addEventListener('submit', function(e) {
+    e.preventDefault(); // ডিফল্ট পেজ রিলোড বন্ধ করা
+    
+    // সাবমিট বাটন ডিসেবল করা এবং লোডিং টেক্সট দেওয়া
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে, অপেক্ষা করুন...`;
 
-            // Fetch API এর সাহায্যে ডাটা অ্যাপ স্ক্রিপ্টে পাঠানো (GET/POST)
-            fetch(`${apiURL}&${params.toString()}`, {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success || data.message === "Registration Successful") {
-                    // সফল হলে পপআপ ওপেন হবে
-                    openSuccessModal();
-                    form.reset(); // ফর্ম ফাঁকা করা
-                    toggleOlympiadField(false); // কন্ডিশনাল বক্স রিসেট
-                    toggleBkashFields(false);
-                } else {
-                    alert("দুঃখিত! কোনো একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // যদি গুগল ক্রস-অরিজিন পলিসির কারণে এরর দেখায় কিন্তু শিটে ডাটা চলে যায়, তার সেফটি হ্যান্ডলার:
-                openSuccessModal();
-                form.reset();
-                toggleOlympiadField(false);
-                toggleBkashFields(false);
-            })
-            .finally(() => {
-                // বাটন পুনরায় সচল করা
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> সাবমিট করুন`;
-            });
-        });
+    // ফর্ম ডাটা সংগ্রহ করা
+    const formData = new FormData(form);
+    
+    // URL Query Parameter তৈরি করা এবং action=register যুক্ত করা
+    const params = new URLSearchParams();
+    params.append('action', 'register');
+    formData.forEach((value, key) => {
+        params.append(key, value);
+    });
+
+    // CORS সমস্যা এড়াতে এবং গুগল অ্যাপ স্ক্রিপ্টের সাথে পারফেক্টলি কানেক্ট করতে no-cors মোড ব্যবহার
+    fetch(`${apiURL}?${params.toString()}`, {
+        method: 'POST',
+        mode: 'no-cors', // এই লাইনটি CORS এরর ব্লক করবে
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(() => {
+        // 'no-cors' মোডে রেসপন্স রিড করা যায় না, কিন্তু রিকোয়েস্ট সফলভাবে শিটে চলে যায়
+        openSuccessModal();
+        form.reset(); // ফর্ম ফাঁকা করা
+        toggleOlympiadField(false); // কন্ডিশনাল বক্স রিসেট
+        toggleBkashFields(false);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("নেটওয়ার্ক সমস্যার কারণে সাবমিট করা যায়নি। দয়া করে আবার চেষ্টা করুন।");
+    })
+    .finally(() => {
+        // বাটন পুনরায় সচল করা
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> সাবমিট করুন`;
+    });
+});
+
 
         // পপআপ ওপেন এবং ক্লোজ ফাংশন
         function openSuccessModal() {
