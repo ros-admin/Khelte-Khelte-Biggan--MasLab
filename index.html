@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)</title>
-    <!-- FontAwesome Elements for Icons -->
+    <!-- FontAwesome 6 for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #009688;
-            --accent-color: #ff5722;
-            --dark-color: #1a252f;
-            --light-color: #f8f9fa;
+            --primary-dark: #0f172a;
+            --teal-bright: #0d9488;
+            --teal-light: #f0fdfa;
+            --orange-accent: #f97316;
+            --text-main: #334155;
+            --bg-light: #f8fafc;
         }
 
         * {
@@ -24,14 +25,14 @@
         }
 
         body {
-            background-color: #f4f6f9;
-            color: #333;
-            line-height: 1.7;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.8;
         }
 
-        /* Top Navbar */
+        /* Navbar & Sidebar Menu */
         .navbar {
-            background: rgba(26, 37, 47, 0.95);
+            background: rgba(15, 23, 42, 0.95);
             color: #fff;
             padding: 15px 25px;
             display: flex;
@@ -41,412 +42,406 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .nav-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: bold;
-            color: #fff;
+            letter-spacing: 0.5px;
         }
 
         .menu-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             cursor: pointer;
-            transition: 0.3s;
         }
 
-        .menu-btn:hover {
-            color: var(--accent-color);
-        }
-
-        /* Sidebar Drawer */
         .sidebar {
             position: fixed;
             top: 0;
             right: -320px;
             width: 320px;
             height: 100%;
-            background: #1a252f;
+            background: var(--primary-dark);
             z-index: 1001;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-            transition: 0.4s ease-in-out;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.25);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 30px 20px;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
         }
 
-        .sidebar.active {
-            right: 0;
-        }
+        .sidebar.active { right: 0; }
 
         .close-btn {
             background: none;
             border: none;
             color: #fff;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             align-self: flex-end;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .sidebar a {
-            color: #cbd5e1;
+            color: #94a3b8;
             text-decoration: none;
-            padding: 12px 15px;
-            font-size: 1.1rem;
-            border-bottom: 1px solid #2c3e50;
+            padding: 14px 15px;
+            font-size: 1.05rem;
+            border-bottom: 1px solid #1e293b;
             transition: 0.3s;
-            display: block;
         }
 
         .sidebar a:hover {
             color: #fff;
-            background: var(--secondary-color);
-            padding-left: 20px;
+            background: var(--teal-bright);
+            padding-left: 22px;
+            border-radius: 4px;
         }
 
-        /* Sidebar Registration Box */
-        .sidebar-reg-box {
+        .sidebar-reg-card {
             margin-top: auto;
-            background: linear-gradient(135deg, #ff5722, #e64a19);
+            background: linear-gradient(135deg, #f97316, #ea580c);
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .sidebar-reg-box h4 {
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
+        .sidebar-reg-card h4 { margin-bottom: 8px; font-size: 1.15rem; }
+        .sidebar-reg-card p { font-size: 0.9rem; opacity: 0.9; }
 
-        .sidebar-reg-box .menu-reg-btn {
+        .menu-action-btn {
             display: inline-block;
             background: #fff;
-            color: #ff5722;
-            padding: 10px 20px;
-            border-radius: 25px;
+            color: #ea580c;
+            padding: 8px 20px;
+            border-radius: 20px;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 10px;
-            transition: 0.3s;
+            margin-top: 12px;
+            font-size: 0.95rem;
         }
 
-        .sidebar-reg-box .menu-reg-btn:hover {
-            background: #1a252f;
-            color: #fff;
-        }
-
-        /* Banner Slider */
-        .slider-container {
+        /* Banner Slider Carousel */
+        .slider-wrapper {
             width: 100%;
-            height: 480px;
+            height: 450px;
             overflow: hidden;
             position: relative;
-            margin-top: 60px;
+            margin-top: 55px;
         }
 
-        .slides {
+        .slides-container {
             display: flex;
             width: 100%;
             height: 100%;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.6s ease-in-out;
         }
 
-        .slide {
+        .single-slide {
             min-width: 100%;
             height: 100%;
             position: relative;
         }
 
-        .slide img {
+        .single-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.7);
+            filter: brightness(0.65);
         }
 
-        .slide-text {
+        .slide-caption {
             position: absolute;
-            bottom: 40px;
-            left: 5%;
-            right: 5%;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-            max-width: 600px;
-        }
-
-        .slide-text h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            bottom: 50px;
+            left: 8%;
+            right: 8%;
             color: #fff;
         }
 
-        /* Main Layout */
-        .container {
+        .slide-caption h2 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Page Layout & Universal Section Framework */
+        .main-container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
         }
 
-        .section {
+        .content-card {
             background: #fff;
-            padding: 35px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--secondary-color);
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e2e8f0;
         }
 
-        /* Header Style Section */
-        .welcome-section {
-            text-align: center;
-            border-top: 4px solid var(--accent-color);
-            background: linear-gradient(to bottom right, #fff, #fff5f2);
-        }
-
-        .welcome-section h1 {
-            color: var(--accent-color);
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-        }
-
-        .welcome-section .subtitle {
-            font-size: 1.25rem;
-            color: #4a5568;
-            font-weight: 600;
-        }
-
-        h2 {
-            color: var(--dark-color);
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+        .section-headline {
+            font-size: 1.6rem;
+            color: var(--primary-dark);
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
         }
 
-        h2 i {
-            color: var(--secondary-color);
+        .section-headline i {
+            color: var(--teal-bright);
         }
 
-        /* Grid Cards */
-        .grid-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        /* Unique Summary Modules */
+        .intro-box {
+            text-align: center;
+            background: linear-gradient(135deg, #fff, var(--teal-light));
+            border-top: 5px solid var(--teal-bright);
         }
 
-        .card-item {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid var(--secondary-color);
-            transition: 0.3s;
-        }
-
-        .card-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .card-item strong {
-            display: block;
-            color: var(--dark-color);
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        /* Styled Lists */
-        .list-items {
-            list-style: none;
-        }
-
-        .list-items li {
-            position: relative;
-            padding-left: 30px;
-            margin-bottom: 12px;
-        }
-
-        .list-items li::before {
-            content: "\f00c";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: var(--secondary-color);
-        }
-
-        .numbered-list {
-            list-style: none;
-            counter-reset: my-counter;
-        }
-
-        .numbered-list li {
-            counter-increment: my-counter;
-            position: relative;
-            padding-left: 40px;
+        .intro-box h1 {
+            color: var(--teal-bright);
+            font-size: 2.4rem;
             margin-bottom: 15px;
         }
 
-        .numbered-list li::before {
-            content: counter(my-counter);
+        .intro-box p {
+            font-size: 1.2rem;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        /* Grid Framework for Quick Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-badge {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 12px;
+            border-top: 4px solid var(--teal-bright);
+            transition: 0.3s ease;
+        }
+
+        .stat-badge:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+        }
+
+        .stat-badge span {
+            display: block;
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .stat-badge strong {
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+        }
+
+        /* Modern List Design */
+        .premium-list {
+            list-style: none;
+        }
+
+        .premium-list li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .premium-list li i {
+            position: absolute;
+            left: 0;
+            top: 5px;
+            color: var(--teal-bright);
+            font-size: 1.2rem;
+        }
+
+        /* Step by Step Flow for Registration */
+        .step-timeline {
+            list-style: none;
+            counter-reset: steps;
+        }
+
+        .step-timeline li {
+            counter-increment: steps;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 25px;
+        }
+
+        .step-timeline li::before {
+            content: counter(steps);
             position: absolute;
             left: 0;
             top: 2px;
-            background: var(--secondary-color);
-            color: white;
-            width: 24px;
-            height: 24px;
+            background: var(--primary-dark);
+            color: #fff;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             text-align: center;
-            line-height: 24px;
-            font-size: 0.85rem;
+            line-height: 30px;
             font-weight: bold;
+            font-size: 0.95rem;
         }
 
-        /* Bkash Badge Design */
-        .bkash-badge {
-            display: inline-flex;
+        /* bKash Payment Component */
+        .bkash-payment-info {
+            background: #fff0f6;
+            border: 1px solid #fbcfe8;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
             align-items: center;
-            background: #e2136e;
+            justify-content: space-between;
+            max-width: 450px;
+        }
+
+        .bkash-brand {
+            background: #d1156c;
             color: white;
-            padding: 3px 12px;
+            padding: 4px 14px;
             border-radius: 4px;
             font-weight: bold;
-            font-size: 0.9rem;
-            margin-left: 8px;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
 
-        /* Action Buttons */
-        .btn-wrapper {
+        /* Button Infrastructure */
+        .center-btn-block {
             text-align: center;
-            margin: 40px 0;
+            margin: 45px 0;
         }
 
-        .action-btn {
-            background: linear-gradient(135deg, #ff5722, #f44336);
+        .primary-action-btn {
+            background: linear-gradient(135deg, var(--orange-accent), #e15b00);
             color: white;
-            padding: 16px 45px;
+            padding: 16px 50px;
             font-size: 1.3rem;
             font-weight: bold;
             text-decoration: none;
             border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);
-            transition: 0.3s;
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.35);
+            transition: 0.3s ease;
             display: inline-block;
         }
 
-        .action-btn:hover {
+        .primary-action-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.6);
+            box-shadow: 0 10px 25px rgba(249, 115, 22, 0.5);
         }
 
-        /* Quote Callout */
-        .quote-callout {
-            background: linear-gradient(135deg, #1a252f, #2c3e50);
+        .quote-banner {
+            background: linear-gradient(135deg, #1e293b, var(--primary-dark));
             color: #fff;
-            padding: 30px;
-            border-radius: 12px;
+            padding: 35px;
+            border-radius: 16px;
             text-align: center;
             font-style: italic;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
+            border-left: 6px solid var(--orange-accent);
             margin: 40px 0;
-            border-left: 6px solid var(--accent-color);
         }
 
-        /* Footer & Embedded Map */
-        footer {
-            background: #111827;
-            color: #9ca3af;
-            padding: 60px 20px 20px;
-            margin-top: 60px;
+        /* Footer & Location Integration */
+        .main-footer {
+            background: #0b0f19;
+            color: #94a3b8;
+            padding: 70px 20px 25px;
+            margin-top: 80px;
         }
 
-        .footer-grid {
+        .footer-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px;
             max-width: 1000px;
             margin: 0 auto;
         }
 
-        .footer-logo-area {
+        .brand-hub {
             text-align: center;
         }
 
-        .footer-logo-area a {
+        .brand-hub a {
             display: inline-block;
             background: #fff;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             transition: 0.3s;
         }
 
-        .footer-logo-area a:hover {
-            transform: scale(1.03);
+        .brand-hub a:hover { transform: scale(1.02); }
+        .brand-hub img { max-width: 190px; height: auto; display: block; }
+
+        .footer-contact h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
         }
 
-        .footer-logo-area img {
-            max-width: 180px;
-            height: auto;
-            display: block;
-        }
-
-        .contact-info p {
-            margin-bottom: 12px;
+        .footer-contact p {
+            margin-bottom: 14px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            color: #e5e7eb;
+            color: #cbd5e1;
+            font-size: 1rem;
         }
 
-        .contact-info i {
-            color: var(--secondary-color);
+        .footer-contact i {
+            color: var(--teal-bright);
             margin-top: 5px;
-            width: 20px;
+            font-size: 1.1rem;
         }
 
-        /* Google Map Frame */
-        .map-container {
+        .map-wrapper {
             width: 100%;
-            height: 200px;
-            border-radius: 8px;
+            height: 220px;
+            border-radius: 10px;
             overflow: hidden;
-            margin-top: 15px;
-            border: 2px solid #2d3748;
+            margin-top: 18px;
+            border: 1px solid #1e293b;
         }
 
-        .copyright-area {
+        .footer-bottom {
             text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid #1f2937;
-            font-size: 0.9rem;
+            margin-top: 60px;
+            padding-top: 25px;
+            border-top: 1px solid #1e293b;
+            font-size: 0.95rem;
         }
 
-        .copyright-area p {
-            margin-bottom: 5px;
-        }
+        .footer-bottom p { margin-bottom: 6px; }
+        .footer-bottom strong { color: #fff; }
 
-        .copyright-area strong {
-            color: #fff;
-        }
-
-        /* Responsive Configuration */
+        /* Responsive Settings */
         @media (max-width: 768px) {
-            .slider-container { height: 280px; }
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
-            .contact-info p { justify-content: center; }
-            .welcome-section h1 { font-size: 1.8rem; }
+            .slider-wrapper { height: 280px; }
+            .slide-caption h2 { font-size: 1.6rem; }
+            .content-card { padding: 25px; }
+            .footer-container { grid-template-columns: 1fr; text-align: center; }
+            .footer-contact p { justify-content: center; text-align: left; }
+            .intro-box h1 { font-size: 1.9rem; }
         }
     </style>
 </head>
@@ -455,206 +450,210 @@
     <!-- শীর্ষ নেভিগেশন বার -->
     <nav class="navbar">
         <div class="nav-title">খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)</div>
-        <button class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <button class="menu-btn" onclick="toggleSidebarMenu()"><i class="fas fa-bars"></i></button>
     </nav>
 
-    <!-- থ্রি ডট ড্রয়ার মেনু -->
+    <!-- থ্রি ডট ড্রয়ার স্লাইডিং মেনু -->
     <div class="sidebar" id="sidebarMenu">
-        <button class="close-btn" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
-        <a href="#welcome" onclick="toggleSidebar()">হোম</a>
-        <a href="#about" onclick="toggleSidebar()">উদ্দেশ্য</a>
-        <a href="#topics" onclick="toggleSidebar()">বিষয়বস্তু</a>
-        <a href="#details" onclick="toggleSidebar()">সময় ও স্থান</a>
-        <a href="#rules" onclick="toggleSidebar()">রেজিস্ট্রেশন নিয়ম</a>
-        <a href="#benefits" onclick="toggleSidebar()">সুবিধাসমূহ</a>
-        <a href="#contact" onclick="toggleSidebar()">যোগাযোগ</a>
+        <button class="close-btn" onclick="toggleSidebarMenu()"><i class="fas fa-times"></i></button>
+        <a href="#welcome" onclick="toggleSidebarMenu()">পরিচিতি</a>
+        <a href="#about" onclick="toggleSidebarMenu()">উদ্দেশ্য ও যোগ্যতা</a>
+        <a href="#topics" onclick="toggleSidebarMenu()">সিলেবাস ও শিখনফল</a>
+        <a href="#schedule" onclick="toggleSidebarMenu()">সময়সূচী ও ভেন্যু</a>
+        <a href="#registration" onclick="toggleSidebarMenu()">নিবন্ধন প্রক্রিয়া</a>
+        <a href="#benefits" onclick="toggleSidebarMenu()">লজিস্টিকস ও অফার</a>
+        <a href="#contact" onclick="toggleSidebarMenu()">যোগাযোগ</a>
         
-        <!-- মেনুর নিচে রেজিস্ট্রেশন বাক্স -->
-        <div class="sidebar-reg-box">
-            <h4>সীমিত আসন!</h4>
-            <p>মাত্র ১২ জন অংশ নিতে পারবে</p>
-            <a href="#" class="menu-reg-btn" target="_blank"><i class="fas fa-edit"></i> ফর্ম পূরণ করুন</a>
+        <div class="sidebar-reg-card">
+            <h4>সীমিত আসন সতর্কতা!</h4>
+            <p>প্রতি ব্যাচে সর্বোচ্চ ১২ জন অংশ নিতে পারবে</p>
+            <a href="#" class="menu-action-btn" target="_blank"><i class="fas fa-pen-to-square"></i> এখনই ফর্ম পূরণ করো</a>
         </div>
     </div>
 
-    <!-- ব্যানার স্লাইডার অংশ -->
-    <div class="slider-container">
-        <div class="slides" id="mainSlider">
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80" alt="Banner 1">
-                <div class="slide-text">
-                    <h2>হাতে-কলমে বিজ্ঞানের আনন্দ</h2>
-                    <p>১৬তম বিশেষ পর্ব - ম্যাসল্যাব আয়োজন</p>
+    <!-- টপ স্লাইডার (ক্যারোসেল) -->
+    <div class="slider-wrapper">
+        <div class="slides-container" id="carouselSlider">
+            <div class="single-slide">
+                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80" alt="Science Practical">
+                <div class="slide-text slide-caption">
+                    <h2>হাতে-কলমে বিজ্ঞানের বিশ্ব</h2>
+                    <p>মুখস্থ বিদ্যা নয়, ল্যাবরেটরিতে নিজে পরীক্ষা করে শেখার এক অনন্য অভিজ্ঞতা।</p>
                 </div>
             </div>
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1200&q=80" alt="Banner 2">
-                <div class="slide-text">
-                    <h2>ল্যাবরেটরির রহস্য উন্মোচন</h2>
-                    <p>নিজে কর, নিজে শেখো</p>
+            <div class="single-slide">
+                <img src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1200&q=80" alt="Microscope view">
+                <div class="slide-text slide-caption">
+                    <h2>অলিম্পিয়াডের প্র্যাক্টিক্যাল প্রস্তুতি</h2>
+                    <p>আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের জন্য নিজেকে এখন থেকেই তৈরি করো।</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- মূল কন্টেন্ট কন্টেইনার -->
-    <div class="container">
+    <!-- মূল কন্টেন্ট হাব -->
+    <div class="main-container">
         
-        <!-- ১. স্বাগতম সেকশন -->
-        <div class="section welcome-section" id="welcome">
+        <!-- সেকশন ১: লক্ষ্য ও পরিচিতি -->
+        <div class="content-card intro-box" id="welcome">
             <h1>প্রিয় এসএসসি পরীক্ষার্থী ২০২৬</h1>
-            <p class="subtitle">পরীক্ষা শেষ, শুরু হলো দীর্ঘ ছুটি! এই সময়টা শুধু বিশ্রাম নয়, নতুন কিছু শেখারও দারুণ সুযোগ।</p>
+            <p>পরীক্ষা শেষ, শুরু হলো দীর্ঘ ছুটি! এই সময়টা শুধু বিশ্রাম নয়, নতুন কিছু শেখারও দারুণ সুযোগ।</p>
         </div>
 
-        <!-- ২. বিস্তারিত উদ্দেশ্য -->
-        <div class="section" id="about">
-            <h2><i class="fas fa-microscope"></i> কর্মশালার মূল উদ্দেশ্য</h2>
-            <p>কেমন হয়, যদি তুমি নিজে হাতে-কলমে বিজ্ঞানের কিছু মজার এক্সপেরিমেন্ট নিয়ে খেলার সুযোগ পাও? মাইক্রোস্কোপ দিয়ে বিভিন্ন উদ্ভিদ ও প্রাণির কোষ দেখার সুযোগ পাও! পৃথিবী কেনো ঘুরে তার রহস্য উন্মোচন এবং মান নির্ণয় করতে পারতে? ল্যাবরেটরিতে কিভাবে কাজ করে তার ধারণা পেতে?</p>
-            <br>
-            <p>তোমাদেরকে এমন মজার কর্মকান্ডে অংশ নেয়ার সুযোগ দেয়ার জন্য শুরু হচ্ছে ৪ দিনের একটি বিশেষ কর্মশালা - <strong>“খেলতে খেলতে বিজ্ঞান”</strong>। এবার এই আয়োজনের ১৬ তম পর্ব অনুষ্ঠিত হতে চলছে। নিবন্ধন করা যাবে ২৮ জুন থেকে ৪ জুলাই রাত ৮টা পর্যন্ত (আসন থাকা সাপেক্ষে) পর্যন্ত।</p>
-            <br>
-            <p>যারা নিজেরা হাতেকলমে পরীক্ষা করে বিজ্ঞানকে বুঝতে চাও, আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের জন্য এখন থেকে প্রস্তুতি নিতে চাও, তাদের জন্যই এই কর্মশালা।</p>
-            <br>
-            <p><strong>অংশ নিতে পারবে:</strong> ২০২৬ -এ এসএসসি পরীক্ষার্থীরা (তবে আগ্রহী হলে ৮ম-৯ম শ্রেণির শিক্ষার্থীরাও অংশ নিতে পারো)</p>
-        </div>
-
-        <!-- ৩. বিষয়ের বিবরণী -->
-        <div class="section" id="topics">
-            <h2><i class="fas fa-atom"></i> কোর্সের বিষয়বস্তু</h2>
-            <p style="font-weight: 600; margin-bottom: 15px;">পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, এবং মাপজোখ নিয়ে ব্যবহারিক ক্লাস।</p>
+        <!-- সেকশন ২: কেন এই কর্মশালা এবং কারা অংশ নিতে পারবে -->
+        <div class="content-card" id="about">
+            <div class="section-headline"><i class="fas fa-lightbulb"></i> কেন তুমি এই কর্মশালায় অংশ নেবে?</div>
+            <p style="margin-bottom: 20px;">তুমি কি নিজে হাতে-কলমে বিজ্ঞানের কিছু মজার এক্সপেরিমেন্ট নিয়ে খেলতে চাও? মাইক্রোস্কোপ দিয়ে বিভিন্ন উদ্ভিদ ও প্রাণির কোষ দেখতে চাও? পৃথিবী কেন ঘোরে তার রহস্য উন্মোচন ও মান নির্ণয় করতে চাও কিংবা ল্যাবরেটরিতে কীভাবে কাজ করতে হয় তার বাস্তব ধারণা পেতে চাও? বিজ্ঞানকে গভীরভাবে বুঝতে এবং আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের অগ্রিম প্রস্তুতির জন্য এই ৪ দিনের বিশেষ আয়োজন।</p>
             
-            <h3 style="font-size: 1.1rem; color: var(--secondary-color); margin-bottom: 10px;">কর্মশালায় যা যা শেখানো হবে (ল্যাবরেটরির যন্ত্রপাতি ও মাপজোখের হাতে-কলমে ব্যবহার):</h3>
-            <ol class="numbered-list">
-                <li>ল্যাবের যন্ত্রপাতি ও মাপজোখ নিয়ে ধারণা</li>
-                <li>স্ক্রুগজ এবং স্লাইড ক্যালিপার্স ব্যবহার</li>
-                <li>দ্রবণ তৈরি করা</li>
-                <li>অম্ল-ক্ষার টাইট্রেশন</li>
-                <li>রক্তের গ্রুপ নির্ণয়</li>
-                <li>স্ফিগমোম্যানোমিটার এবং স্টেথোস্কোপের ব্যবহার</li>
-                <li>মাইক্রোস্কোপে পেঁয়াজ কোষ ও এর প্লাজমোলাইসিস পর্যবেক্ষণ</li>
-            </ol>
-            <p style="margin-top: 15px; background: #fff8f6; padding: 10px; border-radius: 5px; border-left: 3px solid var(--accent-color);">
-                <i class="fas fa-exclamation-circle" style="color: var(--accent-color);"></i> কর্মশালার শেষদিন পরীক্ষায় অংশগ্রহণ করতে হবে।
-            </p>
-            <br>
-            <p><strong>যারা বিজ্ঞানকে হাতে-কলমে বুঝতে চাও বা আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের প্রস্তুতি শুরু করতে চাও—এ কর্মশালা তোমার জন্যই।</strong></p>
+            <div style="background-color: var(--bg-light); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <p><strong><i class="fas fa-user-check" style="color:var(--teal-bright);"></i> অংশগ্রহণের যোগ্যতা:</strong> ২০২৬ সালের এসএসসি পরীক্ষার্থীবৃন্দ (আগ্রহী ৮ম ও ৯ম শ্রেণির শিক্ষার্থীরাও অংশ নিতে পারবে)।</p>
+            </div>
         </div>
 
-        <!-- ৪. সময়, ফি এবং স্থানাঙ্ক -->
-        <div class="section" id="details">
-            <h2><i class="fas fa-calendar-alt"></i> কর্মশালার বিবরণী</h2>
-            <div class="grid-info">
-                <div class="card-item">
-                    <strong><i class="fas fa-calendar-day"></i> তারিখ:</strong>
-                    ৬ জুলাই ২০২৬ - ১০ জুলাই ২০২৬
+        <!-- সেকশন ৩: সিলেবাস এবং কি কি শেখানো হবে -->
+        <div class="content-card" id="topics">
+            <div class="section-headline"><i class="fas fa-flask-vial"></i> কোর্সের মূল বিষয়বস্তু ও সিলেবাস</div>
+            <p style="margin-bottom: 20px; font-weight: bold; color: var(--teal-bright);">পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান এবং মাপজোখ নিয়ে সম্পূর্ণ ব্যবহারিক ক্লাস:</p>
+            
+            <ul class="premium-list">
+                <li><i class="fas fa-square-poll-vertical"></i> ল্যাবের প্রেশাস যন্ত্রপাতি ও সুক্ষ্ম মাপজোখ নিয়ে প্রাথমিক ধারণা।</li>
+                <li><i class="fas fa-compass-drafting"></i> স্লাইড ক্যালিপার্স এবং স্ক্রুগজের নিখুঁত ব্যবহারিক প্রয়োগ।</li>
+                <li><i class="fas fa-vial"></i> রাসায়নিক দ্রবণ তৈরি এবং অম্ল-ক্ষার টাইট্রেশন প্রক্রিয়া।</li>
+                <li><i class="fas fa-droplet"></i> রক্তের গ্রুপ নিজে নিজেই নির্ভুলভাবে নির্ণয় করা।</li>
+                <li><i class="fas fa-heart-pulse"></i> স্ফিগমোম্যানোমিটার (রক্তচাপ পরিমাপক) এবং স্টেথোস্কোপের ব্যবহার।</li>
+                <li><i class="fas fa-dna"></i> মাইক্রোস্কোপের নিচে পেঁয়াজ কোষের গঠন এবং এর প্লাজমোলাইসিস সরাসরি পর্যবেক্ষণ।</li>
+            </ul>
+            <div style="margin-top: 20px; padding: 12px; background: #fffbeb; border-radius: 8px; font-size: 0.95rem;">
+                <i class="fas fa-circle-info" style="color: #d97706;"></i> <strong>মূল্যায়ন:</strong> কর্মশালার শেষ দিন অর্জিত দক্ষতার ওপর একটি বাস্তব পরীক্ষায় অংশগ্রহণ করতে হবে।
+            </div>
+        </div>
+
+        <!-- সেকশন ৪: সময়সূচী ও আসন সংখ্যা -->
+        <div class="content-card" id="schedule">
+            <div class="section-headline"><i class="fas fa-clock-seven"></i> কর্মশালার সময়সূচী ও ভেন্যু</div>
+            <div class="stats-grid">
+                <div class="stat-badge">
+                    <span><i class="fas fa-calendar"></i> সময়কাল</span>
+                    <strong>৬ জুলাই – ১০ জুলাই ২০২৬</strong>
                 </div>
-                <div class="card-item">
-                    <strong><i class="fas fa-clock"></i> সময়:</strong>
-                    বিকার ৩টা – ৫টা
+                <div class="stat-badge">
+                    <span><i class="fas fa-clock"></i> দৈনিক সময়</span>
+                    <strong>বিকাল ৩:০০ টা – ৫:০০ টা</strong>
                 </div>
-                <div class="card-item">
-                    <strong><i class="fas fa-wallet"></i> নিবন্ধন ফি:</strong>
-                    ৩০০০/- টাকা
+                <div class="stat-badge">
+                    <span><i class="fas fa-tag"></i> কোর্স ফি</span>
+                    <strong>৩,০০০/- টাকা মাত্র</strong>
                 </div>
-                <div class="card-item">
-                    <strong><i class="fas fa-users"></i> মোট আসন:</strong>
-                    মাত্র ১২ জন (আগে আসলে আগে পাবেন ভিত্তিতে)
+                <div class="stat-badge">
+                    <span><i class="fas fa-chair"></i> মোট আসন সংখ্যা</span>
+                    <strong style="color: var(--orange-accent);">মাত্র ১২ জন (আগে আসলে আগে পাবেন)</strong>
                 </div>
             </div>
-            <p style="margin-top: 20px;"><i class="fas fa-map-marker-alt" style="color: var(--accent-color);"></i> <strong>স্থান:</strong> ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
+            <div style="margin-top: 25px;">
+                <p><strong><i class="fas fa-map-location-dot" style="color: var(--teal-bright);"></i> ভেন্যু ঠিকানা:</strong> ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
+            </div>
         </div>
 
-        <!-- ৫. রেজিস্ট্রেশন নিয়মাবলি -->
-        <div class="section" id="rules">
-            <h2><i class="fas fa-receipt"></i> রেজিস্ট্রেশন করার নিয়ম</h2>
-            <ol class="numbered-list">
-                <li>প্রথমেই বিকাশের মাধ্যমে কোর্সের নিবন্ধন ফি অগ্রিম প্রদান করতে হবে।</li>
-                <li>নিবন্ধন ফি প্রদান করার বিকাশ নম্বর: <strong>01730-716522</strong> <span class="bkash-badge">bKash</span></li>
-                <li>এই বিকাশ নম্বরটি পারসোনাল নম্বর। তাই বিকাশের সেন্ড মানি অপশন ব্যবহার করে <strong>৩০৬০ টাকা</strong> (বিকাশ ফি সহ) পাঠাতে হবে। নিবন্ধনের জন্য বিকাশের ফিরতি ম্যাসেজের ট্রাঞ্জেকশন আইডি (TrxID) সংরক্ষণ করতে হবে।</li>
-                <li>এরপর নিচের রেজিস্ট্রেশন বাটনের ফর্মটি পূরণ করতে হবে। ফর্মটি পূরনের সময় ট্রাঞ্জেকশন আইডিটি দিয়ে লিখে ফর্মটি সাবমিট করতে হবে।</li>
-                <li>ফর্ম পূরণ করার ৪৮ ঘণ্টার মধ্যে মেইলের মাধ্যমে নিবন্ধন নিশ্চিত করা হবে। ৪৮ ঘণ্টার মধ্যে নিবন্ধন কনফার্মেশন না পেলে আমাদের সঙ্গে যোগাযোগ করুন।</li>
-            </ol>
+        <!-- সেকশন ৫: পেমেন্ট এবং রেজিস্ট্রেশন গাইডলাইন -->
+        <div class="content-card" id="registration">
+            <div class="section-headline"><i class="fas fa-wallet"></i> ধাপে ধাপে রেজিস্ট্রেশন করার নিয়ম</div>
+            <ul class="step-timeline">
+                <li>নিবন্ধন নিশ্চিত করার জন্য প্রথমেই কোর্সের ফি অগ্রিম বিকাশ করতে হবে।
+                    <div class="bkash-payment-info">
+                        <div>
+                            <span style="font-size:0.85rem; color:#64748b; display:block;">বিকাশ পারসোনাল নম্বর</span>
+                            <strong style="font-size:1.2rem; color:var(--primary-dark);">01730-716522</strong>
+                        </div>
+                        <span class="bkash-brand">bKash</span>
+                    </div>
+                    <p style="font-size: 0.95rem; color: #64748b;"><i class="fas fa-info-circle"></i> এটি পারসোনাল অ্যাকাউন্ট হওয়ায় বিকাশের <strong>"সেন্ড মানি"</strong> অপশন ব্যবহার করে বিকাশ ফিসহ মোট <strong>৩০৬০ টাকা</strong> পাঠাতে হবে।</p>
+                </li>
+                <li>টাকা পাঠানোর পর বিকাশের ফিরতি মেসেজ থেকে <strong>ট্রাঞ্জেকশন আইডি (TrxID)</strong> টি যত্ন সহকারে কপি বা সংরক্ষণ করুন।</li>
+                <li>নিচে দেওয়া "রেজিস্ট্রেশন ফর্ম" বাটনে ক্লিক করে ফর্মটি ওপেন করুন এবং ট্রাঞ্জেকশন আইডিটি নির্দিষ্ট বক্সে লিখে ফর্মটি সাবমিট করুন।</li>
+                 <li>ফর্ম সফলভাবে সাবমিটের ৪৮ ঘণ্টার মধ্যে আপনার ইমেইলের মাধ্যমে কনফার্মেশন পাঠানো হবে। (৪৮ ঘণ্টার মধ্যে মেইল না পেলে সরাসরি আমাদের সাথে যোগাযোগ করুন)।</li>
+            </ul>
+            
+            <p style="font-size: 0.95rem; color: #64748b; margin-top: 15px;"><i class="fas fa-calendar-days"></i> <strong>নিবন্ধনের সময়সীমা:</strong> ২৮ জুন থেকে ৪ জুলাই রাত ৮:০০ টা পর্যন্ত (আসন খালি থাকা সাপেক্ষে)।</p>
         </div>
 
-        <!-- সরাসরি রেজিস্ট্রেশন অ্যাকশন বাটন -->
-        <div class="btn-wrapper">
-            <a href="#" class="action-btn" target="_blank"><i class="fas fa-file-alt"></i> রেজিস্ট্রেশন ফর্মটি পূরণ করো</a>
+        <!-- মূল অ্যাকশন রেজিস্ট্রেশন বাটন -->
+        <div class="center-btn-block">
+            <a href="#" class="primary-action-btn" target="_blank"><i class="fas fa-file-signature"></i> অনলাইন রেজিস্ট্রেশন ফর্ম</a>
         </div>
 
-        <!-- ৬. কর্মশালার সুবিধাসমূহ -->
-        <div class="section" id="benefits">
-            <h2><i class="fas fa-gift"></i> কর্মশালায় যা যা প্রদান করা হবে</h2>
-            <ul class="list-items">
-                <li><strong>ক)</strong> কোর্স শেষে অংশগ্রহণকারীদের সার্টিফিকেট প্রদান করা হবে।</li>
-                <li><strong>খ)</strong> ব্যবহারিক উপকরণ ও আনুষাঙ্গিক ম্যাটারিয়েলস ম্যাসল্যাব কর্তৃক প্রদান করা হবে।</li>
-                <li><strong>গ)</strong> ২ ঘন্টার মাঝখানে ১০ মিনিটের বিরতি দেয়া হবে এবং হালকা নাস্তা প্রদান করা হবে।</li>
-                <li><strong>ঘ)</strong> আসন সংখ্যা প্রতি ব্যাচে ১২ টি। তাই আগে আসলে আগে পাবে ভিত্তিতে অংশ নেয়ার সুযোগ।</li>
+        <!-- সেকশন ৬: সুযোগ-সুবিধাসমূহ -->
+        <div class="content-card" id="benefits">
+            <div class="section-headline"><i class="fas fa-gift"></i> কর্মশালায় অংশগ্রহণকারীরা যা যা পাবে</div>
+            <ul class="premium-list">
+                <li><i class="fas fa-certificate"></i> সফলভাবে কোর্স সম্পন্ন করার পর আনুষ্ঠানিকভাবে প্রফেশনাল <strong>সার্টিফিকেট</strong> প্রদান।</li>
+                <li><i class="fas fa-toolbox"></i> পরীক্ষার জন্য প্রয়োজনীয় যাবতীয় ব্যবহারিক উপকরণ ও ল্যাব মেটেরিয়ালস সম্পূর্ণ ম্যাসল্যাব কর্তৃক সরবরাহ করা হবে।</li>
+                <li><i class="fas fa-mug-hot"></i> ২ ঘণ্টার ক্লাসের মাঝে ১০ মিনিটের রিফ্রেশমেন্ট বিরতি এবং হালকা পুষ্টিকর নাস্তা।</li>
             </ul>
         </div>
 
-        <!-- মোটো / সমাপনী বার্তা -->
-        <div class="quote-callout">
+        <!-- সমাপনী স্লোগান -->
+        <div class="quote-banner">
             "চলো, পরীক্ষা-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি"
         </div>
 
     </div>
 
-    <!-- ফুটার ও অফিসিয়াল ব্রান্ডিং -->
-    <footer id="contact">
-        <div class="footer-grid">
+    <!-- ফুটার ও প্রাতিষ্ঠানিক যোগাযোগ হাব -->
+    <footer class="main-footer" id="contact">
+        <div class="footer-container">
             
-              <!-- বাম অংশ: লোগো (যা ক্লিকের মাধ্যমে maslab.org সাইটে নিয়ে যায়) -->
-            <div class="footer-logo-area">
-                <a href="https://maslab.org/" target="_blank" title="Visit MASLab Website">
+            <!-- বাম কলাম: অফিশিয়াল লোগো এবং হাইপারলিংক -->
+            <div class="brand-hub">
+                <a href="https://maslab.org/" target="_blank" title="ম্যাসল্যাব অফিসিয়াল ওয়েবসাইট">
                     <img src="https://maslab.org/wp-content/uploads/2024/03/MASLab-Logo-1-1.png" alt="MASLab Logo">
                 </a>
             </div>
 
-            <!-- ডান অংশ: সরাসরি যোগাযোগের ঠিকানা এবং গুগল ম্যাপ -->
-            <div class="contact-info">
-                <h3 style="color: #fff; margin-bottom: 15px; font-size: 1.2rem;">যোগাযোগ</h3>
-                <p><i class="fas fa-phone-alt"></i> মোবাইল: +880 1730-716522</p>
-                <p><i class="fas fa-envelope"></i> ইমেইল: info@maslab.org</p>
-                <p><i class="fas fa-map-marked-alt"></i> ঠিকানা: ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
+            <!-- ডান কলাম: আইকন বেসড যোগাযোগ এবং লাইভ ম্যাপ -->
+            <div class="footer-contact">
+                <h3>যোগাযোগ করুন</h3>
+                <p><i class="fas fa-phone"></i> <strong>মোবাইল:</strong> +880 1730-716522</p>
+                <p><i class="fas fa-envelope"></i> <strong>ইমেইল:</strong> info@maslab.org</p>
+                <p><i class="fas fa-map-location"></i> <strong>ঠিকানা:</strong> ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
                 
-                <!-- লাইভ ইন্টারেক্টিভ গুগল ম্যাপ এমবেড করা স্থান -->
-                <div class="map-container">
+                <!-- গুগল ম্যাপ এমবেড -->
+                <div class="map-wrapper">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.227280459524!2d90.3721381!3d23.739276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b51d45906d%3A0x7d8a6358c5a2789!2sGreen%20City%20Center!5e0!3m2!1sbn!2sbd!4v1700000000000!5m2!1sbn!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
 
         </div>
 
-        <!-- কপিরাইট এবং ডেভেলপার ক্রেডিটস -->
-        <div class="copyright-area">
+        <!-- কপিরাইট এবং ক্রেডিট পার্ট -->
+        <div class="footer-bottom">
             <p>Event by, <strong>MASLab</strong></p>
             <p>Developed by, <strong>Utsab Sarker</strong></p>
         </div>
     </footer>
 
-    <!-- ফাংশনাল জাভাস্ক্রিপ্ট কোড -->
+    <!-- স্ক্রিপ্ট কন্ট্রোলার -->
     <script>
-        // সাইডবার মেনু টগল ফাংশন
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebarMenu');
-            sidebar.classList.toggle('active');
+        // সাইডবার ওপেন ও ক্লোজ হওয়া নিয়ণ্ত্রণকারী ফাংশন
+        function toggleSidebarMenu() {
+            const menu = document.getElementById('sidebarMenu');
+            menu.classList.toggle('active');
         }
 
-        // অটো স্লাইডার কন্ট্রোলার
-        const slider = document.getElementById('mainSlider');
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
+        // অটো স্লাইডার ক্যারোসেল কন্ট্রোল
+        const sliderContainer = document.getElementById('carouselSlider');
+        const totalSlides = document.querySelectorAll('.single-slide').length;
+        let activeIndex = 0;
 
-        function runSlider() {
-            currentSlide++;
-            if (currentSlide >= slides.length) {
-                currentSlide = 0;
+        function autoPlaySlider() {
+            activeIndex++;
+            if (activeIndex >= totalSlides) {
+                activeIndex = 0;
             }
-            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            sliderContainer.style.transform = `translateX(-${activeIndex * 100}%)`;
         }
 
-        // প্রতি ৪ সেকেন্ড পর পর ব্যানার পরিবর্তিত হবে
-        setInterval(runSlider, 4000);
+        // প্রতি ৪ সেকেন্ড পর পর ব্যানার স্লাইড হবে
+        setInterval(autoPlaySlider, 4000);
     </script>
 </body>
 </html>
