@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #654e02;    /* ব্যানার থেকে নেওয়া গাঢ় মাটির রঙ */
-            --accent-color: #facc15;     /* ব্যানার থেকে নেওয়া উজ্জ্বল হলুদ রঙ */
-            --dark-bg: #403101;          /* ডিপার শেড */
-            --light-bg: #fefcf3;         /* প্রিমিয়াম অফ-হোয়াইট ব্যাকগ্রাউন্ড */
-            --text-dark: #2c2201;
-            --text-light: #6b7280;
+            --bg-main: #0b132b;          /* প্রিমিয়াম ডার্ক ব্যাকগ্রাউন্ড */
+            --bg-card: #1c2541;          /* কার্ড ব্যাকগ্রাউন্ড */
+            --teal-bright: #48cae4;      /* নিয়ন সায়ান কালার */
+            --gold-accent: #facc15;      /* গোল্ডেন অ্যাকসেন্ট */
+            --text-light: #f8fafc;       /* লাইট টেক্সট */
+            --text-muted: #94a3b8;       /* মিউটেড টেক্সট */
+            --alert-red: #ef4444;        /* হাইলাইট লাল রঙ */
         }
 
         * {
@@ -25,14 +26,14 @@
         }
 
         body {
-            background-color: var(--light-bg);
-            color: var(--text-dark);
+            background-color: var(--bg-main);
+            color: var(--text-light);
             line-height: 1.8;
         }
 
-        /* Navbar & Sidebar */
+        /* Navbar & Sidebar Drawer */
         .navbar {
-            background: rgba(101, 78, 2, 0.95);
+            background: rgba(28, 37, 65, 0.95);
             color: #fff;
             padding: 15px 25px;
             display: flex;
@@ -42,13 +43,15 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-bottom: 2px solid var(--teal-bright);
         }
 
         .nav-title {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: bold;
+            color: var(--teal-bright);
         }
 
         .menu-btn {
@@ -57,7 +60,9 @@
             color: white;
             font-size: 1.4rem;
             cursor: pointer;
+            transition: 0.3s;
         }
+        .menu-btn:hover { color: var(--gold-accent); }
 
         .sidebar {
             position: fixed;
@@ -65,10 +70,10 @@
             right: -320px;
             width: 320px;
             height: 100%;
-            background: var(--dark-bg);
+            background: #0f1423;
             z-index: 1001;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.3);
-            transition: 0.4s ease-in-out;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 30px 20px;
             display: flex;
             flex-direction: column;
@@ -87,7 +92,7 @@
         }
 
         .sidebar a {
-            color: #e2e8f0;
+            color: var(--text-muted);
             text-decoration: none;
             padding: 12px 15px;
             font-size: 1.05rem;
@@ -96,25 +101,26 @@
         }
 
         .sidebar a:hover {
-            color: var(--accent-color);
-            background: rgba(255,255,255,0.05);
+            color: #fff;
+            background: var(--bg-card);
             padding-left: 20px;
+            border-radius: 4px;
         }
 
         .sidebar-reg-card {
-            background: var(--primary-color);
+            background: var(--bg-card);
             padding: 20px;
             border-radius: 12px;
             text-align: center;
             color: white;
             margin-top: 20px;
-            border: 2px solid var(--accent-color);
+            border: 1px solid var(--teal-bright);
         }
 
         .menu-action-btn {
             display: inline-block;
-            background: var(--accent-color);
-            color: var(--dark-bg);
+            background: linear-gradient(135deg, var(--teal-bright), #0077b6);
+            color: #fff;
             padding: 10px 20px;
             border-radius: 20px;
             text-decoration: none;
@@ -123,26 +129,22 @@
             font-size: 0.95rem;
             transition: 0.3s;
         }
+        .menu-action-btn:hover { transform: scale(1.05); }
 
-        .menu-action-btn:hover {
-            background: white;
-            transform: scale(1.05);
-        }
-
-        /* Banner Section */
+        /* Banner Carousel */
         .banner-container {
             width: 100%;
             height: 480px;
             overflow: hidden;
             position: relative;
-            margin-top: 55px;
+            margin-top: 60px;
         }
 
         .slides {
             display: flex;
             width: 100%;
             height: 100%;
-            transition: transform 0.6s ease-in-out;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .slide {
@@ -155,94 +157,136 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.7);
+            filter: brightness(0.5);
         }
 
         .slide-caption {
             position: absolute;
-            bottom: 50px;
+            bottom: 60px;
             left: 8%;
             right: 8%;
             color: #fff;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .slide-caption h2 {
-            font-size: 2.3rem;
-            color: var(--accent-color);
+            font-size: 2.5rem;
+            color: var(--gold-accent);
             font-weight: 700;
             margin-bottom: 10px;
         }
 
-        /* Content Layout */
+        /* Layout Container */
         .main-container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
         }
 
         .section-card {
-            background: #fff;
+            background: var(--bg-card);
             padding: 40px;
             border-radius: 16px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(101, 78, 2, 0.05);
-            border-left: 5px solid var(--primary-color);
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .headline-wrapper {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
+            font-size: 1.6rem;
+            color: var(--teal-bright);
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 12px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 12px;
         }
 
-        .headline-wrapper i { color: var(--primary-color); }
-
-        /* Intro Box */
+        /* Intro Presentation Box */
         .intro-box {
-            background: linear-gradient(135deg, #fff, #fefce8);
-            border-left: none;
-            border-top: 5px solid var(--primary-color);
+            background: linear-gradient(135deg, #1c2541, #0b132b);
+            border-top: 4px solid var(--teal-bright);
             text-align: center;
         }
-        .intro-box h1 { color: var(--primary-color); font-size: 2.2rem; margin-bottom: 15px; }
+        .intro-box h1 { color: var(--gold-accent); font-size: 2.4rem; margin-bottom: 15px; }
+        .intro-box p.lead { font-size: 1.25rem; color: var(--text-light); font-weight: 600; }
 
-        /* Lists */
-        .custom-list { list-style: none; }
-        .custom-list li { position: relative; padding-left: 35px; margin-bottom: 15px; font-size: 1.1rem; }
-        .custom-list li i { position: absolute; left: 0; top: 6px; color: var(--primary-color); }
-
-        .numbered-list { list-style: none; counter-reset: li-counter; }
-        .numbered-list li { counter-increment: li-counter; position: relative; padding-left: 45px; margin-bottom: 15px; }
-        .numbered-list li::before {
-            content: counter(li-counter);
-            position: absolute; left: 0; top: 2px;
-            background: var(--primary-color); color: white;
-            width: 26px; height: 26px; border-radius: 50%;
-            text-align: center; line-height: 26px; font-weight: bold; font-size: 0.9rem;
+        /* Icon-based Syllabus List */
+        .syllabus-list {
+            list-style: none;
+        }
+        .syllabus-list li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.02);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--teal-bright);
+            transition: 0.3s;
+        }
+        .syllabus-list li:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateX(5px);
+        }
+        .syllabus-list li i {
+            font-size: 1.4rem;
+            color: var(--gold-accent);
+            width: 30px;
+            text-align: center;
         }
 
-        /* Schedule Grid */
+        /* Separate Highlight Boxes */
+        .standalone-box {
+            background: #222e50;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 20px;
+        }
+        
+        .seats-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .seats-box .highlight-red {
+            color: var(--alert-red);
+            font-weight: bold;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .venue-box {
+            border-left: 4px solid var(--gold-accent);
+        }
+        .venue-box h3 {
+            color: var(--gold-accent);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Grid Layouts */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
         }
         .info-node {
-            background: var(--light-bg);
+            background: #111a36;
             padding: 20px;
             border-radius: 10px;
-            border-top: 3px solid var(--accent-color);
+            border-top: 3px solid var(--teal-bright);
         }
-        .info-node span { display: block; color: var(--text-light); font-size: 0.9rem; margin-bottom: 5px; }
-        .info-node strong { font-size: 1.1rem; color: var(--text-dark); }
+        .info-node span { display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px; }
+        .info-node strong { font-size: 1.15rem; color: #fff; }
 
-        /* bKash Area */
+        /* bKash Section */
         .bkash-container {
             background: #fff0f6;
             border: 1px solid #fbcfe8;
@@ -253,93 +297,137 @@
             align-items: center;
             justify-content: space-between;
             max-width: 400px;
+            color: #333;
         }
+        .bkash-container strong { color: #000; }
         .bkash-label { background: #d1156c; color: white; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; }
 
-        /* Buttons */
+        /* General Custom List */
+        .custom-ul { list-style: none; }
+        .custom-ul li { position: relative; padding-left: 30px; margin-bottom: 12px; }
+        .custom-ul li::before {
+            content: "\f00c"; font-family: "Font Awesome 5 Free"; font-weight: 900;
+            position: absolute; left: 0; color: var(--teal-bright);
+        }
+
+        /* Action Buttons */
         .btn-holder { text-align: center; margin: 40px 0; }
         .cta-button {
-            background: linear-gradient(135deg, var(--primary-color), var(--dark-bg));
-            color: white;
-            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--gold-accent), #eab308);
+            color: #0b132b;
+            padding: 16px 45px;
             font-size: 1.25rem;
             font-weight: bold;
             text-decoration: none;
             border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(101, 78, 2, 0.3);
+            box-shadow: 0 6px 25px rgba(250, 204, 21, 0.3);
             transition: 0.3s;
             display: inline-block;
-            border: 2px solid var(--accent-color);
         }
-        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(101, 78, 2, 0.5); }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(250, 204, 21, 0.5); }
 
-        /* Embedded Map */
-        .map-box-title {
-            background: var(--primary-color);
-            color: var(--accent-color);
-            padding: 10px 15px;
-            border-radius: 8px 8px 0 0;
+        /* Premium Quote Box */
+        .premium-quote-box {
+            background: linear-gradient(135deg, #1c2541, #0f1423);
+            color: #fff;
+            padding: 35px;
+            border-radius: 16px;
+            text-align: center;
+            font-style: italic;
+            font-size: 1.3rem;
+            border-left: 6px solid var(--teal-bright);
+            margin: 45px 0;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        /* Map Structure with Middle Overlay Text */
+        .map-wrapper-relative {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.1);
+            margin-top: 20px;
+        }
+        .map-iframe-container { width: 100%; height: 100%; filter: grayscale(0.3) invert(0.9) contrast(1.2); } /* ডার্ক থিম ম্যাপ এফেক্ট */
+        .map-center-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(11, 19, 43, 0.9);
+            color: var(--gold-accent);
+            padding: 15px 25px;
+            border-radius: 8px;
             font-weight: bold;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 1rem;
+            text-align: center;
+            border: 1px solid var(--teal-bright);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            pointer-events: none; /* যাতে ম্যাপ ড্র্যাগিংয়ে সমস্যা না হয় */
+            width: 85%;
+            max-width: 450px;
         }
-        .map-holder { width: 100%; height: 250px; border-radius: 0 0 8px 8px; overflow: hidden; border: 2px solid var(--primary-color); border-top: none; }
 
-        /* Footer */
+        /* Footer Infrastructure */
         .footer-wrapper {
-            background: var(--dark-bg);
-            color: #d1d5db;
-            padding: 60px 20px 20px;
-            margin-top: 60px;
+            background: #070b19;
+            color: var(--text-muted);
+            padding: 60px 20px 30px;
+            margin-top: 80px;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
-        .footer-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+        .footer-heading-center {
+            text-align: center;
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .footer-heading-center::after {
+            content: ''; display: block; width: 60px; height: 3px; background: var(--teal-bright); margin: 8px auto 0; border-radius: 2px;
+        }
+        
+        .footer-flex-layout {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
             max-width: 1000px;
             margin: 0 auto;
+            gap: 40px;
         }
-        .footer-brand { text-align: center; }
-        .footer-brand a {
-            display: inline-block;
-            background: #fff;
-            padding: 12px;
-            border-radius: 12px;
-            transition: 0.3s;
+        .footer-left-logo {
+            flex: 1; min-width: 280px; text-align: center;
         }
-        .footer-brand a:hover { transform: scale(1.03); }
-        .footer-brand img { max-width: 180px; height: auto; display: block; }
+        .footer-left-logo a {
+            display: inline-block; background: #fff; padding: 12px; border-radius: 12px; transition: 0.3s;
+        }
+        .footer-left-logo a:hover { transform: scale(1.03); }
+        .footer-left-logo img { max-width: 200px; height: auto; display: block; }
 
-        .footer-links h3 { color: #fff; margin-bottom: 20px; }
-        .footer-links a {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            color: #e5e7eb;
-            text-decoration: none;
-            margin-bottom: 15px;
-            transition: 0.3s;
+        .footer-right-links {
+            flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 18px;
         }
-        .footer-links a:hover { color: var(--accent-color); }
-        .footer-links i { color: var(--accent-color); margin-top: 5px; width: 20px; }
+        .footer-right-links a {
+            display: flex; align-items: flex-start; gap: 15px; color: #cbd5e1; text-decoration: none; font-size: 1.05rem; transition: 0.3s;
+        }
+        .footer-right-links a:hover { color: var(--teal-bright); }
+        .footer-right-links i { color: var(--teal-bright); margin-top: 5px; font-size: 1.2rem; width: 24px; }
 
-        .footer-base {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.9rem;
+        .footer-credits-bar {
+            text-align: center; margin-top: 60px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem;
         }
-        .footer-base strong { color: #fff; }
+        .footer-credits-bar strong { color: #fff; }
 
         @media (max-width: 768px) {
             .banner-container { height: 260px; }
-            .slide-caption h2 { font-size: 1.6rem; }
+            .slide-caption h2 { font-size: 1.7rem; }
             .section-card { padding: 25px; }
-            .footer-layout { grid-template-columns: 1fr; text-align: center; }
-            .footer-links a { justify-content: center; }
+            .footer-flex-layout { flex-direction: column; text-align: center; }
+            .footer-right-links a { justify-content: center; }
         }
     </style>
 </head>
@@ -351,21 +439,20 @@
         <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
     </nav>
 
-    <!-- Drawer Navigation Menu -->
+    <!-- Drawer Menu Module -->
     <div class="sidebar" id="sidebarMenu">
         <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
         <a href="#welcome" onclick="toggleMenu()">পরিচিতি</a>
-        <a href="#audience" onclick="toggleMenu()">উদ্দেশ্য ও যোগ্যতা</a>
-        <a href="#topics" onclick="toggleMenu()">সিলেবাস</a>
+        <a href="#audience" onclick="toggleMenu()">যোগ্যতা</a>
+        <a href="#topics" onclick="toggleMenu()">বিষয়বস্তু</a>
         <a href="#lessons" onclick="toggleMenu()">শিখনফল</a>
         <a href="#schedule" onclick="toggleMenu()">সময়সূচি ও ভেন্যু</a>
         <a href="#rules" onclick="toggleMenu()">নিবন্ধনের নিয়ম</a>
         <a href="#perks" onclick="toggleMenu()">সুবিধাসমূহ</a>
         
-        <!-- মেনুর ঠিক নিচেই রেজিস্ট্রেশন বাটন -->
         <div class="sidebar-reg-card">
-            <p style="font-size: 0.9rem; opacity: 0.9;">আসন সংখ্যা মাত্র ১২ জন</p>
-            <a href="https://forms.gle/" class="menu-action-btn" target="_blank"><i class="fas fa-pen-to-square"></i> রেজিস্ট্রেশন ফর্ম</a>
+            <p style="font-size: 0.9rem; margin-bottom: 5px;">সীমিত আসন সংখ্যা!</p>
+            <a href="https://forms.gle/" class="menu-action-btn" target="_blank"><i class="fas fa-signature"></i> রেজিস্ট্রেশন ফর্ম</a>
         </div>
     </div>
 
@@ -373,30 +460,30 @@
     <div class="banner-container">
         <div class="slides" id="bannerSlider">
             <div class="slide">
-                <!-- এখানে ব্যানার ইমেজ 1000364238.jpg ব্যবহার করতে পারবেন -->
-                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80" alt="Banner Image 1">
+                <!-- এখানে রেফারেন্স ইমেজ 1000364238.jpg ব্যবহার করা যাবে -->
+                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80" alt="Science Workshop Banner">
                 <div class="slide-caption">
                     <h2>খেলতে খেলতে বিজ্ঞান</h2>
-                    <p>১৬তম পর্ব - ম্যাসল্যাব আয়োজন</p>
+                    <p>১৬তম পর্ব - নতুন কিছু শেখার দারুণ সুযোগ</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1200&q=80" alt="Banner Image 2">
+                <img src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1200&q=80" alt="Microscope view">
                 <div class="slide-caption">
-                    <h2>হাতে-কলমে বিজ্ঞানের এক্সপেরিমেন্ট</h2>
-                    <p>ছুটি হোক বিজ্ঞানময় ও আনন্দদায়ক</p>
+                    <h2>হাতে-কলমে প্র্যাক্টিক্যাল ল্যাব</h2>
+                    <p>বিজ্ঞানকে জানো আনন্দের সাথে</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Main Content Hub -->
+    <!-- Main Container -->
     <div class="main-container">
         
-        <!-- Section: Text/Intro -->
+        <!-- Section: Text (Intro) -->
         <div class="section-card intro-box" id="welcome">
             <h1>প্রিয় এসএসসি পরীক্ষার্থী ২০২৬</h1>
-            <p style="font-size: 1.2rem; color: #4b5563; font-weight: 500; margin-bottom: 20px;">পরীক্ষা শেষ, শুরু হলো দীর্ঘ ছুটি! এই সময়টা শুধু বিশ্রাম নয়, নতুন কিছু শেখারও দারুণ সুযোগ।</p>
+            <p class="lead" style="margin-bottom: 25px;">পরীক্ষা শেষ, শুরু হলো দীর্ঘ ছুটি! এই সময়টা শুধু বিশ্রাম নয়, নতুন কিছু শেখারও দারুণ সুযোগ।</p>
             <p>কেমন হয়, যদি তুমি নিজে হাতে-কলমে বিজ্ঞানের কিছু মজার এক্সপেরিমেন্ট নিয়ে খেলার সুযোগ পাও? মাইক্রোস্কোপ দিয়ে বিভিন্ন উদ্ভিদ ও প্রাণির কোষ দেখার সুযোগ পাও! পৃথিবী কেনো ঘুরে তার রহস্য উন্মোচন এবং মান নির্ণয় করতে পারতে? ল্যাবরেটরিতে কিভাবে কাজ করে তার ধারণা পেতে?</p>
             <br>
             <p>তোমাদেরকে এমন মজার কর্মকান্ডে অংশ নেয়ার সুযোগ দেয়ার জন্য শুরু হচ্ছে ৪ দিনের একটি বিশেষ কর্মশালা - <strong>“খেলতে খেলতে বিজ্ঞান”</strong>। এবার এই আয়োজনের ১৬ তম পর্ব অনুষ্ঠিত হতে চলছে।</p>
@@ -404,169 +491,188 @@
 
         <!-- Section: কাদের জন্য এই কর্মশালা -->
         <div class="section-card" id="audience">
-            <div class="headline-wrapper"><i class="fas fa-user-graduate"></i> কাদের জন্য এই কর্মশালা</div>
+            <div class="headline-wrapper"><i class="fas fa-users-viewfinder"></i> কাদের জন্য এই কর্মশালা</div>
             <p><strong>এসএসসি ২০২৬ পরীক্ষার্থীরা</strong> এবং ২০২৬ সালে অষ্টম থেকে দশম শ্রেণীতে অধ্যয়নরত যেসব শিক্ষার্থীরা নিজে হাতেকলমে পরীক্ষা করে বিজ্ঞানকে বুঝতে চাও, আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের জন্য এখন থেকে প্রস্তুতি নিতে চাও, তাদের জন্যই এই কর্মশালা।</p>
         </div>
 
         <!-- Section: কর্মশালার বিষয়বস্তু -->
         <div class="section-card" id="topics">
-            <div class="headline-wrapper"><i class="fas fa-atom"></i> কর্মশালার বিষয়বস্তু</div>
-            <p style="font-size: 1.15rem; font-weight: bold; color: var(--primary-color);"><i class="fas fa-book-open"></i> পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, এবং মাপজোখ নিয়ে ব্যবহারিক ক্লাস</p>
+            <div class="headline-wrapper"><i class="fas fa-graduation-cap"></i> কর্মশালার বিষয়বস্তু</div>
+            <p style="font-size: 1.2rem; font-weight: bold; color: var(--gold-accent);"><i class="fas fa-chart-pie"></i> পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, এবং মাপজোখ নিয়ে সম্পূর্ণ ব্যবহারিক ক্লাস</p>
         </div>
 
-        <!-- Section: কর্মশালায় যা যা শেখানো হবে -->
+        <!-- Section: কর্মশালায় যা যা শেখানো হবে (আইকন বেসড) -->
         <div class="section-card" id="lessons">
-            <div class="headline-wrapper"><i class="fas fa-flask-vial"></i> কর্মশালায় যা যা শেখানো হবে</div>
-            <ol class="numbered-list">
-                <li>ল্যাবের যন্ত্রপাতি ও মাপজোখ নিয়ে ধারণা</li>
-                <li>স্ক্রুগজ এবং স্লাইড ক্যালিপার্স ব্যবহার</li>
-                <li>দ্রবণ তৈরি করা</li>
-                <li>অম্ল-ক্ষার টাইট্রেশন</li>
-                <li>রক্তের গ্রুপ নির্ণয়</li>
-                <li>স্ফিগমোম্যানোমিটার এবং স্টেথোস্কোপের ব্যবহার</li>
-                <li>মাইক্রোস্কোপে পেঁয়াজ কোষ ও এর প্লাজমোলাইসিস পর্যবেক্ষণ</li>
-            </ol>
-            <div style="margin-top: 20px; padding: 12px; background: #fffbeb; border-radius: 8px; font-weight: bold; border-left: 4px solid #d97706;">
-                <i class="fas fa-square-poll-vertical"></i> মূল্যায়ন: কর্মশালার শেষদিন পরীক্ষায় অংশগ্রহণ করতে হবে।
+            <div class="headline-wrapper"><i class="fas fa-vials"></i> কর্মশালায় যা যা শেখানো হবে</div>
+            <ul class="syllabus-list">
+                <li><i class="fas fa-tools"></i> <span>ল্যাবের যন্ত্রপাতি ও মাপজোখ নিয়ে ধারণা</span></li>
+                <li><i class="fas fa-ruler-combined"></i> <span>স্ক্রুগজ এবং স্লাইড ক্যালিপার্স ব্যবহার</span></li>
+                <li><i class="fas fa-recipe"></i> <span>দ্রবণ তৈরি করা</span></li>
+                <li><i class="fas fa-filter"></i> <span>অম্ল-ক্ষার টাইট্রেশন</span></li>
+                <li><i class="fas fa-droplet"></i> <span>রক্তের গ্রুপ নির্ণয়</span></li>
+                <li><i class="fas fa-heart-pulse"></i> <span>স্ফিগমোম্যানোমিটার এবং স্টেথোস্কোপের ব্যবহার</span></li>
+                <li><i class="fas fa-dna"></i> <span>মাইক্রোস্কোপে পেঁয়াজ কোষ ও এর প্লাজমোলাইসিস পর্যবেক্ষণ</span></li>
+            </ul>
+            <div style="margin-top: 25px; padding: 15px; background: rgba(24a, 204, 21, 0.05); border-radius: 8px; border-left: 4px solid var(--gold-accent);">
+                <strong><i class="fas fa-file-pen"></i> মূল্যায়ন:</strong> কর্মশালার শেষদিন পরীক্ষায় অংশগ্রহণ করতে হবে।
             </div>
         </div>
 
         <!-- Section: নিবন্ধনের সময়সূচি ও যোগ্যতা -->
         <div class="section-card" id="schedule">
-            <div class="headline-wrapper"><i class="fas fa-calendar-check"></i> নিবন্ধনের সময়সূচি ও যোগ্যতা</div>
+            <div class="headline-wrapper"><i class="fas fa-clock"></i> নিবন্ধনের সময়সূচি ও যোগ্যতা</div>
             <div class="info-grid">
                 <div class="info-node">
-                    <span><i class="fas fa-user-shield"></i> নিবন্ধনের যোগ্যতা</span>
+                    <span><i class="fas fa-id-card-clip"></i> নিবন্ধনের যোগ্যতা</span>
                     <strong>এসএসসি ২০২৬ পরীক্ষার্থী এবং ৮ম-১০ম শ্রেণীর শিক্ষার্থী</strong>
                 </div>
                 <div class="info-node">
-                    <span><i class="fas fa-hourglass-start"></i> শুরু হওয়ার সময়</span>
+                    <span><i class="fas fa-calendar-plus"></i> নিবন্ধন শুরুর সময়</span>
                     <strong>২৮ জুন, ২০২৬; সকাল ৮:০০ টা</strong>
                 </div>
-                <div class="info-node">
-                    <span><i class="fas fa-hourglass-end"></i> শেষ সময়</span>
-                    <strong>৪ জুলাই, ২০২৬; রাত ৮:০০ টা</strong>
+                 <div class="info-node">
+                    <span><i class="fas fa-calendar-minus"></i> নিবন্ধনের শেষ সময়</span>
+                    <strong>৪ জুলাই, ২০২৬; রাত ৮:০০টা</strong>
                 </div>
                 <div class="info-node">
-                    <span><i class="fas fa-money-bill-wave"></i> নিবন্ধন ফি</span>
-                    <strong>৩০০০/- টাকা মাত্র</strong>
+                    <span><i class="fas fa-credit-card"></i> নিবন্ধন ফি</span>
+                    <strong>৩০০০/- টাকা মাত্র (পরিশোধ সাপেক্ষে)</strong>
                 </div>
             </div>
-            <p style="margin-top: 15px; font-weight: bold; color: #b45309;"><i class="fas fa-chair"></i> মোট আসন সংখ্যা: মাত্র ১২ জন (আগে আসলে আগে পাবেন ভিত্তিতে)</p>
-            
-            <!-- নিবন্ধনের মাধ্যম অনলাইন বাটন -->
-            <div class="btn-holder" style="margin: 25px 0 0 0;">
-                <a href="https://forms.gle/" class="cta-button" target="_blank"><i class="fas fa-mouse-pointer"></i> রেজিস্ট্রেশন করতে এখানে ক্লিক করুন</a>
+
+            <!-- স্পেশাল মোট আসন সংখ্যা আলাদা বক্স -->
+            <div class="standalone-box seats-box">
+                <h3><i class="fas fa-chair" style="color:var(--teal-bright);"></i> মোট আসন সংখ্যা: <strong>মাত্র ১২ জন</strong></h3>
+                <span class="highlight-red"><i class="fas fa-triangle-exclamation"></i> আগে আসলে আগে পাবেন ভিত্তিতে</span>
+            </div>
+
+            <div class="btn-holder" style="margin-top: 30px; margin-bottom: 0;">
+                <a href="https://forms.gle/" class="cta-button" target="_blank"><i class="fas fa-arrow-pointer"></i> রেজিস্ট্রেশন করতে এখানে ক্লিক করুন</a>
             </div>
         </div>
 
         <!-- Section: কর্মশালার সময়সূচি ও ভেন্যু -->
         <div class="section-card">
             <div class="headline-wrapper"><i class="fas fa-map-location-dot"></i> কর্মশালার সময়সূচি ও ভেন্যু</div>
-            <div class="info-grid" style="margin-bottom: 20px;">
+            <div class="info-grid" style="margin-bottom: 25px;">
                 <div class="info-node">
-                    <span><i class="fas fa-calendar-days"></i> সময়কাল</span>
+                    <span><i class="fas fa-calendar-range"></i> সময়কাল</span>
                     <strong>৬ জুলাই ২০২৬ – ১০ জুলাই ২০২৬</strong>
                 </div>
                 <div class="info-node">
-                    <span><i class="fas fa-clock"></i> দৈনিক সময়</span>
-                    <strong>বিকাল ৩:০০ টা – ৫:০০ টা</strong>
+                    <span><i class="fas fa-hourglass-half"></i> দৈনিক সময়</span>
+                    <strong>বিকার ৩:০০ টা – ৫:০০ টা</strong>
                 </div>
             </div>
-            <p style="margin-bottom: 15px;"><strong><i class="fas fa-location-dot"></i> ভেন্যু :</strong> ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
-            
-            <!-- Embedded Google Map -->
-            <div class="map-box-title">
-                <i class="fas fa-map-pin"></i> Level 12, MASLab, 758 Satmasjid Road, Dhaka 1209
+
+            <!-- সুন্দর করে আলাদা বক্সে ভেন্যু -->
+            <div class="standalone-box venue-box">
+                <h3><i class="fas fa-building"></i> অফিসিয়াল ভেন্যু</h3>
+                <p>ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড (আবাহনী মাঠের বিপরীতে), ধানমন্ডি, ঢাকা।</p>
             </div>
-            <div class="map-holder">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.227280459524!2d90.3721381!3d23.739276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b51d45906d%3A0x7d8a6358c5a2789!2sGreen%20City%20Center!5e0!3m2!1sbn!2sbd!4v1700000000000!5m2!1sbn!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+            <!-- লোকেশন ম্যাপ এবং তার মাঝখানে লেখা ওভারলে -->
+            <div class="map-wrapper-relative">
+                <div class="map-iframe-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.227280459524!2d90.3721381!3d23.739276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b51d45906d%3A0x7d8a6358c5a2789!2sGreen%20City%20Center!5e0!3m2!1sbn!2sbd!4v1700000000000!5m2!1sbn!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <!-- লোকেশনের একদম মাঝখানে ওভারলে টেক্সট -->
+                <div class="map-center-overlay">
+                    <i class="fas fa-location-crosshairs"></i> Level 12, MASLab, 758 Satmasjid Road, Dhaka 1209
+                </div>
             </div>
         </div>
 
         <!-- Section: নিবন্ধনের নিয়ম -->
         <div class="section-card" id="rules">
-            <div class="headline-wrapper"><i class="fas fa-list-check"></i> রেজিস্ট্রেশন করার নিয়ম</div>
-            <ol class="numbered-list">
+            <div class="headline-wrapper"><i class="fas fa-receipt"></i> রেজিস্ট্রেশন করার নিয়ম</div>
+            <ol class="custom-ul" style="display:flex; flex-direction:column; gap:12px;">
                 <li>প্রথমেই বিকাশের মাধ্যমে কোর্সের নিবন্ধন ফি অগ্রিম প্রদান করতে হবে।</li>
                 <li>নিবন্ধন ফি প্রদান করার বিকাশ নম্বর: <strong>01730-716522</strong>
                     <div class="bkash-container">
                         <div>
-                            <span style="font-size:0.85rem; color:#6b7280;">বিকাশ পারসোনাল নম্বর</span>
+                            <span style="font-size:0.85rem; color:#6b7280; display:block;">বিকার পারসোনাল অ্যাকাউন্ট</span>
                             <strong>01730-716522</strong>
                         </div>
                         <span class="bkash-label">bKash</span>
                     </div>
                 </li>
-                  <li>এই বিকাশ নম্বরটি পারসোনাল নম্বর। তাই বিকাশের সেন্ড মানি অপশন ব্যবহার করে <strong>৩০৬০ টাকা</strong> (বিকাশ ফি সহ) পাঠাতে হবে। নিবন্ধনের জন্য বিকাশের ফিরতি ম্যাসেজের ট্রাঞ্জেকশন আইডি (TrxID) সংরক্ষণ করতে হবে।</li>
-                <li>এরপর উপরে বা নিচে থাকা রেজিস্ট্রেশন বাটনের ফর্মটি পূরণ করতে হবে। ফর্মটি পূরনের সময় ট্রাঞ্জেকশন আইডিটি নির্দিষ্ট স্থানে লিখে ফর্মটি সাবমিট করতে হবে।</li>
+                <li>এই বিকাশ নম্বরটি পারসোনাল নম্বর। তাই বিকাশের সেন্ড মানি অপশন ব্যবহার করে <strong>৩০৬০ টাকা</strong> (বিকাশ ফি সহ) পাঠাতে হবে। নিবন্ধনের জন্য বিকাশের ফিরতি ম্যাসেজের ট্রাঞ্জেকশন আইডি (TrxID) সংরক্ষণ করতে হবে।</li>
+                <li>এরপর অনলাইন রেজিস্ট্রেশন বাটনের ফর্মটি পূরণ করতে হবে। ফর্মটি পূরনের সময় ট্রাঞ্জেকশন আইডিটি সঠিক বক্সে লিখে ফর্মটি সাবমিট করতে হবে।</li>
                 <li>ফর্ম পূরণের ৪৮ ঘণ্টার মধ্যে মেইলের মাধ্যমে নিবন্ধন নিশ্চিত করা হবে। ৪৮ ঘণ্টার মধ্যে নিবন্ধন কনফার্মেশন না পেলে আমাদের সঙ্গে যোগাযোগ করুন।</li>
             </ol>
         </div>
 
         <!-- Section: কর্মশালায় অংশগ্রহণকারীরা কি কি পাবে -->
         <div class="section-card" id="perks">
-            <div class="headline-wrapper"><i class="fas fa-gift"></i> কর্মশালায় অংশগ্রহণকারীরা যা যা পাবে</div>
-            <ul class="custom-list">
-                <li><i class="fas fa-circle-check"></i> <strong>ক)</strong> কোর্স শেষে অংশগ্রহণকারীদের সার্টিফিকেট প্রদান করা হবে।</li>
-                <li><i class="fas fa-circle-check"></i> <strong>খ)</strong> ব্যবহারিক উপকরণ ও আনুষাঙ্গিক ম্যাটারিয়েলস ম্যাসল্যাব কর্তৃক প্রদান করা হবে।</li>
-                <li><i class="fas fa-circle-check"></i> <strong>গ)</strong> ২ ঘন্টার মাঝখানে ১০ মিনিটের বিরতি দেয়া হবে এবং হালকা নাস্তা প্রদান করা হবে।</li>
-                <li><i class="fas fa-circle-check"></i> <strong>ঘ)</strong> আসন সংখ্যা প্রতি ব্যাচে ১২ টি। তাই আগে আসলে আগে পাবে ভিত্তিতে অংশ নেয়ার সুযোগ।</li>
+            <div class="headline-wrapper"><i class="fas fa-box-open"></i> কর্মশালায় অংশগ্রহণকারীরা যা যা পাবে</div>
+            <ul class="custom-ul" style="display:flex; flex-direction:column; gap:10px;">
+                <li><strong>ক)</strong> курс শেষে অংশগ্রহণকারীদের সার্টিফিকেট প্রদান করা হবে।</li>
+                <li><strong>খ)</strong> ব্যবহারিক উপকরণ ও আনুষাঙ্গিক ম্যাটারিয়েলস ম্যাসল্যাব কর্তৃক প্রদান করা হবে।</li>
+                <li><strong>গ)</strong> ২ ঘন্টার মাঝখানে ১০ মিনিটের বিরতি দেয়া হবে এবং হালকা নাস্তা প্রদান করা হবে।</li>
+                <li><strong>ঘ)</strong> আসন সংখ্যা প্রতি ব্যাচে ১২ টি। তাই আগে আসলে আগে পাবে ভিত্তিতে অংশ নেয়ার সুযোগ।</li>
             </ul>
         </div>
 
-        <p style="text-align: center; font-style: italic; font-size: 1.15rem; color: var(--primary-color); font-weight: 600; margin: 30px 0;">(চলো, পরীক্ষা-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি)</p>
+        <!-- স্লোগান কোট বক্স -->
+        <div class="premium-quote-box">
+            "চলো, পরীক্ষা-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি"
+        </div>
 
     </div>
 
     <!-- Section: Footer -->
     <footer class="footer-wrapper" id="contact">
-        <div class="footer-layout">
+        
+        <!-- যোগাযোগ লেখাটি একদম উপরে এবং মাঝখানে -->
+        <div class="footer-heading-center">যোগাযোগ</div>
+        
+        <div class="footer-flex-layout">
             
-            <!-- ক্লিক করলে maslab.org মেইন সাইটে নিয়ে যাবে -->
-            <div class="footer-brand">
-                <a href="https://maslab.org/" target="_blank" title="ম্যাসল্যাব অফিসিয়াল ওয়েবসাইট">
+            <!-- বাম দিকে অফিশিয়াল লোগো -->
+            <div class="footer-left-logo">
+                <a href="https://maslab.org/" target="_blank" title="ম্যাসল্যাব ওয়েবসাইট">
                     <img src="https://maslab.org/wp-content/uploads/2024/03/MASLab-Logo-1-1.png" alt="MASLab Logo">
                 </a>
             </div>
 
-            <!-- ইন্টারেক্টিভ কন্ট্যাক্ট এঙ্কর লিংকস -->
-            <div class="footer-links">
-                <h3>যোগাযোগ</h3>
-                <!-- সরাসরি মোবাইলে কল যাবে -->
-                <a href="tel:+8801730716522"><i class="fas fa-phone-alt"></i> <span><strong>মোবাইল:</strong> +880 1730-716522</span></a>
-                <!-- সরাসরি ইমেইল ওপেন হবে -->
-                <a href="mailto:info@maslab.org"><i class="fas fa-envelope"></i> <span><strong>ইমেইল:</strong> info@maslab.org</span></a>
-                <!-- ক্লিক করলে গুগল ম্যাপে নিয়ে যাবে -->
-                <a href="https://maps.app.goo.gl/aUu6hppcGwhYChjP8" target="_blank"><i class="fas fa-map-location-dot"></i> <span><strong>ঠিকানা:</strong> ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড, ধানমন্ডি, ঢাকা।</span></a>
+            <!-- ডান দিকে কন্ট্যাক্ট ইনফো আইকনসহ -->
+            <div class="footer-right-links">
+                <!-- সরাসরি ডায়ালে নিয়ে যাবে -->
+                <a href="tel:+8801730716522"><i class="fas fa-phone-flip"></i> <span><strong>মোবাইল:</strong> +880 1730-716522</span></a>
+                <!-- সরাসরি ইমেইলে নিয়ে যাবে -->
+                <a href="mailto:info@maslab.org"><i class="fas fa-envelope-open-text"></i> <span><strong>ইমেইল:</strong> info@maslab.org</span></a>
+                <!-- সরাসরি ম্যাপে নিয়ে যাবে -->
+                <a href="https://maps.app.goo.gl/aUu6hppcGwhYChjP8" target="_blank"><i class="fas fa-location-dot"></i> <span><strong>ঠিকানা:</strong> ম্যাসল্যাব, ১২ তলা- গ্রিন সিটি সেন্টার, ৭৫৮ সাত মসজিদ রোড, ধানমন্ডি, ঢাকা।</span></a>
             </div>
 
         </div>
 
-        <div class="footer-base">
-            <p>Event by, <strong>MASLab</strong></p>
+        <!-- ফুটার কপিরাইট ও ক্রেডিট লাইন -->
+        <div class="footer-credits-bar">
+            <p style="margin-bottom: 5px;">Event by, <strong>MASLab</strong></p>
             <p>Developed by, <strong>Utsab Sarker</strong></p>
         </div>
     </footer>
 
-    <!-- JavaScript Controller -->
+    <!-- JavaScript Handler -->
     <script>
         function toggleMenu() {
             const menu = document.getElementById('sidebarMenu');
             menu.classList.toggle('active');
         }
 
-        // অটো মেটিক ব্যানার চেঞ্জ হওয়ার লজিক
+        // ব্যানার ক্যারোসেল অটো স্লাইড
         const slider = document.getElementById('bannerSlider');
-        const totalSlides = document.querySelectorAll('.slide').length;
-        let slideIndex = 0;
+        const count = document.querySelectorAll('.slide').length;
+        let index = 0;
 
-        function autoSlide() {
-            slideIndex++;
-            if (slideIndex >= totalSlides) slideIndex = 0;
-            slider.style.transform = `translateX(-${slideIndex * 100}%)`;
+        function startSlider() {
+            index++;
+            if (index >= count) index = 0;
+            slider.style.transform = `translateX(-${index * 100}%)`;
         }
-        setInterval(autoSlide, 4000);
+        setInterval(startSlider, 4000);
     </script>
 </body>
 </html>
