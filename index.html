@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)</title>
+    
+    <!-- Social Review Meta Tags (Open Graph / Facebook / Twitter) -->
+    <meta property="og:title" content="খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)">
+    <meta property="og:description" content="এসএসসি ২০২৬ পরীক্ষার্থীদের জন্য বিশেষ ৪ দিনের ব্যবহারিক বিজ্ঞান কর্মশালা।">
+    <meta property="og:image" content="../Banner 1.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="../Banner 1.jpg">
+
     <!-- FontAwesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --soft-blue: #2563eb;
-            --accent-red: #ff4500;
-            --text-light: #ffffff;
-            --text-muted: #94a3b8;
+            --bg-main: #f8fafc;          
+            --bg-card: #ffffff;          
+            --accent-red: #ff4500; 
+            --soft-blue: #3b82f6;        
+            --text-dark: #1e293b;        
+            --text-muted: #64748b;       
         }
 
         * {
@@ -23,16 +34,17 @@
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-main);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            color: var(--text-light);
+            color: var(--text-dark);
+            position: relative;
         }
 
-        /* ব্যাকগ্রাউন্ডে হালকা সায়েন্স ওয়াটারমার্ক অ্যানিমেশন */
+        /* ব্যাকগ্রাউন্ডে হালকা রঙিন সায়েন্স ওয়াটারমার্ক */
         .science-bg {
             position: absolute;
             width: 100%;
@@ -41,58 +53,46 @@
             justify-content: space-around;
             align-items: center;
             font-size: 6rem;
-            color: rgba(37, 99, 235, 0.03);
+            color: rgba(59, 130, 246, 0.05);
             z-index: 1;
             user-select: none;
             pointer-events: none;
         }
 
-        /* মেইন কন্টেইনার */
+        /* মেইন কার্ড কন্টেইনার */
         .loading-container {
             text-align: center;
             z-index: 5;
-            padding: 20px;
-            animation: fadeIn 1s ease-out;
-        }
-
-        /* লোগো/আইকন অ্যানিমেশন */
-        .science-icon {
-            font-size: 3.5rem;
-            color: var(--soft-blue);
-            margin-bottom: 20px;
-            animation: spinAtom 4s linear infinite;
-            display: inline-block;
-        }
-
-        @keyframes spinAtom {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); color: var(--accent-red); }
-            100% { transform: rotate(360deg) scale(1); color: var(--soft-blue); }
+            padding: 40px 30px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            border-top: 6px solid var(--soft-blue);
+            max-width: 400px;
+            width: 90%;
+            animation: fadeIn 0.8s ease-out;
         }
 
         /* মূল টাইটেল (খেলতে খেলতে বিজ্ঞান) */
         .main-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            letter-spacing: 1px;
-            background: linear-gradient(to right, #ffffff, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
         }
 
         /* সাব-টাইটেল (১৬ তম পর্ব) */
         .sub-title {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--accent-red);
-            background: rgba(255, 69, 0, 0.1);
-            padding: 4px 18px;
-            border-radius: 20px;
+            background: rgba(255, 69, 0, 0.08);
+            padding: 6px 20px;
+            border-radius: 30px;
             display: inline-block;
             margin-bottom: 25px;
-            border: 1px solid rgba(255, 69, 0, 0.2);
-            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 69, 0, 0.15);
         }
 
         /* আয়োজক সেকশন */
@@ -100,32 +100,30 @@
             font-size: 1.05rem;
             color: var(--text-muted);
             font-weight: 600;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
         .organizer span {
-            color: #38bdf8;
+            color: var(--soft-blue);
             font-weight: 700;
         }
 
-        /* মডার্ন প্রিমিয়াম প্রোগ্রেস বার */
+        /* মডার্ন প্রোগ্রেস বার */
         .progress-bar-container {
-            width: 260px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.08);
+            width: 240px;
+            height: 6px;
+            background: #e2e8f0;
             border-radius: 10px;
             margin: 0 auto;
             overflow: hidden;
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .progress-line {
             width: 0%;
             height: 100%;
-            background: linear-gradient(to right, var(--soft-blue), #38bdf8);
+            background: linear-gradient(to right, var(--soft-blue), #60a5fa);
             border-radius: 10px;
-            box-shadow: 0 0 12px #38bdf8;
             animation: loadProgress 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
@@ -133,8 +131,8 @@
         .loading-text {
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin-top: 12px;
-            font-weight: 600;
+            margin-top: 15px;
+            font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
             animation: pulseText 1.5s infinite alternate;
@@ -143,25 +141,25 @@
         /* অ্যানিমেশন ইফেক্টস */
         @keyframes loadProgress {
             0% { width: 0%; }
-            30% { width: 45%; }
-            70% { width: 85%; }
+            30% { width: 50%; }
+            70% { width: 80%; }
             100% { width: 100%; }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulseText {
-            from { opacity: 0.5; }
+            from { opacity: 0.6; }
             to { opacity: 1; }
         }
 
         @media (max-width: 480px) {
-            .main-title { font-size: 2rem; }
-            .sub-title { font-size: 1.15rem; }
-            .progress-bar-container { width: 200px; }
+            .main-title { font-size: 1.8rem; }
+            .sub-title { font-size: 1.1rem; }
+            .progress-bar-container { width: 100%; }
         }
     </style>
 </head>
@@ -175,12 +173,8 @@
 
     <!-- মূল কন্টেন্ট বক্স -->
     <div class="loading-container">
-        <!-- সায়েন্স রিলেটেড লাইভ আইকন -->
-        <div class="science-icon">
-            <i class="fas fa-atom"></i>
-        </div>
         
-        <!-- আপনার দেওয়া টেক্সট সমূহ -->
+        <!-- মূল টাইটেল ও সাবটাইটেল -->
         <h1 class="main-title">খেলতে খেলতে বিজ্ঞান</h1>
         <div class="sub-title">১৬ তম পর্ব</div>
         <p class="organizer">আয়োজনে: <span>ম্যাসল্যাব</span></p>
