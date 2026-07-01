@@ -139,6 +139,70 @@
             border-top: 8px solid var(--accent-red);
         }
 
+        /* ⏳ ইউনিক লাইভ কাউন্টডাউন টাইমার বক্স */
+        .countdown-wrapper {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 35px;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.05), 0 8px 20px rgba(0,0,0,0.15);
+            border: 1px solid #334155;
+        }
+
+        .countdown-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .countdown-title i {
+            color: #ef4444;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); opacity: 0.8; }
+            to { transform: scale(1.2); opacity: 1; }
+        }
+
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 0;
+            width: 70px;
+            backdrop-filter: blur(4px);
+        }
+
+        .countdown-time {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #38bdf8;
+            font-family: monospace, sans-serif;
+            line-height: 1.2;
+        }
+
+        .countdown-label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
         .form-card h2 {
             font-size: 1.6rem;
             font-weight: 800;
@@ -148,7 +212,7 @@
             padding-bottom: 12px;
         }
 
-        /* 👑 সিএসএস অটোমেটিক নাম্বারিং লজিক (Magic Counter) */
+        /* 👑 সিএসএস অটোমেটিক নাম্বারিং লজিক (রং এখন শতভাগ কালো) */
         #registrationForm {
             counter-reset: question-counter; 
         }
@@ -157,12 +221,12 @@
             margin-bottom: 26px;
         }
 
-        /* শুধুমাত্র যেসব প্রশ্ন দৃশ্যমান (visible) তাদের আগে নম্বর বসবে */
+        /* নম্বরগুলো সুনির্দিষ্টভাবে বডি টেক্সটের সাথে মিল রেখে কালো করা হলো */
         .form-group:not(.conditional-box) label.q-title::before,
         .form-group.conditional-box[style*="display: block"] label.q-title::before {
             counter-increment: question-counter;
             content: counter(question-counter) ". ";
-            color: var(--soft-blue);
+            color: var(--text-dark); /* পরিবর্তন: নীল থেকে কালো */
             font-weight: 800;
         }
 
@@ -309,7 +373,7 @@
             transform: scale(1.03);
         }
 
-        /* আল্ট্রা-ইউনিক সাবমিট বাটন */
+        /* সাবমিট বাটন */
         .submit-btn {
             width: 100%;
             background: linear-gradient(135deg, var(--accent-red), #e03d00);
@@ -382,9 +446,11 @@
 
         @media (max-width: 600px) {
             .fixed-banner h1 { font-size: 1.7rem; }
-            .form-card { padding: 30px 20px; }
+            .form-card { padding: 35px 20px; }
             .radio-flex-group { flex-direction: column; gap: 10px; }
             .radio-label-option { width: 100%; }
+            .countdown-item { width: 60px; }
+            .countdown-time { font-size: 1.25rem; }
         }
     </style>
 </head>
@@ -395,18 +461,43 @@
         <div>∫</div><div>🔭</div><div>√</div><div>📚</div>
     </div>
 
-    <!-- গো ব্যাক বাটন এখন নির্দিষ্টভাবে ../index.html এ যাবে -->
     <div class="header-nav">
-        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> গো ব্যাক</a>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Go Back</a>
     </div>
 
     <div class="fixed-banner">
-        <h1>অনлайн প্রাক-নিবন্ধন পোর্টাল</h1>
-        <p>খেলতে খেলতে বিজ্ঞান (পর্ব-১৬) | ম্যাসল্যাব</p>
+        <h1>খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)</h1>
+        <p>নিবন্ধন ফর্ম</p>
     </div>
 
     <div class="main-container">
         <div class="form-card">
+            
+            <!-- ⏳ লাইভ কাউন্টডাউন টাইমার বক্স (প্রধান ফর্মের ঠিক শুরুতেই যুক্ত করা হয়েছে) -->
+            <div class="countdown-wrapper">
+                <div class="countdown-title">
+                    <i class="fas fa-hourglass-half"></i> নিবন্ধনের সময় শেষ হতে বাকি:
+                </div>
+                <div class="countdown-grid">
+                    <div class="countdown-item">
+                        <div class="countdown-time" id="days">00</div>
+                        <div class="countdown-label">দিন</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-time" id="hours">00</div>
+                        <div class="countdown-label">ঘণ্টা</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-time" id="minutes">00</div>
+                        <div class="countdown-label">মিনিট</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-time" id="seconds">00</div>
+                        <div class="countdown-label">সেকেন্ড</div>
+                    </div>
+                </div>
+            </div>
+
             <h2>আপনার সঠিক তথ্য দিয়ে ফর্মটি পূরণ করুন</h2>
             
             <form id="registrationForm">
@@ -474,7 +565,7 @@
                     </div>
                 </div>
 
-                <!-- 9. Conditional Olympiad Info (অটো-নাম্বারিং হবে) -->
+                <!-- 9. Conditional Olympiad Info -->
                 <div class="form-group conditional-box" id="olympiadDetailsBox">
                     <label class="q-title">If yes, name them with years<span class="req">*</span></label>
                     <input type="text" id="olympiadInfo" name="olympiad" class="form-control" placeholder="উদাঃ National Science Olympiad 2025">
@@ -486,7 +577,7 @@
                         <i class="fas fa-coins" style="color: #eab308; font-size: 1.3rem;"></i>
                         <div>
                             <span style="font-size: 0.8rem; color: var(--text-muted); display: block; font-weight: bold;">নিবন্ধন ফি (বিকাশ খরচসহ):</span>
-                            <span class="fee-amount">3036 tk only</span>
+                            <span class="fee-amount">3060 tk only</span>
                         </div>
                     </div>
                     <br>
@@ -516,7 +607,7 @@
                     </div>
                 </div>
 
-                <!-- 11 & 12. Conditional bKash Fields (অটো-নাম্বারিং হবে) -->
+                <!-- 11 & 12. Conditional bKash Fields -->
                 <div id="bkashDetailsBox">
                     <div class="form-group conditional-box" id="bNumGroup">
                         <label class="q-title">bKash Number<span class="req">*</span></label>
@@ -549,15 +640,42 @@
             <div class="modal-icon-circle"><i class="fas fa-check"></i></div>
             <div class="modal-title">নিবন্ধন সফল হয়েছে!</div>
             <div class="modal-desc">
-                আপনার দেওয়া সমস্ত তথ্য সফলভাবে ডেটাবেজে সংরক্ষণ করা হয়েছে। ভেরিফিকেশন সম্পন্ন হলে আমাদের টিম থেকে খুব শীঘ্রই যোগাযোগ করা হবে।
+                আপনার দেওয়া সমস্ত তথ্য সফলভাবে জমা হয়েছে। ভেরিফিকেশন সম্পন্ন হলে মেইলের মাধ্যমে নিবন্ধন নিশ্চিত করা হবে।
             </div>
             <button type="button" class="modal-close-btn" onclick="closeSuccessModal()">ঠিক আছে</button>
         </div>
     </div>
 
     <script>
-        // আপনার আজকের নতুন ফ্রেশ এপিআই লিঙ্ক 🎯
+        // আপনার নতুন এপিআই লিঙ্ক 🎯
         const apiURL = "https://script.google.com/macros/s/AKfycbx9ZcZ23Ui1A_4d4qQe0y905WyqoED8cDDyX-xfC8gaAT7jSHZTNZiknMWrSUlYy8mb/exec";
+
+        // ⏱️ কাউন্টডাউন টাইমার জাভাস্ক্রিপ্ট লজিক
+        // এখানে আপনার নিবন্ধনের শেষ ডেট ও সময় সেট করুন (যেমন: ৩১ জুলাই ২০২৬, রাত ১১:৫৯:৫৯)
+        const targetDate = new Date("July 04, 2026 20:00:00").getTime();
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            // দিন, ঘণ্টা, মিনিট এবং সেকেন্ড হিসাব
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+            // স্ক্রিনে ডেটা বসানো (যদি সংখ্যা ৯ এর নিচে হয় তবে আগে একটা ০ যোগ হবে)
+            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+            document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+            document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
+
+            // সময় শেষ হয়ে গেলে কাউন্টডাউন জিরো করা
+            if (difference < 0) {
+                clearInterval(countdownInterval);
+                document.querySelector(".countdown-wrapper").innerHTML = "<div class='countdown-title' style='color:#ef4444; font-size:1.1rem;'><i class='fas fa-exclamation-circle'></i> দুঃখিত, নিবন্ধনের সময় শেষ হয়ে গেছে!</div>";
+            }
+        }, 1000);
 
         function toggleOlympiadField(show) {
             const box = document.getElementById('olympiadDetailsBox');
@@ -608,7 +726,7 @@
             e.preventDefault();
             
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...`;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> নিবন্ধন হচ্ছে...`;
 
             const formData = new FormData(form);
             const params = new URLSearchParams();
