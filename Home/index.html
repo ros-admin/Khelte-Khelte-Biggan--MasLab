@@ -153,14 +153,14 @@
             position: fixed;
             top: 0;
             right: -100%;
-            width: 320px;
+            width: 290px; /* মডিফাইড: প্রস্থ হালকা কমানো হয়েছে */
             max-width: 100%;
             height: 100%;
             background: #ffffff;
             z-index: 1002;
             box-shadow: -10px 0 30px rgba(0,0,0,0.1);
             transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            padding: 30px 20px;
+            padding: 25px 15px; /* মডিফাইড: কমপ্যাক্ট স্পেসিং */
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -171,26 +171,26 @@
             background: none;
             border: none;
             color: var(--text-muted);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             align-self: flex-end;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .sidebar-menu-grid {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 8px; /* মডিফাইড: গ্যাপ কমানো হয়েছে */
+            margin-bottom: 20px;
         }
         .sidebar a.menu-item {
             color: var(--text-dark);
             text-decoration: none;
-            padding: 12px 15px;
-            font-size: 1rem;
+            padding: 9px 12px; /* মডিফাইড: বক্সের দৈর্ঘ্য-প্রস্থ ছোট করা হয়েছে */
+            font-size: 0.9rem; /* মডিফাইড: টেক্সট সাইজ মানানসই করা হয়েছে */
             background: #f8fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border-radius: 6px;
             transition: 0.2s;
             font-weight: 600;
         }
@@ -198,79 +198,81 @@
             color: #fff;
             background: var(--soft-blue);
             border-color: var(--soft-blue);
-            padding-left: 20px;
+            padding-left: 16px;
         }
 
         /* 1000364247.jpg ওরেঞ্জ-রেড বক্স রেপ্লিকা */
         .image-replica-box {
             background: var(--accent-red);
-            border-radius: 16px;
-            padding: 20px 20px;
+            border-radius: 12px;
+            padding: 15px 12px; /* মডিফাইড: ভেতরের বক্স এরিয়া ছোট করা হয়েছে */
             text-align: center;
             color: #ffffff;
             box-shadow: 0 6px 20px rgba(255, 69, 0, 0.2);
         }
-        .image-replica-box h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 5px; }
-        .image-replica-box p { font-size: 1.1rem; margin-bottom: 12px; opacity: 0.95; }
+        .image-replica-box h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 3px; }
+        .image-replica-box p { font-size: 0.95rem; margin-bottom: 10px; opacity: 0.95; }
         .image-replica-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             background: #ffffff;
             color: var(--accent-red);
             text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 30px;
+            padding: 9px 18px; /* মডিফাইড: বাটন দৈর্ঘ্য প্রস্থ ছোট করা হয়েছে */
+            border-radius: 25px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 0.95rem; /* মডিফাইড */
             transition: 0.3s;
         }
+        .image-replica-btn:hover { background: #fff1f1; transform: scale(1.02); }
 
         /* Banner */
         .banner-container {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    max-height: 100%;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-}
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            max-height: 100%;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
 
-.slides {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s ease-in-out;
-}
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s ease-in-out;
+        }
 
-.slide {
-    min-width: 100%;
-    height: 100%;
-    position: relative;
-}
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
 
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.45);
-}
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.45);
+        }
 
-.slide-caption {
-    position: absolute;
-    bottom: 8%;
-    left: 5%;
-    right: 5%;
-    color: #fff;
-    z-index: 2;
-}
+        .slide-caption {
+            position: absolute;
+            bottom: 8%;
+            left: 5%;
+            right: 5%;
+            color: #fff;
+            z-index: 2;
+        }
 
-.slide-caption h2 {
-    font-size: clamp(1.4rem, 4vw, 2.2rem);
-    font-weight: 800;
-    margin-bottom: 10px;
-}
+        .slide-caption h2 {
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        
         /* Main Container */
         .main-container {
             max-width: 960px;
@@ -401,7 +403,39 @@
         }
         .cta-button:hover { background: #fff5f5; transform: translateY(-2px); }
 
-        .classic-quote-box { background: var(--soft-blue-bg); border: 1px solid #dbeafe; border-left: 6px solid var(--soft-blue); padding: 30px; border-radius: 16px; text-align: center; font-style: italic; font-size: 1.2rem; color: var(--text-dark); margin: 40px 0; }
+        /* মডিফাইড কোটেশন বক্স ডিজাইন */
+        .classic-quote-box { 
+            background: var(--soft-blue-bg); 
+            border: 1px solid #dbeafe; 
+            border-left: 6px solid var(--soft-blue); 
+            padding: 35px; 
+            border-radius: 16px; 
+            text-align: center; 
+            font-size: 1.25rem; 
+            color: var(--text-dark); 
+            margin: 40px 0; 
+            position: relative;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.05);
+        }
+        .classic-quote-box p {
+            display: inline;
+            font-style: italic;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+        .classic-quote-box i.quote-icon-left {
+            color: rgba(59, 130, 246, 0.2);
+            font-size: 2rem;
+            margin-right: 10px;
+            vertical-align: top;
+        }
+        .classic-quote-box i.quote-icon-right {
+            color: rgba(59, 130, 246, 0.2);
+            font-size: 2rem;
+            margin-left: 10px;
+            vertical-align: bottom;
+        }
 
         .map-relative-frame { position: relative; width: 100%; height: 300px; border-radius: 14px; overflow: hidden; border: 1px solid #cbd5e1; margin-top: 20px; }
         .map-middle-text-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.96); color: var(--text-dark); padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 0.95rem; text-align: center; border: 2px solid var(--soft-blue); width: 85%; max-width: 420px; pointer-events: none; }
@@ -416,8 +450,34 @@
         .footer-links-right { flex: 1; min-width: 280px; display: flex; flex-direction: column; gap: 15px; }
         .footer-links-right a { display: flex; align-items: flex-start; gap: 12px; color: #cbd5e1; text-decoration: none; font-size: 1rem; }
         .footer-links-right i { color: var(--accent-red); margin-top: 5px; width: 20px; text-align: center; }
-        .footer-bottom-credits { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
-        .developer-credit { font-size: 0.8rem; color: #64748b; margin-top: 8px; }
+        
+        /* মডিফাইড প্রিমিয়াম বটম ক্রেডিট */
+        .footer-bottom-credits { 
+            text-align: center; 
+            margin-top: 50px; 
+            padding-top: 25px; 
+            border-top: 1px solid rgba(255,255,255,0.08); 
+            font-size: 0.95rem; 
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .footer-bottom-credits a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+            border-bottom: 1px dashed rgba(56, 189, 248, 0.4);
+            padding-bottom: 1px;
+        }
+        .footer-bottom-credits a:hover {
+            color: #60a5fa;
+            border-bottom-color: #60a5fa;
+            text-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+        }
+        .footer-bottom-credits strong {
+            color: #f1f5f9;
+        }
 
         /* মোবাইল রেসপন্সিভনেস */
         @media (max-width: 768px) {
@@ -447,7 +507,7 @@
         <div>🔭</div><div>💡</div><div>Σ</div><div>√</div>
     </div>
 
-    <!-- বিজ্ঞপ্তি সবার উপরে (পেজ স্ক্রল করলে এটি উপরে চলে যাবে) -->
+      <!-- বিজ্ঞপ্তি সবার উপরে (পেজ স্ক্রল করলে এটি উপরে চলে যাবে) -->
     <div class="top-marquee-container">
         <div class="marquee-fixed-label">
             <i class="fas fa-bullhorn"></i> বিজ্ঞপ্তি:
@@ -588,7 +648,7 @@
             </div>
 
             <div class="info-grid">
-                <!-- উপরের সারি: ৩টি সমান বক্স -->
+                <!-- উপরের সারি: ৩টি সমান باکس -->
                 <div class="info-node">
                     <span><i class="fas fa-graduation-cap"></i> নিবন্ধনের যোগ্যতা</span>
                     <strong>এসএসসি ২০২৬ পরীক্ষার্থী এবং ৮ম-১০ম শ্রেণীর শিক্ষার্থী</strong>
@@ -695,15 +755,18 @@
                 <div class="headline-wrapper"><i class="fas fa-award"></i> কর্মশালায় যা যা পাবে</div>
             </div>
             <ul class="custom-ul">
-                <li>কর্মশালা শেষে সার্টিফিকেট প্রদান করা হবে।</li>
+                <li>कर्मশালা শেষে সার্টিফিকেট প্রদান করা হবে।</li>
                 <li>ব্যবহারিক উপকরণ ও আনুষাঙ্গিক সব ল্যাব থেকেই দেওয়া হবে।</li>
                 <li>ক্লাসের মাঝে হালকা নাস্তা প্রদান করা হবে।</li>
                 <li>আসন সংখ্যা মাত্র ১২ টি, তাই আগে আসলে আগে পাবেন।</li>
             </ul>
         </div>
 
+        <!-- মডিফাইড কুয়াটা বক্সের ডিজাইন -->
         <div class="classic-quote-box">
-            "চলো, পরীক্ষা-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি"
+            <i class="fas fa-quote-left quote-icon-left"></i>
+            <p>চলো, পরীক্ষা-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি</p>
+            <i class="fas fa-quote-right quote-icon-right"></i>
         </div>
     </div>
 
@@ -722,29 +785,31 @@
                 <a href="https://maps.app.goo.gl/7odgJBYMAyEisKgX8"><i class="fas fa-street-view"></i> <span>ম্যাসল্যাব, গ্রিন সিটি সেন্টার (১২ তলা), ৭৫৮ সাত মসজিদ রোড, ধানমন্ডি, ঢাকা।</span></a>
             </div>
         </div>
+        
+        <!-- সুন্দর ক্রেডিট সেকশন লিংক সহ -->
         <div class="footer-bottom-credits">
-            <p>Event by <strong>MASLab</strong></p>
-            <p>Designed & Developed by <strong>UTSAB SARKER</strong></p>
+            <p>Event by <a href="https://maslab.org/" target="_blank">MASLab</a></p>
+            <p>Designed & Developed by <a href="https://github.com/utsabsarker" target="_blank">UTSAB SARKER</a></p>
             <p style="font-size:0.75rem; color:#475569; margin-top:5px;">&copy; 2026 MASLab. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
         function toggleMenu() {
-    document.getElementById('sidebarMenu').classList.toggle('active');
-}
+            document.getElementById('sidebarMenu').classList.toggle('active');
+        }
 
-let index = 0;
-const slider = document.getElementById('bannerSlider');
+        let index = 0;
+        const slider = document.getElementById('bannerSlider');
 
-if (slider) {
-    const totalSlides = slider.children.length;
+        if (slider) {
+            const totalSlides = slider.children.length;
 
-    setInterval(() => {
-        index = (index + 1) % totalSlides;
-        slider.style.transform = `translateX(-${index * 100}%)`;
-    }, 4000);
-}
+            setInterval(() => {
+                index = (index + 1) % totalSlides;
+                slider.style.transform = `translateX(-${index * 100}%)`;
+            }, 4000);
+        }
 
         function copyNumber() {
             navigator.clipboard.writeText("01730716522").then(() => {
@@ -755,59 +820,52 @@ if (slider) {
         }
 
         function checkStatusTimeline() {
-    // ২০২৬ এর বর্তমান সময় ডাইনামিক ট্র্যাকিং 
-    const now = new Date();
-    const regStart = new Date('2026-06-28T08:00:00');
-    const regEnd = new Date('2026-07-04T20:00:00');
-    const wsStart = new Date('2026-07-06T15:00:00');
-    const wsEnd = new Date('2026-07-10T17:00:00');
+            const now = new Date();
+            const regStart = new Date('2026-06-28T08:00:00');
+            const regEnd = new Date('2026-07-04T20:00:00');
+            const wsStart = new Date('2026-07-06T15:00:00');
+            const wsEnd = new Date('2026-07-10T17:00:00');
 
-    // ১. নিবন্ধন শুরুর তারিখ পার হয়ে গেলে কাটা যাবে
-    if (now > regStart) {
-        document.getElementById('startDateNode').classList.add('strike-out');
-    }
-    // ২. নিবন্ধন শেষ হওয়ার তারিখ পার হয়ে গেলে কাটা যাবে
-    if (now > regEnd) {
-        document.getElementById('endDateNode').classList.add('strike-out');
-    }
-    // ৩. নতুন সংযোজন: কর্মশালা শুরু হয়ে গেলে শুরুর তারিখটিও কাটা যাবে
-    if (now > wsStart) {
-        document.getElementById('wsStartTxt').parentElement.classList.add('strike-out');
-    }
-    // ৪. নতুন সংযোজন: সম্পূর্ণ কর্মশালা শেষ হয়ে গেলে শেষের তারিখটিও কাটা যাবে
-    if (now > wsEnd) {
-        document.getElementById('wsEndTxt').parentElement.classList.add('strike-out');
-    }
+            if (now > regStart) {
+                document.getElementById('startDateNode').classList.add('strike-out');
+            }
+            if (now > regEnd) {
+                document.getElementById('endDateNode').classList.add('strike-out');
+            }
+            if (now > wsStart) {
+                document.getElementById('wsStartTxt').parentElement.classList.add('strike-out');
+            }
+            if (now > wsEnd) {
+                document.getElementById('wsEndTxt').parentElement.classList.add('strike-out');
+            }
 
-    // রেজিঃ ব্যাজ নোটিশ আপডেট
-    const regText = document.getElementById('regStatusText');
-    if (now >= regStart && now <= regEnd) {
-        document.getElementById('regStatusBadge').className = "status-badge success";
-        document.getElementById('regStatusDot').className = "status-dot green";
-        regText.innerText = "নিবন্ধন চলমান";
-    } else {
-        document.getElementById('regStatusBadge').className = "status-badge running";
-        document.getElementById('regStatusDot').className = "status-dot red";
-        regText.innerText = now > regEnd ? "নিবন্ধন শেষ" : "নিবন্ধন শুরু হয়নি";
-    }
+            const regText = document.getElementById('regStatusText');
+            if (now >= regStart && now <= regEnd) {
+                document.getElementById('regStatusBadge').className = "status-badge success";
+                document.getElementById('regStatusDot').className = "status-dot green";
+                regText.innerText = "নিবন্ধন চলমান";
+            } else {
+                document.getElementById('regStatusBadge').className = "status-badge running";
+                document.getElementById('regStatusDot').className = "status-dot red";
+                regText.innerText = now > regEnd ? "নিবন্ধন শেষ" : "নিবন্ধন শুরু হয়নি";
+            }
 
-    // ওয়ার্কশপ নোটিশ আপডেট
-    const wsText = document.getElementById('workshopStatusText');
-    if (now < wsStart) {
-        const days = Math.ceil((wsStart - now) / (1000 * 3600 * 24));
-        document.getElementById('workshopStatusBadge').className = "status-badge running";
-        document.getElementById('workshopStatusDot').className = "status-dot red";
-        wsText.innerText = `কর্মশালা শুরু হতে বাকি ${days} দিন`;
-    } else if (now >= wsStart && now <= wsEnd) {
-        document.getElementById('workshopStatusBadge').className = "status-badge success";
-        document.getElementById('workshopStatusDot').className = "status-dot green";
-        wsText.innerText = "কর্মশালা চলমান";
-    } else {
-        document.getElementById('workshopStatusBadge').className = "status-badge running";
-        document.getElementById('workshopStatusDot').className = "status-dot red";
-        wsText.innerText = "কর্মশালা শেষ";
-    }
-}
+            const wsText = document.getElementById('workshopStatusText');
+            if (now < wsStart) {
+                const days = Math.ceil((wsStart - now) / (1000 * 3600 * 24));
+                document.getElementById('workshopStatusBadge').className = "status-badge running";
+                document.getElementById('workshopStatusDot').className = "status-dot red";
+                wsText.innerText = `कर्मशाला शुरू হতে बाकी ${days} दिन`;
+            } else if (now >= wsStart && now <= wsEnd) {
+                document.getElementById('workshopStatusBadge').className = "status-badge success";
+                document.getElementById('workshopStatusDot').className = "status-dot green";
+                wsText.innerText = "কর্মশালা চলমান";
+            } else {
+                document.getElementById('workshopStatusBadge').className = "status-badge running";
+                document.getElementById('workshopStatusDot').className = "status-dot red";
+                wsText.innerText = "কর্মশালা শেষ";
+            }
+        }
 window.onload = checkStatusTimeline;
     </script>
 </body>
