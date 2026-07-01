@@ -542,11 +542,11 @@
         const form = document.getElementById('registrationForm');
 const submitBtn = document.getElementById('submitBtn');
 
-// আপনার এপিআই লিঙ্ক
-const apiURL = "https://script.google.com/macros/s/AKfycbx9ZcZ23Ui1A_4d4qQe0y905WyqoED8cDDyX-xfC8gaAT7jSHZTNZiknMWrSUlYy8mb/exec";
+// আপনার আজকের একদম নতুন ফ্রেশ এপিআই লিঙ্ক 🎯
+const apiURL = "https://script.google.com/macros/s/AKfycbxTrg_mAmPe5CvfkHyJtkNNgf2ElezsxAlu3rAks8Vdlc6s8spo8p8mMzfoQFs0Cf4q/exec";
 
 form.addEventListener('submit', function(e) {
-    e.preventDefault(); // ডিফল্ট পেজ রিলোড বন্ধ করা
+    e.preventDefault(); // পেজ রিলোড বন্ধ করা
     
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...`;
@@ -558,14 +558,13 @@ form.addEventListener('submit', function(e) {
         params.append(key, value);
     });
 
-    // 💡 সমাধান: মোড 'no-cors' করার কারণে ব্রাউজার আর রিকোয়েস্ট ব্লক করবে না।
-    // ডাটা সরাসরি গুগলে চলে যাবে।
+    // ডাটা গুগলে পাঠানোর ফাইনাল মেথড
     fetch(`${apiURL}?${params.toString()}`, {
         method: 'POST',
-        mode: 'no-cors' // এই মোডটি ব্রাউজারের CORS লক ভেঙে দেয়
+        mode: 'no-cors' // ব্রাউজারের CORS পলিসি বাইপাস করার জন্য
     })
     .then(() => {
-        // no-cors মোডে ডাটা গুগলে পৌঁছানো মাত্রই এই ব্লকটি রান করবে
+        // ডাটা সফলভাবে পৌঁছানো মাত্রই সাকসেস পপআপ দেখাবে
         openSuccessModal();
         form.reset();
         toggleOlympiadField(false);
@@ -581,7 +580,7 @@ form.addEventListener('submit', function(e) {
     });
 });
 
-// কন্ডিশনাল ইনপুট ও পপআপ কন্ট্রোল ফাংশনসমূহ (আগের মতোই থাকবে)
+// বাকি সাপোর্ট ফাংশনগুলো (কন্ডিশনাল বক্স এবং পপআপ কন্ট্রোল)
 function toggleOlympiadField(show) {
     const box = document.getElementById('olympiadDetailsBox');
     const input = document.getElementById('olympiadInfo');
