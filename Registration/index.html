@@ -32,6 +32,9 @@
             position: relative;
             overflow-x: hidden;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* ইউনিক সায়েন্স ওয়াটারমার্ক ব্যাকগ্রাউন্ড গ্রিড */
@@ -53,12 +56,12 @@
             overflow: hidden;
         }
 
-        .header-nav, .main-container {
+        .header-nav, .main-container, footer {
             position: relative;
             z-index: 5;
         }
 
-        /* গো ব্যাক হেডার বার (../index.html লিংকে রিডাইরেক্ট করবে) */
+        /* গো ব্যাক হেডার বার */
         .header-nav {
             background: #ffffff;
             height: 65px;
@@ -91,11 +94,18 @@
             transform: translateX(-3px);
         }
 
-        /* মডার্ন থিম ব্যানার */
+        /* 3:2 রেশিও মডার্ন ব্যানার কন্টেইনার */
+        .banner-container {
+            width: 100%;
+            max-width: 750px;
+            margin: 30px auto 0 auto;
+            padding: 0 15px;
+        }
+
         .fixed-banner {
             width: 100%;
-            height: 240px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(37, 99, 235, 0.8)), url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80');
+            aspect-ratio: 3 / 2; /* ৩:২ রেশিও নিশ্চিতকরণ */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.75), rgba(37, 99, 235, 0.7)), url('../../Banner 1');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -104,42 +114,47 @@
             align-items: center;
             color: #ffffff;
             text-align: center;
-            padding: 0 15px;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
 
         .fixed-banner h1 {
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 10px;
-            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
+        
         .fixed-banner p {
             font-size: 1.15rem;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.15);
             padding: 6px 16px;
             border-radius: 20px;
             backdrop-filter: blur(5px);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         /* ফর্ম কন্টেইনার */
         .main-container {
             max-width: 750px;
-            margin: -50px auto 60px auto;
-            padding: 0 15px;
+            margin: 0 auto 60px auto;
+            padding: 20px 15px 0 15px;
             width: 100%;
+            flex: 1;
         }
 
         .form-card {
             background: var(--bg-card);
             padding: 45px 40px;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.06);
             border: 1px solid #e2e8f0;
             border-top: 8px solid var(--accent-red);
         }
 
-        /* ⏳ ইউনিক লাইভ কাউন্টডাউন টাইমার বক্স */
+        /* ⏳ লাইভ কাউন্টডাউন টাইমার বক্স */
         .countdown-wrapper {
             background: linear-gradient(135deg, #1e293b, #0f172a);
             border-radius: 14px;
@@ -203,16 +218,41 @@
             margin-top: 2px;
         }
 
-        .form-card h2 {
-            font-size: 1.6rem;
+        /* 📑 ফর্ম পার্ট ও সেকশন ডিজাইন */
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 10px;
+        }
+        
+        .form-section-title {
+            font-size: 1.25rem;
             font-weight: 800;
-            margin-bottom: 30px;
-            color: var(--text-dark);
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 12px;
+            color: var(--soft-blue);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px dashed #e2e8f0;
+            padding-bottom: 10px;
         }
 
-        /* 👑 সিএসএস অটোমেটিক নাম্বারিং লজিক (রং এখন শতভাগ কালো) */
+        .form-section-title i {
+            background: var(--soft-blue-bg);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+
+        .form-section.payment-part .form-section-title {
+            color: var(--bkash-color);
+            margin-top: 15px;
+        }
+        
+        .form-section.payment-part .form-section-title i {
+            background: #fff0f6;
+        }
+
+        /* সিএসএস অটোমেটিক নাম্বারিং লজিক (রং কালো) */
         #registrationForm {
             counter-reset: question-counter; 
         }
@@ -221,12 +261,11 @@
             margin-bottom: 26px;
         }
 
-        /* নম্বরগুলো সুনির্দিষ্টভাবে বডি টেক্সটের সাথে মিল রেখে কালো করা হলো */
         .form-group:not(.conditional-box) label.q-title::before,
         .form-group.conditional-box[style*="display: block"] label.q-title::before {
             counter-increment: question-counter;
             content: counter(question-counter) ". ";
-            color: var(--text-dark); /* পরিবর্তন: নীল থেকে কালো */
+            color: var(--text-dark);
             font-weight: 800;
         }
 
@@ -320,7 +359,7 @@
             border-left: 6px solid var(--bkash-color);
             padding: 24px;
             border-radius: 14px;
-            margin: 30px 0;
+            margin: 20px 0 30px 0;
             box-shadow: 0 4px 15px rgba(209, 21, 108, 0.03);
         }
 
@@ -423,34 +462,100 @@
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
         .success-modal {
-            background: white; padding: 45px 35px; border-radius: 24px; width: 90%; max-width: 450px;
+            background: white; padding: 40px 30px; border-radius: 24px; width: 92%; max-width: 500px;
             text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.18);
             transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .modal-overlay.active .success-modal { transform: scale(1); }
 
         .modal-icon-circle {
-            width: 80px; height: 80px; background: #ecfdf5; color: #10b981;
-            font-size: 2.8rem; display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; margin: 0 auto 24px auto;
+            width: 75px; height: 75px; background: #ecfdf5; color: #10b981;
+            font-size: 2.5rem; display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; margin: 0 auto 20px auto;
         }
 
-        .modal-title { font-size: 1.7rem; color: #0f172a; font-weight: 800; margin-bottom: 12px; }
-        .modal-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; line-height: 1.6; }
+        .modal-title { font-size: 1.6rem; color: #10b981; font-weight: 800; margin-bottom: 12px; }
+        .modal-desc { color: var(--text-dark); font-size: 0.98rem; margin-bottom: 20px; line-height: 1.6; text-align: justify; }
         
+        /* ⚠️ নতুন রিকোয়ারমেন্ট অনুযায়ী সাকসেস মোডালের ভেতর এটেনশন বক্স */
+        .attention-box {
+            background: #fffbeb;
+            border: 1px solid #fef3c7;
+            border-left: 5px solid #d97706;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: left;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .attention-box i {
+            color: #d97706;
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .attention-text {
+            color: #92400e;
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
         .modal-close-btn {
-            background: var(--soft-blue); color: white; border: none; padding: 12px 35px;
+            background: var(--soft-blue); color: white; border: none; padding: 12px 40px;
             font-size: 1rem; font-weight: 600; border-radius: 30px; cursor: pointer; transition: 0.2s;
         }
         .modal-close-btn:hover { background: #1d4ed8; }
 
+        /* 👑 ব্র্যান্ডেড ও রেসপনসিভ ফুটার সেকশন */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            padding: 20px 15px;
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.02);
+        }
+
+        .footer-credits {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .credit-item {
+            font-weight: 600;
+        }
+
+        .credit-item a {
+            color: var(--soft-blue);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+
+        .credit-item a:hover {
+            color: var(--accent-red);
+            text-decoration: underline;
+        }
+
         @media (max-width: 600px) {
-            .fixed-banner h1 { font-size: 1.7rem; }
-            .form-card { padding: 35px 20px; }
+            .fixed-banner h1 { font-size: 1.6rem; }
+            .form-card { padding: 30px 20px; }
             .radio-flex-group { flex-direction: column; gap: 10px; }
             .radio-label-option { width: 100%; }
             .countdown-item { width: 60px; }
             .countdown-time { font-size: 1.25rem; }
+            .footer-credits { flex-direction: column; gap: 8px; }
         }
     </style>
 </head>
@@ -462,18 +567,20 @@
     </div>
 
     <div class="header-nav">
-        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Go Back</a>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> গো ব্যাক</a>
     </div>
 
-    <div class="fixed-banner">
-        <h1>খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)</h1>
-        <p>নিবন্ধন ফর্ম</p>
+    <div class="banner-container">
+        <div class="fixed-banner">
+            <h1>খেলতে খেলতে বিজ্ঞান (পর্ব-১৬) </h1>
+            <p>নিবন্ধন ফর্ম</p>
+        </div>
     </div>
 
     <div class="main-container">
         <div class="form-card">
             
-            <!-- ⏳ লাইভ কাউন্টডাউন টাইমার বক্স (প্রধান ফর্মের ঠিক শুরুতেই যুক্ত করা হয়েছে) -->
+            <!-- ⏳ লাইভ কাউন্টডাউন টাইমার বক্স -->
             <div class="countdown-wrapper">
                 <div class="countdown-title">
                     <i class="fas fa-hourglass-half"></i> নিবন্ধনের সময় শেষ হতে বাকি:
@@ -497,130 +604,143 @@
                     </div>
                 </div>
             </div>
-
-            <h2>আপনার সঠিক তথ্য দিয়ে ফর্মটি পূরণ করুন</h2>
             
             <form id="registrationForm">
                 
-                <!-- 1. Name -->
-                <div class="form-group">
-                    <label class="q-title">Name<span class="req">*</span></label>
-                    <input type="text" id="userName" name="name" class="form-control" placeholder="আপনার সম্পূর্ণ নাম লিখুন" required>
-                </div>
-
-                <!-- 2. Email -->
-                <div class="form-group">
-                    <label class="q-title">Email<span class="req">*</span></label>
-                    <input type="email" id="userEmail" name="email" class="form-control" placeholder="example@mail.com" required>
-                </div>
-
-                <!-- 3. Mobile -->
-                <div class="form-group">
-                    <label class="q-title">Mobile<span class="req">*</span></label>
-                    <input type="tel" id="userMobile" name="mobile" class="form-control" placeholder="01XXXXXXXXX" required>
-                </div>
-
-                <!-- 4. School Name -->
-                <div class="form-group">
-                    <label class="q-title">School Name<span class="req">*</span></label>
-                    <input type="text" id="schoolName" name="school" class="form-control" placeholder="আপনার স্কুলের নাম" required>
-                </div>
-
-                <!-- 5. Class -->
-                <div class="form-group">
-                    <label class="q-title">Class<span class="req">*</span></label>
-                    <div class="radio-flex-group">
-                        <label class="radio-label-option"><input type="radio" name="class" value="Class 8" required> Class 8</label>
-                        <label class="radio-label-option"><input type="radio" name="class" value="Class 9"> Class 9</label>
-                        <label class="radio-label-option"><input type="radio" name="class" value="Class 10"> Class 10</label>
-                        <label class="radio-label-option"><input type="radio" name="class" value="SSC 2026"> SSC 2026</label>
+                <!-- ================= 👤 PART 1: Personal Details ================= -->
+                <div class="form-section personal-part">
+                    <div class="form-section-title">
+                        <i class="fas fa-user-graduate"></i> Personal Details
                     </div>
-                </div>
 
-                <!-- 6. Gender -->
-                <div class="form-group">
-                    <label class="q-title">Gender<span class="req">*</span></label>
-                    <div class="radio-flex-group">
-                        <label class="radio-label-option"><input type="radio" name="gender" value="Male" required> Male</label>
-                        <label class="radio-label-option"><input type="radio" name="gender" value="Female"> Female</label>
+                    <!-- 1. Name -->
+                    <div class="form-group">
+                        <label class="q-title">Name<span class="req">*</span></label>
+                        <input type="text" id="userName" name="name" class="form-control" placeholder="আপনার সম্পূর্ণ নাম লিখুন" required>
                     </div>
-                </div>
 
-                <!-- 7. Date of Birth -->
-                <div class="form-group">
-                    <label class="q-title">Date of Birth<span class="req">*</span></label>
-                    <input type="date" id="userDOB" name="dob" class="form-control" required>
-                </div>
-
-                <!-- 8. Olympiad Participation -->
-                <div class="form-group">
-                    <label class="q-title">Did you ever participate in any olympiad?<span class="req">*</span></label>
-                    <div class="radio-flex-group">
-                        <label class="radio-label-option" onclick="toggleOlympiadField(true)">
-                            <input type="radio" name="participate" value="Yes" required> Yes
-                        </label>
-                        <label class="radio-label-option" onclick="toggleOlympiadField(false)">
-                            <input type="radio" name="participate" value="No"> No
-                        </label>
+                    <!-- 2. Email -->
+                    <div class="form-group">
+                        <label class="q-title">Email<span class="req">*</span></label>
+                        <input type="email" id="userEmail" name="email" class="form-control" placeholder="example@mail.com" required>
                     </div>
-                </div>
 
-                <!-- 9. Conditional Olympiad Info -->
-                <div class="form-group conditional-box" id="olympiadDetailsBox">
-                    <label class="q-title">If yes, name them with years<span class="req">*</span></label>
-                    <input type="text" id="olympiadInfo" name="olympiad" class="form-control" placeholder="উদাঃ National Science Olympiad 2025">
-                </div>
+                    <!-- 3. Mobile -->
+                    <div class="form-group">
+                        <label class="q-title">Mobile<span class="req">*</span></label>
+                        <input type="tel" id="userMobile" name="mobile" class="form-control" placeholder="01XXXXXXXXX" required>
+                    </div>
 
-                <!-- 💰 বিকাশ পেমেন্ট তথ্য বক্স ও টাকার পরিমাণ হাইলাইট -->
-                <div class="bkash-info-wrapper">
-                    <div class="payment-highlight-box">
-                        <i class="fas fa-coins" style="color: #eab308; font-size: 1.3rem;"></i>
-                        <div>
-                            <span style="font-size: 0.8rem; color: var(--text-muted); display: block; font-weight: bold;">নিবন্ধন ফি (বিকাশ খরচসহ):</span>
-                            <span class="fee-amount">3060 tk only</span>
+                    <!-- 4. School Name -->
+                    <div class="form-group">
+                        <label class="q-title">School Name<span class="req">*</span></label>
+                        <input type="text" id="schoolName" name="school" class="form-control" placeholder="আপনার স্কুলের নাম" required>
+                    </div>
+
+                    <!-- 5. Class -->
+                    <div class="form-group">
+                        <label class="q-title">Class<span class="req">*</span></label>
+                        <div class="radio-flex-group">
+                            <label class="radio-label-option"><input type="radio" name="class" value="Class 8" required> Class 8</label>
+                            <label class="radio-label-option"><input type="radio" name="class" value="Class 9"> Class 9</label>
+                            <label class="radio-label-option"><input type="radio" name="class" value="Class 10"> Class 10</label>
+                            <label class="radio-label-option"><input type="radio" name="class" value="SSC 2026"> SSC 2026</label>
                         </div>
                     </div>
-                    <br>
-                    <strong style="color: var(--bkash-color); font-size: 0.95rem;"><i class="fas fa-wallet"></i> পেমেন্ট পদ্ধতি:</strong>
-                    <p style="font-size:0.85rem; margin-top:5px; color: var(--text-muted);">উক্ত ফি নিচের বিকাশ নম্বরে অবশই <b>'Send Money'</b> করতে হবে।</p>
-                    <div class="bkash-number-row">
-                        <div>
-                            <span style="font-size:0.75rem; color:var(--text-muted); display:block;">বিকাশ পারসোনাল নম্বর</span>
-                            <strong style="font-size:1.05rem; color:var(--text-dark);">01730-716522</strong>
+
+                    <!-- 6. Gender -->
+                    <div class="form-group">
+                        <label class="q-title">Gender<span class="req">*</span></label>
+                        <div class="radio-flex-group">
+                            <label class="radio-label-option"><input type="radio" name="gender" value="Male" required> Male</label>
+                            <label class="radio-label-option"><input type="radio" name="gender" value="Female"> Female</label>
                         </div>
-                        <button type="button" class="copy-btn" onclick="copyBkashNumber()">
-                            <i class="far fa-copy"></i> নম্বর কপি করুন
-                        </button>
+                    </div>
+
+                    <!-- 7. Date of Birth -->
+                    <div class="form-group">
+                        <label class="q-title">Date of Birth<span class="req">*</span></label>
+                        <input type="date" id="userDOB" name="dob" class="form-control" required>
+                    </div>
+
+                    <!-- 8. Olympiad Participation -->
+                    <div class="form-group">
+                        <label class="q-title">Did you ever participate in any olympiad?<span class="req">*</span></label>
+                        <div class="radio-flex-group">
+                            <label class="radio-label-option" onclick="toggleOlympiadField(true)">
+                                <input type="radio" name="participate" value="Yes" required> Yes
+                            </label>
+                            <label class="radio-label-option" onclick="toggleOlympiadField(false)">
+                                <input type="radio" name="participate" value="No"> No
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 9. Conditional Olympiad Info -->
+                    <div class="form-group conditional-box" id="olympiadDetailsBox">
+                        <label class="q-title">If yes, name them with years<span class="req">*</span></label>
+                        <input type="text" id="olympiadInfo" name="olympiad" class="form-control" placeholder="উদাঃ National Science Olympiad 2025">
                     </div>
                 </div>
 
-                <!-- 10. Paid Through bKash -->
-                <div class="form-group">
-                    <label class="q-title">Did you pay your Registration fee through bKash?<span class="req">*</span></label>
-                    <div class="radio-flex-group">
-                        <label class="radio-label-option" onclick="toggleBkashFields(true)">
-                            <input type="radio" name="paid" value="Yes" required> Yes
-                        </label>
-                        <label class="radio-label-option" onclick="toggleBkashFields(false)">
-                            <input type="radio" name="paid" value="No"> No
-                        </label>
-                    </div>
-                </div>
 
-                <!-- 11 & 12. Conditional bKash Fields -->
-                <div id="bkashDetailsBox">
-                    <div class="form-group conditional-box" id="bNumGroup">
-                        <label class="q-title">bKash Number<span class="req">*</span></label>
-                        <input type="tel" id="bkashNum" name="bkash" class="form-control" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন">
+                <!-- ================= 💰 PART 2: Payment Section ================= -->
+                <div class="form-section payment-part">
+                    <div class="form-section-title">
+                        <i class="fas fa-credit-card"></i> Payment Section
                     </div>
-                    <div class="form-group conditional-box" id="bTrxGroup">
-                        <label class="q-title">bKash Trx ID<span class="req">*</span></label>
-                        <input type="text" id="trxId" name="trx" class="form-control" placeholder="বিকাশ মেসেজের ট্রাঞ্জেকশন আইডি (TrxID)">
+
+                    <!-- বিকাশ পেমেন্ট তথ্য বক্স ও টাকার পরিমাণ হাইলাইট -->
+                    <div class="bkash-info-wrapper">
+                        <div class="payment-highlight-box">
+                            <i class="fas fa-coins" style="color: #eab308; font-size: 1.3rem;"></i>
+                            <div>
+                                <span style="font-size: 0.8rem; color: var(--text-muted); display: block; font-weight: bold;">নিবন্ধন ফি (বিকাশ খরচসহ):</span>
+                                <span class="fee-amount">৳ ১৫০/- (একশত পাশে টাকা)</span>
+                            </div>
+                        </div>
+                        <br>
+                        <strong style="color: var(--bkash-color); font-size: 0.95rem;"><i class="fas fa-wallet"></i> পেমেন্ট পদ্ধতি:</strong>
+                        <p style="font-size:0.85rem; margin-top:5px; color: var(--text-muted);">উক্ত ফি নিচের বিকাশ নম্বরে অবশই <b>'Send Money'</b> করতে হবে।</p>
+                        <div class="bkash-number-row">
+                            <div>
+                                <span style="font-size:0.75rem; color:var(--text-muted); display:block;">বিকাশ পারসোনাল নম্বর</span>
+                                <strong style="font-size:1.05rem; color:var(--text-dark);">01730-716522</strong>
+                            </div>
+                            <button type="button" class="copy-btn" onclick="copyBkashNumber()">
+                                <i class="far fa-copy"></i> নম্বর কপি করুন
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 10. Paid Through bKash -->
+                    <div class="form-group">
+                        <label class="q-title">Did you pay your Registration fee through bKash?<span class="req">*</span></label>
+                        <div class="radio-flex-group">
+                            <label class="radio-label-option" onclick="toggleBkashFields(true)">
+                                <input type="radio" name="paid" value="Yes" required> Yes
+                            </label>
+                            <label class="radio-label-option" onclick="toggleBkashFields(false)">
+                                <input type="radio" name="paid" value="No"> No
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 11 & 12. Conditional bKash Fields -->
+                    <div id="bkashDetailsBox">
+                        <div class="form-group conditional-box" id="bNumGroup">
+                            <label class="q-title">bKash Number<span class="req">*</span></label>
+                            <input type="tel" id="bkashNum" name="bkash" class="form-control" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন">
+                        </div>
+                        <div class="form-group conditional-box" id="bTrxGroup">
+                            <label class="q-title">bKash Trx ID<span class="req">*</span></label>
+                            <input type="text" id="trxId" name="trx" class="form-control" placeholder="বিকাশ মেসেজের ট্রাঞ্জেকশন আইডি (TrxID)">
+                        </div>
                     </div>
                 </div>
 
                 <!-- 13. Comments -->
-                <div class="form-group">
+                <div class="form-group" style="border-top: 1px solid #f1f5f9; padding-top: 20px;">
                     <label class="q-title">If you have any questions or comments, please mention it here.</label>
                     <textarea id="userComment" name="comment" class="form-control" rows="4" placeholder="আপনার কোনো বিশেষ জিজ্ঞাসা বা মন্তব্য থাকলে এখানে লিখতে পারেন।"></textarea>
                 </div>
@@ -633,47 +753,61 @@
         </div>
     </div>
 
+    <!-- 👑 ব্র্যান্ডেড ফুটার সেকশন -->
+    <footer>
+        <div class="footer-credits">
+            <span class="credit-item">Event by, <a href="https://maslab.org/" target="_blank">MASLab</a></span>
+            <span class="credit-item">Developed by, <a href="https://www.facebook.com/utsabsarker.arup/" target="_blank">UTSAB SARKER</a></span>
+        </div>
+    </footer>
+
     <div class="toast-notification" id="toastBox">বিকাশ নম্বরটি কপি করা হয়েছে!</div>
 
+    <!-- 📑 মডার্ন নিবন্ধন সফল মোডাল কন্টেইনার -->
     <div class="modal-overlay" id="successModalOverlay">
         <div class="success-modal">
             <div class="modal-icon-circle"><i class="fas fa-check"></i></div>
             <div class="modal-title">নিবন্ধন সফল হয়েছে!</div>
             <div class="modal-desc">
-                আপনার দেওয়া সমস্ত তথ্য সফলভাবে জমা হয়েছে। ভেরিফিকেশন সম্পন্ন হলে মেইলের মাধ্যমে নিবন্ধন নিশ্চিত করা হবে।
+                আপনার দেওয়া সমস্ত তথ্য সফলভাবে জমা হয়েছে। তথ্য যাচাই সম্পন্ন হলে ই-মেইল এর মাধ্যমে নিবন্ধন নিশ্চিত করা হবে।
             </div>
+            
+            <!-- ⚠️ নতুন রিকোয়ারমেন্ট অনুযায়ী এটেনশন বক্স -->
+            <div class="attention-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="attention-text">
+                    পরবর্তী ৪৮ ঘণ্টার মধ্যে নিবন্ধন নিশ্চায়ন না পেলে অনুগ্রহ করে আমাদের সঙ্গে যোগাযোগ করুন।
+                </div>
+            </div>
+
             <button type="button" class="modal-close-btn" onclick="closeSuccessModal()">ঠিক আছে</button>
         </div>
     </div>
 
     <script>
-        // আপনার নতুন এপিআই লিঙ্ক 🎯
         const apiURL = "https://script.google.com/macros/s/AKfycbx9ZcZ23Ui1A_4d4qQe0y905WyqoED8cDDyX-xfC8gaAT7jSHZTNZiknMWrSUlYy8mb/exec";
 
-        // ⏱️ কাউন্টডাউন টাইমার জাভাস্ক্রিপ্ট লজিক
-        // এখানে আপনার নিবন্ধনের শেষ ডেট ও সময় সেট করুন (যেমন: ৩১ জুলাই ২০২৬, রাত ১১:৫৯:৫৯)
-        const targetDate = new Date("July 04, 2026 20:00:00").getTime();
+        // ⏱️ লাইভ কাউন্টডাউন টাইমার: ৪ জুলাই রাত ৮ টা (২০:০০)
+        const targetDate = new Date("July 4, 2026 20:00:00").getTime();
 
         const countdownInterval = setInterval(function() {
             const now = new Date().getTime();
             const difference = targetDate - now;
 
-            // দিন, ঘণ্টা, মিনিট এবং সেকেন্ড হিসাব
             const d = Math.floor(difference / (1000 * 60 * 60 * 24));
             const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((difference % (1000 * 60)) / 1000);
 
-            // স্ক্রিনে ডেটা বসানো (যদি সংখ্যা ৯ এর নিচে হয় তবে আগে একটা ০ যোগ হবে)
             document.getElementById("days").innerText = d < 10 ? "0" + d : d;
             document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
             document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
             document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
 
-            // সময় শেষ হয়ে গেলে কাউন্টডাউন জিরো করা
             if (difference < 0) {
                 clearInterval(countdownInterval);
                 document.querySelector(".countdown-wrapper").innerHTML = "<div class='countdown-title' style='color:#ef4444; font-size:1.1rem;'><i class='fas fa-exclamation-circle'></i> দুঃখিত, নিবন্ধনের সময় শেষ হয়ে গেছে!</div>";
+                document.getElementById("submitBtn").disabled = true;
             }
         }, 1000);
 
@@ -726,7 +860,7 @@
             e.preventDefault();
             
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> নিবন্ধন হচ্ছে...`;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...`;
 
             const formData = new FormData(form);
             const params = new URLSearchParams();
