@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)</title>
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #f8fafc;          
+            --bg-card: #ffffff;          
+            --accent-red: #ff4500; 
+            --soft-blue: #3b82f6;        
+            --soft-blue-bg: #eff6ff;     
+            --text-dark: #1e293b;        
+            --text-muted: #64748b;       
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* মেনু থেকে সেকশনে ক্লিক করলে হেডারের নিচে ঢাকা পড়া রোধ করার ম্যাজিক সিএসএস */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px; /* ফিক্সড হেডারের উচ্চতা + গ্যাপ */
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.8;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* সায়েন্স ওয়াটারমার্ক ব্যাকগ্রাউন্ড লেয়ার */
+        .science-bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 100px;
+            padding: 50px;
+            font-size: 3.5rem;
+            color: rgba(59, 130, 246, 0.05); 
+            pointer-events: none;
+            z-index: 1; 
+            user-select: none;
+            overflow: hidden;
+        }
+
+        .main-container, .navbar, .top-marquee-container {
+            position: relative;
+            z-index: 2; 
+        }
+
+        .section-card {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* বিজ্ঞপ্তি বার - একদম সবার উপরে (স্ক্রল করলে উপরে চলে যাবে) */
+        .top-marquee-container {
+            width: 90%;
+            max-width: 930px;
+            height: 40px;
+            background: transparent;
+            border: 2px solid var(--accent-red);
+            border-radius: 30px;
+            margin: 15px auto 15px auto; 
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 0 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .marquee-fixed-label {
+            background: transparent;
+            color: var(--accent-red);
+            font-weight: 800;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            padding-right: 10px;
+            border-right: 2px solid rgba(255, 69, 0, 0.3);
+        }
+
+        .marquee-scrolling-zone {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-scrolling-zone marquee {
+            color: var(--accent-red);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .marquee-scrolling-zone a {
+            color: var(--accent-red);
+            text-decoration: none;
+        }
+
+        /* ফিক্সড হেডার (Navbar) - এটি স্ক্রিনের ওপরে আটকে থাকবে */
+        .navbar {
+            background: #ffffff;
+            color: var(--text-dark);
+            padding: 0 25px;
+            height: 65px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: 2px solid var(--soft-blue);
+        }
+
+        .nav-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .nav-title span { color: var(--accent-red); }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--accent-red);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* Sidebar Drawer */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            max-width: 100%;
+            height: 100%;
+            background: #ffffff;
+            z-index: 1002;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .sidebar.active { right: 0; }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            align-self: flex-end;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .sidebar a.menu-item {
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 12px 15px;
+            font-size: 1rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+        .sidebar a.menu-item:hover {
+            color: #fff;
+            background: var(--soft-blue);
+            border-color: var(--soft-blue);
+            padding-left: 20px;
+        }
+
+        /* 1000364247.jpg ওরেঞ্জ-রেড বক্স রেপ্লিকা */
+        .image-replica-box {
+            background: var(--accent-red);
+            border-radius: 16px;
+            padding: 20px 20px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.2);
+        }
+        .image-replica-box h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 5px; }
+        .image-replica-box p { font-size: 1.1rem; margin-bottom: 12px; opacity: 0.95; }
+        .image-replica-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #ffffff;
+            color: var(--accent-red);
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        /* Banner */
+        .banner-container {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    max-height: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.45);
+}
+
+.slide-caption {
+    position: absolute;
+    bottom: 8%;
+    left: 5%;
+    right: 5%;
+    color: #fff;
+    z-index: 2;
+}
+
+.slide-caption h2 {
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+        /* Main Container */
+        .main-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 30px 15px;
+            width: 100%;
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            padding: 35px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            border-left: 6px solid var(--soft-blue); 
+            word-wrap: break-word;
+        }
+
+        /* শিরোনাম এবং কোণায় স্ট্যাটাস */
+        .headline-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .headline-wrapper {
+            font-size: 1.45rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+        .headline-wrapper i { color: var(--accent-red); } 
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid transparent;
+        }
+        .status-badge.running { background: #ef444415; color: #ef4444; border-color: #ef444430; }
+        .status-badge.success { background: #22c55e15; color: #22c55e; border-color: #22c55e30; }
+
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: blinker 1.2s linear infinite; }
+        .status-dot.green { background-color: #22c55e; }
+        .status-dot.red { background-color: #ef4444; }
+        @keyframes blinker { 50% { opacity: 0; } }
+        
+        .strike-out { text-decoration: line-through !important; color: var(--text-muted) !important; opacity: 0.55; }
+
+        /* Intro Presentation */
+        .intro-box { border-left: 6px solid var(--accent-red); }
+        .intro-box h1 { color: var(--accent-red); font-size: 2.2rem; margin-bottom: 12px; font-weight: 800; }
+
+        /* Syllabus */
+        .syllabus-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .syllabus-item { display: flex; align-items: center; gap: 15px; background: #f8fafc; padding: 15px 20px; border-radius: 10px; border: 1px solid #e2e8f0; }
+        .syllabus-item-icon { color: var(--accent-red); font-size: 1.2rem; width: 25px; display: flex; justify-content: center; flex-shrink: 0; }
+
+        /* কাস্টম ৩-কলাম এবং ২-কলাম মিশ্রিত গ্রিড লেআউট */
+        .info-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+            width: 100%; 
+        }
+        .info-node {
+            background: #f8fafc; padding: 20px; border-radius: 12px; border-top: 4px solid var(--soft-blue);
+            border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;
+        }
+        .info-node span { display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 6px; font-weight: 500; }
+        .info-node strong { font-size: 1.1rem; color: var(--text-dark); }
+        .small-note { font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 4px; }
+
+        /* আসন সংখ্যা বক্সটি ২ টি বক্সের সমান জায়গা জুড়ে থাকবে (Grid Span 2) */
+        .seat-full-area-box {
+            grid-column: span 2;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid var(--accent-red);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .seat-main-title { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+        .seat-count-highlight { font-size: 1.3rem; color: var(--text-dark); font-weight: 700; margin-bottom: 10px; }
+        .seat-count-highlight span { color: var(--accent-red); }
+        
+        .inner-warning-box {
+            background: #fff5f5; border: 1px solid #fee2e2; padding: 8px 12px; border-radius: 6px;
+            font-size: 0.85rem; color: var(--text-dark); font-weight: 600; display: flex; align-items: center; gap: 8px;
+        }
+
+        /* bKash Widget */
+        .bkash-container { background: #fff0f6; border: 1px solid #fbcfe8; padding: 14px 18px; border-radius: 10px; margin: 15px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .bkash-number-box { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .copy-btn { background: #ffffff; border: 1px solid #cbd5e1; color: var(--text-muted); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 5px; }
+        .bkash-label { background: #d1156c; color: white; padding: 5px 14px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
+
+        .toast-notification { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #334155; color: #fff; padding: 10px 24px; border-radius: 30px; font-size: 0.95rem; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease; z-index: 2000; opacity: 0; }
+        .toast-notification.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        .custom-ul { list-style: none; }
+        .custom-ul li { position: relative; padding-left: 32px; margin-bottom: 12px; }
+        .custom-ul li::before {
+            content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            position: absolute; left: 0; top: 4px; color: #ffffff; background-color: var(--accent-red);
+            font-size: 0.65rem; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        .btn-holder { text-align: center; margin: 35px 0; }
+        .cta-button {
+            background: #ffffff; color: var(--accent-red); border: 2px solid var(--accent-red);
+            padding: 12px 35px; font-size: 1.15rem; font-weight: 700; text-decoration: none;
+            border-radius: 50px; transition: 0.3s; display: inline-block;
+        }
+        .cta-button:hover { background: #fff5f5; transform: translateY(-2px); }
+
+        .classic-quote-box { background: var(--soft-blue-bg); border: 1px solid #dbeafe; border-left: 6px solid var(--soft-blue); padding: 30px; border-radius: 16px; text-align: center; font-style: italic; font-size: 1.2rem; color: var(--text-dark); margin: 40px 0; }
+
+        .map-relative-frame { position: relative; width: 100%; height: 300px; border-radius: 14px; overflow: hidden; border: 1px solid #cbd5e1; margin-top: 20px; }
+        .map-middle-text-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.96); color: var(--text-dark); padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 0.95rem; text-align: center; border: 2px solid var(--soft-blue); width: 85%; max-width: 420px; pointer-events: none; }
+
+        /* Footer */
+        .footer-universe { background: #1e293b; color: #94a3b8; padding: 50px 15px 20px; margin-top: 60px; }
+        .footer-header-centered { text-align: center; color: #fff; font-size: 1.6rem; font-weight: 700; margin-bottom: 35px; }
+        .footer-header-centered span::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent-red); margin: 8px auto 0; border-radius: 2px; }
+        .footer-split-grid { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; max-width: 960px; margin: 0 auto; gap: 40px; }
+        .footer-branding-left { flex: 1; min-width: 260px; text-align: center; }
+        .footer-branding-left img { max-width: 190px; height: auto; background: #fff; padding: 10px; border-radius: 12px; }
+        .footer-links-right { flex: 1; min-width: 280px; display: flex; flex-direction: column; gap: 15px; }
+        .footer-links-right a { display: flex; align-items: flex-start; gap: 12px; color: #cbd5e1; text-decoration: none; font-size: 1rem; }
+        .footer-links-right i { color: var(--accent-red); margin-top: 5px; width: 20px; text-align: center; }
+        .footer-bottom-credits { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+        .developer-credit { font-size: 0.8rem; color: #64748b; margin-top: 8px; }
+
+        /* মোবাইল রেসপন্সিভনেস */
+        @media (max-width: 768px) {
+            .top-marquee-container { width: 96%; margin: 10px auto; }
+            .banner-container { height: 240px; }
+            .slide-caption h2 { font-size: 1.5rem; }
+            .section-card { padding: 20px; }
+            
+            /* মোবাইলে গ্রিড এক কলামে হবে যাতে ভেঙে ডানদিকে না কাটে */
+            .info-grid { grid-template-columns: 1fr; gap: 15px; }
+            .seat-full-area-box { grid-column: span 1; }
+            
+            .headline-container { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .footer-split-grid { flex-direction: column; text-align: center; }
+            .footer-links-right a { justify-content: center; }
+            .science-bg-overlay { grid-template-columns: repeat(2, 1fr); gap: 60px; padding: 20px; font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- সায়েন্স ব্যাকগ্রাউন্ড লেয়ার -->
+    <div class="science-bg-overlay">
+        <div>π</div><div>⚛</div><div>Σ</div><div>📚</div>
+        <div>∫</div><div>🔭</div><div>√</div><div>💡</div>
+        <div>⚛</div><div>π</div><div>∫</div><div>📚</div>
+        <div>🔭</div><div>💡</div><div>Σ</div><div>√</div>
+    </div>
+
+    <!-- বিজ্ঞপ্তি সবার উপরে (পেজ স্ক্রল করলে এটি উপরে চলে যাবে) -->
+    <div class="top-marquee-container">
+        <div class="marquee-fixed-label">
+            <i class="fas fa-bullhorn"></i> বিজ্ঞপ্তি:
+        </div>
+        <div class="marquee-scrolling-zone">
+            <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();">
+                <a href="#schedule">রেজিস্ট্রেশন চলছে! 'খেলতে খেলতে বিজ্ঞান'-এর ১৬তম পর্বের জন্য অনলাইন নিবন্ধন ফর্মটি সঠিক ট্রাঞ্জেকশন আইডিসহ পূরণ করে সাবমিট করুন। আসন সংখ্যা সীমিত!</a>
+            </marquee>
+        </div>
+    </div>
+
+    <!-- ফিক্সড হেডার (Navbar) -->
+    <nav class="navbar">
+        <div class="nav-title">খেলতে খেলতে বিজ্ঞান <span>(পর্ব-১৬)</span></div>
+        <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+    </nav>
+
+    <!-- Drawer Component -->
+    <div class="sidebar" id="sidebarMenu">
+        <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        <div class="sidebar-menu-grid">
+            <a href="#welcome" class="menu-item" onclick="toggleMenu()">পরিচিতি</a>
+            <a href="#audience" class="menu-item" onclick="toggleMenu()">কাদের জন্য এই কর্মশালা</a>
+            <a href="#topics" class="menu-item" onclick="toggleMenu()">কর্মশালার বিষয়বস্তু</a>
+            <a href="#lessons" class="menu-item" onclick="toggleMenu()">শিখনফল</a>
+            <a href="#schedule" class="menu-item" onclick="toggleMenu()">নিবন্ধনের সময়সূচি</a>
+            <a href="#rules" class="menu-item" onclick="toggleMenu()">নিবন্ধনের নিয়ম</a>
+            <a href="#perks" class="menu-item" onclick="toggleMenu()">সুবিধাসমূহ</a>
+        </div>
+        
+        <!-- ইমেজ 1000364247.jpg এর হুবহু রেপ্লিকা বক্স -->
+        <div class="image-replica-box">
+            <h3>সীমিত আসন!</h3>
+            <p>মাত্র ১২ জন অংশ নিতে পারবে</p>
+            <a href="../Registration/" class="image-replica-btn">
+                <i class="fas fa-pen-to-square"></i> নিবন্ধন করুন
+            </a>
+        </div>
+    </div>
+
+    <!-- Banner Container -->
+    <div class="banner-container">
+        <div class="slides" id="bannerSlider">
+            <div class="slide">
+                <img src="../Banner 1.jpg" alt="MASLab Workshop Banner">
+                <div class="slide-caption">
+                    <h2>খেলতে খেলতে বিজ্ঞান (পর্ব-১৬)</h2>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="../Banner 2.jpg" alt="Volumetric Analysis Experiment">
+                <div class="slide-caption">
+                    <p>ধাপে ধাপে পরীক্ষা, ধাপে ধাপে নতুন আবিষ্কারের পথে</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="../Banner 3.jpg" alt="Microscope Observation Activity">
+                <div class="slide-caption">
+                    <p>নিজের চোখে দেখা, নিজের হাতে শেখা—এটাই বিজ্ঞানের আনন্দ</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="../Banner 4.jpg" alt="Digital Balance Measurement">
+                <div class="slide-caption">
+                    <p>নিখুঁত পরিমাপেই সফল পরীক্ষার শুরু</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="../Banner 5.jpg" alt="Hands-on Chemistry Experiment">
+                <div class="slide-caption">
+                    <p>পরীক্ষার টেবিলে কৌতূহল, মনোযোগ আর দলগত কাজ</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="../Banner 6.jpg" alt="Plant Cells Under Microscope">
+                <div class="slide-caption">
+                    <p>মাইক্রোস্কোপের নিচে খুলে যায় অদৃশ্য এক জগতের গল্প</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Hub -->
+    <div class="main-container">
+        
+        <!-- Section: পরিচিতি -->
+        <div class="section-card intro-box" id="welcome">
+            <h1>প্রিয় এসএসসি পরীক্ষার্থী ২০২৬</h1>
+            <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 15px;">পরীক্ষা শেষ, শুরু হলো দীর্ঘ ছুটি! এই সময়টা শুধু বিশ্রাম নয়, নতুন কিছু শেখারও দারুণ সুযোগ।</p>
+            <p>কেমন হয়, যদি তুমি নিজে হাতে-কলমে বিজ্ঞানের কিছু মজার এক্সপেরিমেন্ট নিয়ে খেলার সুযোগ পাও? মাইক্রোস্কোপ দিয়ে বিভিন্ন উদ্ভিদ ও প্রাণির কোষ দেখার সুযোগ পাও! পৃথিবী কেনো ঘুরে তার রহস্য উন্মোচন এবং মান নির্ণয় করতে পারতে? ল্যাবরেটরিতে কিভাবে কাজ করে তার ধারণা পেতে?</p>
+            <br>
+            <p>তোমাদেরকে এমন মজার কর্মকান্ডে অংশ নেয়ার সুযোগ দেয়ার জন্য শুরু হচ্ছে ৪ দিনের একটি বিশেষ কর্মশালা - <strong>“খেলতে খেলতে বিজ্ঞান”</strong>। এবার এই আয়োজনের ১৬ তম পর্ব অনুষ্ঠিত হতে চলছে।</p>
+        </div>
+
+        <!-- Section: কাদের জন্য এই কর্মশালা -->
+        <div class="section-card" id="audience">
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-user-astronaut"></i> কাদের জন্য এই কর্মশালা</div>
+            </div>
+            <p><strong>এসএসসি ২০২৬ পরীক্ষার্থীরা</strong> এবং ২০২৬ সালে অষ্টম থেকে দশম শ্রেণীতে অধ্যয়নরত যেসব শিক্ষার্থীরা নিজে হাতেকলমে পরীক্ষা করে বিজ্ঞানকে বুঝতে চাও, আন্তর্জাতিক অলিম্পিয়াডের ব্যবহারিক অংশের জন্য এখন থেকে প্রস্তুতি নিতে চাও, তাদের জন্যই এই কর্মশালা।</p>
+        </div>
+
+        <!-- Section: কর্মশালার বিষয়বস্তু -->
+        <div class="section-card" id="topics">
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-microscope"></i> কর্মশালার বিষয়বস্তু</div>
+            </div>
+            <p style="font-size: 1.1rem; font-weight: bold; color: var(--text-dark);"><i class="fas fa-compass-drafting" style="color:var(--accent-red)"></i> পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, এবং মাপজোখ নিয়ে ব্যবহারিক ক্লাস</p>
+        </div>
+
+        <!-- Section: কর্মশালায় যা যা শেখানো হবে -->
+        <div class="section-card" id="lessons">
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-flask"></i> কর্মশালায় যা যা শেখানো হবে</div>
+            </div>
+            <div class="syllabus-grid">
+                <div class="syllabus-item"><div class="syllabus-item-icon"><i class="fas fa-screwdriver-wrench"></i></div><span>ল্যাবের যন্ত্রপাতি ও মাপজোখ নিয়ে ধারণা</span></div>
+                <div class="syllabus-item"><div class="syllabus-item-icon"><i class="fas fa-ruler-horizontal"></i></div><span>স্কুরগজ এবং স্লাইড ক্যালিপার্স ব্যবহার</span></div>
+                <div class="syllabus-item"><div class="syllabus-item-icon"><i class="fas fa-vial-circle-check"></i></div><span>দ্রবণ তৈরি করা</span></div>
+                <div class="syllabus-item"><div class="syllabus-item-icon"><i class="fas fa-vials"></i></div><span>অম্ল-ক্ষার টাইট্রেশন</span></div>
+                <div class="syllabus-item"><div class="syllabus-item-icon"><i class="fas fa-droplet"></i></div><span>রক্তের গ্রুপ নির্ণয়</span></div>
+                <div class="syllabus-item"><div class="syllabus-item-icon"><i class="fas fa-heart-pulse"></i></div><span>স্ফিগমোম্যানোমিটার এবং স্টেথোস্কোপের ব্যবহার</span></div>
+                <div class="syllabus-item"><div class="syllabus-item-icon"><i class="fas fa-dna"></i></div><span>মাইক্রোস্কোপে পেঁয়াজ কোষ ও এর প্রয়োগ পর্যবেক্ষণ</span></div>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: var(--soft-blue-bg); border-radius: 10px; border-left: 4px solid var(--soft-blue);">
+                <strong><i class="fas fa-clipboard-check" style="color:var(--soft-blue)"></i> মূল্যায়ন:</strong> কর্মশালার শেষদিন পরীক্ষায় অংশগ্রহণ করতে হবে।
+            </div>
+        </div>
+
+        <!-- Section: নিবন্ধনের সময়সূচি (৩+২ পারফেক্ট গ্রিড লেআউট) -->
+        <div class="section-card" id="schedule">
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-calendar-days"></i> নিবন্ধনের সময়সূচি ও যোগ্যতা</div>
+                <div id="regStatusBadge" class="status-badge">
+                    <span id="regStatusDot" class="status-dot"></span>
+                    <span id="regStatusText">লোড হচ্ছে...</span>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <!-- উপরের সারি: ৩টি সমান বক্স -->
+                <div class="info-node">
+                    <span><i class="fas fa-graduation-cap"></i> নিবন্ধনের যোগ্যতা</span>
+                    <strong>এসএসসি ২০২৬ পরীক্ষার্থী এবং ৮ম-১০ম শ্রেণীর শিক্ষার্থী</strong>
+                </div>
+                <div class="info-node" id="startDateNode">
+                    <span><i class="fas fa-business-time"></i> নিবন্ধন শুরুর সময়</span>
+                    <strong id="startDateTxt">২৮ জুন, ২০২৬; সকাল ৮:০০ টা</strong>
+                </div>
+                <div class="info-node" id="endDateNode">
+                    <span><i class="fas fa-calendar-xmark"></i> নিবন্ধনের শেষ সময়</span>
+                    <strong id="endDateTxt">৪ জুলাই, ২০২৬; রাত ৮:০০টা</strong>
+                </div>
+                
+                <!-- নিচের সারি: ১টি ফি বক্স এবং ২টি বক্সের সমান বড় আসন বক্স -->
+                <div class="info-node">
+                    <span><i class="fas fa-wallet"></i>নিবন্ধন ফি</span>
+                    <strong>৩০০০/- টাকা মাত্র <span class="small-note">(রেজিস্ট্রেশনের সময় পরিশোধযোগ্য)</span></strong>
+                </div>
+                
+                <div class="seat-full-area-box">
+                    <div class="seat-main-title"><i class="fas fa-chair" style="color:var(--accent-red)"></i> আসন সংখ্যা</div>
+                    <div class="seat-count-highlight">মাত্র <span>১২</span> টি</div>
+                    <div class="inner-warning-box">
+                        <i class="fas fa-triangle-exclamation" style="color:var(--accent-red)"></i>
+                        <span>আগে আসলে আগে পাবেন ভিত্তিতে আসন বরাদ্দ করা হবে।</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-holder" style="margin-top: 35px;">
+                <a href="../Registration/" class="cta-button"><i class="fas fa-file-signature"></i> রেজিস্ট্রেশন করতে এখানে ক্লিক করুন</a>
+            </div>
+        </div>
+
+        <!-- Section: কর্মশালার সময়সূচি ও ভেন্যু -->
+        <div class="section-card">
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-map-pinned"></i> কর্মশালার সময়সূচি ও ভেন্যু</div>
+                <div id="workshopStatusBadge" class="status-badge">
+                    <span id="workshopStatusDot" class="status-dot"></span>
+                    <span id="workshopStatusText">লোড হচ্ছে...</span>
+                </div>
+            </div>
+
+            <div class="info-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: 20px;">
+                <div class="info-node">
+                    <span><i class="fas fa-calendar-plus"></i> কর্মশালা শুরুর তারিখ</span>
+                    <strong id="wsStartTxt">৬ জুলাই ২০২৬</strong>
+                </div>
+                <div class="info-node">
+                    <span><i class="fas fa-calendar-check"></i> কর্মশালা শেষের তারিখ</span>
+                    <strong id="wsEndTxt">১০ জুলাই ২০২৬</strong>
+                </div>
+            </div>
+
+            <div class="info-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: 25px;">
+                <div class="info-node">
+                    <span><i class="fas fa-clock"></i> দৈনিক সময়সূচী</span>
+                    <strong>বিকাল ৩:০০ টা – ৫:০০ টা</strong>
+                </div>
+                <div class="seat-full-area-box" style="grid-column: span 1; border-top: 4px solid var(--soft-blue);">
+                    <div class="seat-main-title" style="color:var(--soft-blue); font-weight:bold;"><i class="fas fa-hotel"></i> কর্মশালার ভেন্যু</div>
+                    <p style="font-size: 0.95rem; font-weight: 600;">ম্যাসল্যাব, গ্রিন সিটি সেন্টার (১২ তলা), ৭৫৮ সাত মসজিদ রোড, ধানমন্ডি, ঢাকা।</p>
+                </div>
+            </div>
+
+            <div class="map-relative-frame">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.227280459524!2d90.3721381!3d23.739276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b51d45906d%3A0x7d8a6358c5a2789!2sGreen%20City%20Center!5e0!3m2!1sbn!2sbd!4v1700000000000!5m2!1sbn!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="map-middle-text-overlay">
+                    <i class="fas fa-location-dot" style="color:var(--accent-red)"></i> Level 12, MASLab, 758 Satmasjid Road, Dhaka 1209
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: নিবন্ধনের নিয়ম -->
+        <div class="section-card" id="rules">
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-file-invoice"></i> রেজিস্ট্রেশন করার নিয়ম</div>
+            </div>
+            <ol class="custom-ul" style="display:flex; flex-direction:column; gap:12px;">
+                <li>প্রথমেই বিকাশের মাধ্যমে কোর্সের নিবন্ধন ফি অগ্রিম প্রদান করতে হবে।</li>
+                <li>নিবন্ধন ফি প্রদান করার বিকাশ নম্বর: 
+                    <div class="bkash-container">
+                        <div class="bkash-number-box">
+                            <div>
+                                <span style="font-size:0.8rem; color:var(--text-muted); display:block;">বিকাশ পারসোনাল অ্যাকাউন্ট</span>
+                                <strong id="bkashNo">01730-716522</strong>
+                            </div>
+                            <button class="copy-btn" onclick="copyNumber()">
+                                <i class="far fa-copy" id="copyIcon"></i> <span id="copyTxt">কপি</span>
+                            </button>
+                        </div>
+                        <span class="bkash-label">bKash</span>
+                    </div>
+                </li>
+                <li>বিকাশের সেন্ড মানি অপশন ব্যবহার করে <strong>৩০৬০ টাকা</strong> (ফি সহ) পাঠিয়ে ট্রাঞ্জেকশন আইডি (TrxID) সংরক্ষণ করুন।</li>
+                <li>অনলাইন রেজিস্ট্রেশন ফর্মটি সঠিক ট্রাঞ্জেকশন আইডিসহ পূরণ করে সাবমিট করুন।</li>
+            </ol>
+        </div>
+
+        <!-- Section: সুযোগ সুবিধা -->
+        <div class="section-card" id="perks">
+            <div class="headline-container">
+                <div class="headline-wrapper"><i class="fas fa-award"></i> কর্মশালায় যা যা পাবে</div>
+            </div>
+            <ul class="custom-ul">
+                <li>কর্মশালা শেষে সার্টিফিকেট প্রদান করা হবে।</li>
+                <li>ব্যবহারিক উপকরণ ও আনুষাঙ্গিক সব ল্যাব থেকেই দেওয়া হবে।</li>
+                <li>ক্লাসের মাঝে হালকা নাস্তা প্রদান করা হবে।</li>
+                <li>আসন সংখ্যা মাত্র ১২ টি, তাই আগে আসলে আগে পাবেন।</li>
+            </ul>
+        </div>
+
+        <div class="classic-quote-box">
+            "চলো, পরীক্ষা-পরবর্তী ছুটিটাকে বিজ্ঞানময় করে তুলি— দেখি, জানি, আর খেলতে খেলতে শিখি"
+        </div>
+    </div>
+
+    <div class="toast-notification" id="toastBox">নম্বরটি কপি হয়েছে!</div>
+
+    <!-- Footer (Branding + Developer Info) -->
+    <footer class="footer-universe" id="contact">
+        <div class="footer-header-centered"><span>যোগাযোগ</span></div>
+        <div class="footer-split-grid">
+            <div class="footer-branding-left">
+                <img src="https://maslab.org/wp-content/uploads/2024/03/MASLab-Logo-1-1.png" alt="MASLab Logo">
+            </div>
+            <div class="footer-links-right">
+                <a href="tel:+8801730716522"><i class="fas fa-phone"></i> <span>+880 1730-716522</span></a>
+                <a href="mailto:info@maslab.org"><i class="fas fa-envelope"></i> <span>info@maslab.org</span></a>
+                <a href="https://maps.app.goo.gl/7odgJBYMAyEisKgX8"><i class="fas fa-street-view"></i> <span>ম্যাসল্যাব, গ্রিন সিটি সেন্টার (১২ তলা), ৭৫৮ সাত মসজিদ রোড, ধানমন্ডি, ঢাকা।</span></a>
+            </div>
+        </div>
+        <div class="footer-bottom-credits">
+            <p>Event by <strong>MASLab</strong></p>
+            <p>Designed & Developed by <strong>UTSAB SARKER</strong></p>
+            <p style="font-size:0.75rem; color:#475569; margin-top:5px;">&copy; 2026 MASLab. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+    document.getElementById('sidebarMenu').classList.toggle('active');
+}
+
+let index = 0;
+const slider = document.getElementById('bannerSlider');
+
+if (slider) {
+    const totalSlides = slider.children.length;
+
+    setInterval(() => {
+        index = (index + 1) % totalSlides;
+        slider.style.transform = `translateX(-${index * 100}%)`;
+    }, 4000);
+}
+
+        function copyNumber() {
+            navigator.clipboard.writeText("01730716522").then(() => {
+                const toast = document.getElementById('toastBox');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            });
+        }
+
+        function checkStatusTimeline() {
+    // ২০২৬ এর বর্তমান সময় ডাইনামিক ট্র্যাকিং 
+    const now = new Date();
+    const regStart = new Date('2026-06-28T08:00:00');
+    const regEnd = new Date('2026-07-04T20:00:00');
+    const wsStart = new Date('2026-07-06T15:00:00');
+    const wsEnd = new Date('2026-07-10T17:00:00');
+
+    // ১. নিবন্ধন শুরুর তারিখ পার হয়ে গেলে কাটা যাবে
+    if (now > regStart) {
+        document.getElementById('startDateNode').classList.add('strike-out');
+    }
+    // ২. নিবন্ধন শেষ হওয়ার তারিখ পার হয়ে গেলে কাটা যাবে
+    if (now > regEnd) {
+        document.getElementById('endDateNode').classList.add('strike-out');
+    }
+    // ৩. নতুন সংযোজন: কর্মশালা শুরু হয়ে গেলে শুরুর তারিখটিও কাটা যাবে
+    if (now > wsStart) {
+        document.getElementById('wsStartTxt').parentElement.classList.add('strike-out');
+    }
+    // ৪. নতুন সংযোজন: সম্পূর্ণ কর্মশালা শেষ হয়ে গেলে শেষের তারিখটিও কাটা যাবে
+    if (now > wsEnd) {
+        document.getElementById('wsEndTxt').parentElement.classList.add('strike-out');
+    }
+
+    // রেজিঃ ব্যাজ নোটিশ আপডেট
+    const regText = document.getElementById('regStatusText');
+    if (now >= regStart && now <= regEnd) {
+        document.getElementById('regStatusBadge').className = "status-badge success";
+        document.getElementById('regStatusDot').className = "status-dot green";
+        regText.innerText = "নিবন্ধন চলমান";
+    } else {
+        document.getElementById('regStatusBadge').className = "status-badge running";
+        document.getElementById('regStatusDot').className = "status-dot red";
+        regText.innerText = now > regEnd ? "নিবন্ধন শেষ" : "নিবন্ধন শুরু হয়নি";
+    }
+
+    // ওয়ার্কশপ নোটিশ আপডেট
+    const wsText = document.getElementById('workshopStatusText');
+    if (now < wsStart) {
+        const days = Math.ceil((wsStart - now) / (1000 * 3600 * 24));
+        document.getElementById('workshopStatusBadge').className = "status-badge running";
+        document.getElementById('workshopStatusDot').className = "status-dot red";
+        wsText.innerText = `কর্মশালা শুরু হতে বাকি ${days} দিন`;
+    } else if (now >= wsStart && now <= wsEnd) {
+        document.getElementById('workshopStatusBadge').className = "status-badge success";
+        document.getElementById('workshopStatusDot').className = "status-dot green";
+        wsText.innerText = "কর্মশালা চলমান";
+    } else {
+        document.getElementById('workshopStatusBadge').className = "status-badge running";
+        document.getElementById('workshopStatusDot').className = "status-dot red";
+        wsText.innerText = "কর্মশালা শেষ";
+    }
+}
+window.onload = checkStatusTimeline;
+    </script>
+</body>
+</html>
