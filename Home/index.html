@@ -755,7 +755,7 @@
                 <div class="headline-wrapper"><i class="fas fa-award"></i> কর্মশালায় যা যা পাবে</div>
             </div>
             <ul class="custom-ul">
-                <li>कर्मশালা শেষে সার্টিফিকেট প্রদান করা হবে।</li>
+                <li>কর্মশালা শেষে সার্টিফিকেট প্রদান করা হবে।</li>
                 <li>ব্যবহারিক উপকরণ ও আনুষাঙ্গিক সব ল্যাব থেকেই দেওয়া হবে।</li>
                 <li>ক্লাসের মাঝে হালকা নাস্তা প্রদান করা হবে।</li>
                 <li>আসন সংখ্যা মাত্র ১২ টি, তাই আগে আসলে আগে পাবেন।</li>
@@ -790,7 +790,6 @@
         <div class="footer-bottom-credits">
             <p>Event by <a href="https://maslab.org/" target="_blank">MASLab</a></p>
             <p>Designed & Developed by <a href="https://github.com/utsabsarker" target="_blank">UTSAB SARKER</a></p>
-            <p style="font-size:0.75rem; color:#475569; margin-top:5px;">&copy; 2026 MASLab. All rights reserved.</p>
         </div>
     </footer>
 
@@ -855,7 +854,7 @@
                 const days = Math.ceil((wsStart - now) / (1000 * 3600 * 24));
                 document.getElementById('workshopStatusBadge').className = "status-badge running";
                 document.getElementById('workshopStatusDot').className = "status-dot red";
-                wsText.innerText = `कर्मशाला शुरू হতে बाकी ${days} दिन`;
+                wsText.innerText = `কর্মশালা শুরু হতে বাকি ${days} দিন`;
             } else if (now >= wsStart && now <= wsEnd) {
                 document.getElementById('workshopStatusBadge').className = "status-badge success";
                 document.getElementById('workshopStatusDot').className = "status-dot green";
@@ -863,7 +862,7 @@
             } else {
                 document.getElementById('workshopStatusBadge').className = "status-badge running";
                 document.getElementById('workshopStatusDot').className = "status-dot red";
-                wsText.innerText = "কর্মশালা শেষ";
+                wsText.innerText = "কর্মশালা শেষ হয়েছে";
             }
         }
 window.onload = checkStatusTimeline;
